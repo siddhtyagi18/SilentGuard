@@ -1,0 +1,2 @@
+rootProject.name = "Silent Guard"
+include ':app'

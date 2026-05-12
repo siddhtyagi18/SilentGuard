@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.SilentGuard" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_purple</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:navigationBarColor">@color/bg_primary</item>
+    </style>
+
+    <!-- Glassmorphism Card Style -->
+    <style name="GlassCard">
+        <item name="android:background">@drawable/bg_glass_card</item>
+    </style>
+
+    <!-- Neon Button Style -->
+    <style name="NeonButton">
+        <item name="android:background">@drawable/bg_neon_button</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+</resources>

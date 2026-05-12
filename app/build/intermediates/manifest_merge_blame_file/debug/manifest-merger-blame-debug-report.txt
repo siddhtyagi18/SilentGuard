@@ -1,0 +1,329 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.silentguard.app"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="33" />
+10
+11    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+11-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:5:5-71
+11-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:5:22-68
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:6:5-79
+12-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:7:5-81
+13-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:7:22-78
+14    <uses-permission android:name="android.permission.SEND_SMS" />
+14-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:8:5-67
+14-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:8:22-64
+15    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+15-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:9:5-77
+15-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:9:22-74
+16    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+16-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:10:5-88
+16-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:10:22-85
+17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+17-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:11:5-86
+17-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:11:22-83
+18    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+18-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:12:5-95
+18-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:12:22-92
+19    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+19-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:13:5-77
+19-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:13:22-74
+20    <uses-permission android:name="android.permission.INTERNET" />
+20-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:25:5-67
+20-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:25:22-64
+21    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+21-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:26:5-79
+21-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:26:22-76
+22    <uses-permission android:name="android.permission.WAKE_LOCK" />
+22-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:24:5-68
+22-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:24:22-65
+23    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+23-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:25:5-79
+23-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:25:22-76
+24    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+24-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:26:5-110
+24-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:26:22-107
+25
+26    <permission
+26-->[androidx.core:core:1.9.0] C:\Users\nihar\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+27        android:name="com.silentguard.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+27-->[androidx.core:core:1.9.0] C:\Users\nihar\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+28        android:protectionLevel="signature" />
+28-->[androidx.core:core:1.9.0] C:\Users\nihar\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+29
+30    <uses-permission android:name="com.silentguard.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+30-->[androidx.core:core:1.9.0] C:\Users\nihar\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+30-->[androidx.core:core:1.9.0] C:\Users\nihar\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+31
+32    <application
+32-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:15:5-46:19
+33        android:allowBackup="true"
+33-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:16:9-35
+34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+34-->[androidx.core:core:1.9.0] C:\Users\nihar\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+35        android:debuggable="true"
+36        android:extractNativeLibs="false"
+37        android:icon="@mipmap/ic_launcher"
+37-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:17:9-43
+38        android:label="@string/app_name"
+38-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:18:9-41
+39        android:roundIcon="@mipmap/ic_launcher_round"
+39-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:19:9-54
+40        android:supportsRtl="true"
+40-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:20:9-35
+41        android:testOnly="true"
+42        android:theme="@style/Theme.SilentGuard" >
+42-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:21:9-49
+43        <activity
+43-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:22:9-29:20
+44            android:name="com.silentguard.app.LoginActivity"
+44-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:23:13-42
+45            android:exported="true" >
+45-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:24:13-36
+46            <intent-filter>
+46-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:25:13-28:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:26:17-69
+47-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:26:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:27:17-77
+49-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:27:27-74
+50            </intent-filter>
+51        </activity>
+52        <activity android:name="com.silentguard.app.SignUpActivity" />
+52-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:30:9-52
+52-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:30:19-49
+53        <activity android:name="com.silentguard.app.MainActivity" />
+53-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:31:9-50
+53-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:31:19-47
+54        <activity android:name="com.silentguard.app.TriggerSettingsActivity" />
+54-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:32:9-61
+54-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:32:19-58
+55        <activity android:name="com.silentguard.app.ShareLocationActivity" />
+55-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:33:9-59
+55-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:33:19-56
+56        <activity android:name="com.silentguard.app.HowItWorksActivity" />
+56-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:34:9-56
+56-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:34:19-53
+57        <activity android:name="com.silentguard.app.HistoryActivity" />
+57-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:35:9-53
+57-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:35:19-50
+58        <activity android:name="com.silentguard.app.SettingsActivity" />
+58-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:36:9-54
+58-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:36:19-51
+59        <activity android:name="com.silentguard.app.ProfileActivity" />
+59-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:37:9-53
+59-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:37:19-50
+60        <activity android:name="com.silentguard.app.EditProfileActivity" />
+60-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:38:9-57
+60-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:38:19-54
+61        <activity android:name="com.silentguard.app.EmergencyContactsActivity" />
+61-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:39:9-63
+61-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:39:19-60
+62
+63        <service
+63-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:41:9-45:67
+64            android:name="com.silentguard.app.SilentGuardService"
+64-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:42:13-47
+65            android:enabled="true"
+65-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:43:13-35
+66            android:exported="false"
+66-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:44:13-37
+67            android:foregroundServiceType="microphone|location" />
+67-->C:\Users\nihar\OneDrive\Desktop\SilentGuard\app\src\main\AndroidManifest.xml:45:13-64
+68
+69        <activity
+69-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:29:9-46:20
+70            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+70-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:30:13-80
+71            android:excludeFromRecents="true"
+71-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:31:13-46
+72            android:exported="true"
+72-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:32:13-36
+73            android:launchMode="singleTask"
+73-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:33:13-44
+74            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+74-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:34:13-72
+75            <intent-filter>
+75-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:35:13-45:29
+76                <action android:name="android.intent.action.VIEW" />
+76-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:36:17-69
+76-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:36:25-66
+77
+78                <category android:name="android.intent.category.DEFAULT" />
+78-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:38:17-76
+78-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:38:27-73
+79                <category android:name="android.intent.category.BROWSABLE" />
+79-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:39:17-78
+79-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:39:27-75
+80
+81                <data
+81-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:41:17-44:51
+82                    android:host="firebase.auth"
+82-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:42:21-49
+83                    android:path="/"
+83-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:43:21-37
+84                    android:scheme="genericidp" />
+84-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:44:21-48
+85            </intent-filter>
+86        </activity>
+87        <activity
+87-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:47:9-64:20
+88            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+88-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:48:13-79
+89            android:excludeFromRecents="true"
+89-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:49:13-46
+90            android:exported="true"
+90-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:50:13-36
+91            android:launchMode="singleTask"
+91-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:51:13-44
+92            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+92-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:52:13-72
+93            <intent-filter>
+93-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:53:13-63:29
+94                <action android:name="android.intent.action.VIEW" />
+94-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:36:17-69
+94-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:36:25-66
+95
+96                <category android:name="android.intent.category.DEFAULT" />
+96-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:38:17-76
+96-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:38:27-73
+97                <category android:name="android.intent.category.BROWSABLE" />
+97-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:39:17-78
+97-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:39:27-75
+98
+99                <data
+99-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:41:17-44:51
+100                    android:host="firebase.auth"
+100-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:42:21-49
+101                    android:path="/"
+101-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:43:21-37
+102                    android:scheme="recaptcha" />
+102-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:44:21-48
+103            </intent-filter>
+104        </activity>
+105
+106        <service
+106-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:66:9-72:19
+107            android:name="com.google.firebase.components.ComponentDiscoveryService"
+107-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:67:13-84
+108            android:directBootAware="true"
+108-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:34:13-43
+109            android:exported="false" >
+109-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:68:13-37
+110            <meta-data
+110-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:69:13-71:85
+111                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+111-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:70:17-109
+112                android:value="com.google.firebase.components.ComponentRegistrar" />
+112-->[com.google.firebase:firebase-auth:22.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:71:17-82
+113            <meta-data
+113-->[com.google.firebase:firebase-database:20.2.2] C:\Users\nihar\.gradle\caches\8.10\transforms\830f73aaea0e3475e4bf228c658f89c0\transformed\jetified-firebase-database-20.2.2\AndroidManifest.xml:31:13-33:85
+114                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+114-->[com.google.firebase:firebase-database:20.2.2] C:\Users\nihar\.gradle\caches\8.10\transforms\830f73aaea0e3475e4bf228c658f89c0\transformed\jetified-firebase-database-20.2.2\AndroidManifest.xml:32:17-109
+115                android:value="com.google.firebase.components.ComponentRegistrar" />
+115-->[com.google.firebase:firebase-database:20.2.2] C:\Users\nihar\.gradle\caches\8.10\transforms\830f73aaea0e3475e4bf228c658f89c0\transformed\jetified-firebase-database-20.2.2\AndroidManifest.xml:33:17-82
+116            <meta-data
+116-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:31:13-33:85
+117                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+117-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:32:17-139
+118                android:value="com.google.firebase.components.ComponentRegistrar" />
+118-->[com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:33:17-82
+119            <meta-data
+119-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\nihar\.gradle\caches\8.10\transforms\0055a2d103087bd602a0935d5c3b47d8\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:17:13-19:85
+120                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+120-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\nihar\.gradle\caches\8.10\transforms\0055a2d103087bd602a0935d5c3b47d8\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:18:17-127
+121                android:value="com.google.firebase.components.ComponentRegistrar" />
+121-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\nihar\.gradle\caches\8.10\transforms\0055a2d103087bd602a0935d5c3b47d8\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:19:17-82
+122        </service>
+123
+124        <provider
+124-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:25:9-30:39
+125            android:name="com.google.firebase.provider.FirebaseInitProvider"
+125-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:26:13-77
+126            android:authorities="com.silentguard.app.firebaseinitprovider"
+126-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:27:13-72
+127            android:directBootAware="true"
+127-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:28:13-43
+128            android:exported="false"
+128-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:29:13-37
+129            android:initOrder="100" />
+129-->[com.google.firebase:firebase-common:20.3.3] C:\Users\nihar\.gradle\caches\8.10\transforms\65758889272fdb78036cf9e577669164\transformed\jetified-firebase-common-20.3.3\AndroidManifest.xml:30:13-36
+130
+131        <activity
+131-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\5233ba2b5ab776f6367d02460d9d25fc\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+132            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+132-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\5233ba2b5ab776f6367d02460d9d25fc\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+133            android:exported="false"
+133-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\5233ba2b5ab776f6367d02460d9d25fc\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+134            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+134-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\5233ba2b5ab776f6367d02460d9d25fc\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+135
+136        <receiver
+136-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:29:9-33:20
+137            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+137-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:30:13-85
+138            android:enabled="true"
+138-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:31:13-35
+139            android:exported="false" >
+139-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:32:13-37
+140        </receiver>
+141
+142        <service
+142-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:35:9-38:40
+143            android:name="com.google.android.gms.measurement.AppMeasurementService"
+143-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:36:13-84
+144            android:enabled="true"
+144-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:37:13-35
+145            android:exported="false" />
+145-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:38:13-37
+146        <service
+146-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:39:9-43:72
+147            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+147-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:40:13-87
+148            android:enabled="true"
+148-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:41:13-35
+149            android:exported="false"
+149-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:42:13-37
+150            android:permission="android.permission.BIND_JOB_SERVICE" />
+150-->[com.google.android.gms:play-services-measurement:21.3.0] C:\Users\nihar\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:43:13-69
+151
+152        <meta-data
+152-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\05cc5b3b05e4a16939002fd7b215aa86\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+153            android:name="com.google.android.gms.version"
+153-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\05cc5b3b05e4a16939002fd7b215aa86\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+154            android:value="@integer/google_play_services_version" />
+154-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\nihar\.gradle\caches\8.10\transforms\05cc5b3b05e4a16939002fd7b215aa86\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+155
+156        <provider
+156-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+157            android:name="androidx.startup.InitializationProvider"
+157-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+158            android:authorities="com.silentguard.app.androidx-startup"
+158-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+159            android:exported="false" >
+159-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+160            <meta-data
+160-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+161                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+161-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+162                android:value="androidx.startup" />
+162-->[androidx.emoji2:emoji2:1.2.0] C:\Users\nihar\.gradle\caches\8.10\transforms\0b83e16bd1e1fcca6038e6a21237180d\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+163            <meta-data
+163-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\nihar\.gradle\caches\8.10\transforms\6a9df8f320aab4ef9dc483aec912866e\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+164                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+164-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\nihar\.gradle\caches\8.10\transforms\6a9df8f320aab4ef9dc483aec912866e\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+165                android:value="androidx.startup" />
+165-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\nihar\.gradle\caches\8.10\transforms\6a9df8f320aab4ef9dc483aec912866e\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+166        </provider>
+167    </application>
+168
+169</manifest>

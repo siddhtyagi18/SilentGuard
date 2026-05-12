@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent_purple">#8B5CF6</color>
+    <color name="alert_red">#EF4444</color>
+    <color name="bg_glass">#20FFFFFF</color>
+    <color name="bg_glass_stroke">#30FFFFFF</color>
+    <color name="bg_primary">#050816</color>
+    <color name="bg_secondary">#0B1020</color>
+    <color name="nav_inactive">#6B7280</color>
+    <color name="neon_violet">#A855F7</color>
+    <color name="neon_violet_glow">#40A855F7</color>
+    <color name="success_green">#22C55E</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#A1A1AA</color>
+    <dimen name="button_radius">16dp</dimen>
+    <dimen name="card_radius">24dp</dimen>
+    <dimen name="screen_padding">20dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <string name="all_systems_active">All systems are active</string>
+    <string name="app_name">Silent Guard</string>
+    <string name="gcm_defaultSenderId" translatable="false">343416458895</string>
+    <string name="google_api_key" translatable="false">AIzaSyCOQDq3zPobRiMCEEdPvPwrWM9Cps1Q6ZM</string>
+    <string name="google_app_id" translatable="false">1:343416458895:android:0ec3e8ac7d1e045b1beafa</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCOQDq3zPobRiMCEEdPvPwrWM9Cps1Q6ZM</string>
+    <string name="google_storage_bucket" translatable="false">silentguard-95709.firebasestorage.app</string>
+    <string name="phone_snatches">Phone Snatches</string>
+    <string name="power_trigger">Power Button Trigger</string>
+    <string name="project_id" translatable="false">silentguard-95709</string>
+    <string name="screen_off_mode">Screen Off Mode</string>
+    <string name="tap_hold_sos">Tap &amp; Hold to Share Location</string>
+    <string name="test_voice">Test Voice Command</string>
+    <string name="voice_command">Voice Command Trigger</string>
+    <string name="volume_trigger">Volume Button Trigger</string>
+    <string name="wrong_password">Wrong Password Detection</string>
+    <style name="GlassCard">
+        <item name="android:background">@drawable/bg_glass_card</item>
+    </style>
+    <style name="NeonButton">
+        <item name="android:background">@drawable/bg_neon_button</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="Theme.SilentGuard" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_purple</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:navigationBarColor">@color/bg_primary</item>
+    </style>
+</resources>

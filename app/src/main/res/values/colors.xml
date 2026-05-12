@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Background Colors -->
+    <color name="bg_primary">#050816</color>
+    <color name="bg_secondary">#0B1020</color>
+    <color name="bg_glass">#20FFFFFF</color>
+    <color name="bg_glass_stroke">#30FFFFFF</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_purple">#8B5CF6</color>
+    <color name="neon_violet">#A855F7</color>
+    <color name="neon_violet_glow">#40A855F7</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#A1A1AA</color>
+
+    <!-- Status Colors -->
+    <color name="alert_red">#EF4444</color>
+    <color name="success_green">#22C55E</color>
+
+    <!-- Navigation -->
+    <color name="nav_inactive">#6B7280</color>
+</resources>

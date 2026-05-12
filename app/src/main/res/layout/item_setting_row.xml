@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:padding="16dp"
+    android:background="@drawable/bg_glass_card"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/setting_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_myplaces"
+        app:tint="@color/neon_violet"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/setting_icon"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/setting_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emergency Contacts"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/setting_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage your trusted circle"
+            android:textColor="@color/text_secondary"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/ic_media_next"
+        app:tint="@color/neon_violet" />
+
+</RelativeLayout>

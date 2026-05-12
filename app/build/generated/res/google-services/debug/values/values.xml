@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">343416458895</string>
+    <string name="google_api_key" translatable="false">AIzaSyCOQDq3zPobRiMCEEdPvPwrWM9Cps1Q6ZM</string>
+    <string name="google_app_id" translatable="false">1:343416458895:android:0ec3e8ac7d1e045b1beafa</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCOQDq3zPobRiMCEEdPvPwrWM9Cps1Q6ZM</string>
+    <string name="google_storage_bucket" translatable="false">silentguard-95709.firebasestorage.app</string>
+    <string name="project_id" translatable="false">silentguard-95709</string>
+</resources>

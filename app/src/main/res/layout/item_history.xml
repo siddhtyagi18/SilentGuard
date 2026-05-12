@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+    <View
+        android:id="@+id/timeline_connector"
+        android:layout_width="2dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/neon_violet_glow" />
+
+    <View
+        android:id="@+id/timeline_dot"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_dot_neon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/timeline_dot"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/bg_glass_card"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alert Sent"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/event_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="10:45 AM"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/event_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Emergency SOS triggered via voice command"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_location_tag"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@android:drawable/ic_menu_mylocation"
+                app:tint="@color/neon_violet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="View Location"
+                android:textColor="@color/neon_violet"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
