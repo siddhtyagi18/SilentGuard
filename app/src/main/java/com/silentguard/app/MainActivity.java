@@ -156,6 +156,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private int volumePressCount = 0;
+    private long lastVolumePressTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
+        if ((keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == android.view.KeyEvent.KEYCODE_VOLUME_UP) 
+                && prefs.getBoolean("switch_volume", false)) {
+            
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastVolumePressTime < 1500) {
+                volumePressCount++;
+            } else {
+                volumePressCount = 1;
+            }
+            lastVolumePressTime = currentTime;
+
+            if (volumePressCount >= 3) {
+                volumePressCount = 0;
+                startActivity(new Intent(this, ShareLocationActivity.class));
+                Toast.makeText(this, "Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private Runnable sosAction = new Runnable() {
         @Override
         public void run() {

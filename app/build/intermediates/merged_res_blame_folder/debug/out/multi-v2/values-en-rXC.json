@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.silentguard.app-mergeDebugResources-31:/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "com.silentguard.app-mergeDebugResources-39:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nihar\\.gradle\\caches\\8.10\\transforms\\e05091d988f42a68d9166e8ea841c317\\transformed\\browser-1.4.0\\res\\values-en-rXC\\values-en-rXC.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.silentguard.app-mergeDebugResources-31:/values-en-rIN/values-en-rIN.xml",
+            "outputFile": "com.silentguard.app-mergeDebugResources-39:/values-en-rIN/values-en-rIN.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nihar\\.gradle\\caches\\8.10\\transforms\\b5d2e9e411bd2e7e529896ff9de83c4d\\transformed\\appcompat-1.6.1\\res\\values-en-rIN\\values-en-rIN.xml",

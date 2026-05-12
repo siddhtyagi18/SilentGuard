@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.silentguard.app-mergeDebugResources-31:/values-v28/values-v28.xml",
+            "outputFile": "com.silentguard.app-mergeDebugResources-39:/values-v28/values-v28.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nihar\\.gradle\\caches\\8.10\\transforms\\44dc15444922060b96b9d61bb861f288\\transformed\\material-1.9.0\\res\\values-v28\\values-v28.xml",

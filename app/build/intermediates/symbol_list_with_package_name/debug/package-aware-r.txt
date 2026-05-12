@@ -636,6 +636,7 @@ attr imagePanX
 attr imagePanY
 attr imageRotate
 attr imageZoom
+attr implementationMode
 attr indeterminateAnimationType
 attr indeterminateProgressStyle
 attr indicatorColor
@@ -996,6 +997,7 @@ attr round
 attr roundPercent
 attr saturation
 attr scaleFromTextSize
+attr scaleType
 attr scopeUris
 attr scrimAnimationDuration
 attr scrimBackground
@@ -3179,13 +3181,18 @@ id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
+id btn_add_command
+id btn_add_contact
 id btn_back
+id btn_expand_commands
+id btn_import_contacts
 id btn_login
 id btn_logout
 id btn_save_contacts
 id btn_save_profile
 id btn_send_alert
 id btn_signup
+id btn_test_sos
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3211,10 +3218,16 @@ id clip_horizontal
 id clip_vertical
 id clockwise
 id closest
+id cmd_give_phone
+id cmd_help
+id cmd_pakdo
 id collapseActionView
+id compatible
 id compress
 id confirm_button
 id constraint
+id contact_1
+id contact_2
 id container
 id content
 id contentPanel
@@ -3291,6 +3304,9 @@ id expand_activities_button
 id expanded_menu
 id fade
 id fill
+id fillCenter
+id fillEnd
+id fillStart
 id fill_horizontal
 id fill_vertical
 id filled
@@ -3321,6 +3337,7 @@ id home
 id homeAsUp
 id honorRequest
 id horizontal_only
+id ic_contacts
 id ic_notif
 id ic_pass
 id ic_power
@@ -3350,10 +3367,20 @@ id item_emergency_contacts
 id item_privacy_policy
 id item_security_settings
 id item_touch_helper_previous_elevation
+id iv_delete
+id iv_delete_contact
+id iv_edit
+id iv_edit_contact
+id iv_expand_arrow
+id iv_mic
+id iv_profile
 id jumpToEnd
 id jumpToStart
 id labeled
 id layout
+id layout_actions
+id layout_contacts_list
+id layout_custom_commands
 id left
 id leftToRight
 id legacy
@@ -3473,6 +3500,7 @@ id path
 id pathRelative
 id peekHeight
 id percent
+id performance
 id pin
 id position
 id postLayout
@@ -3583,11 +3611,14 @@ id stretch
 id submenuarrow
 id submit_area
 id supportScrollUp
+id switch_location_sharing
 id switch_pass
 id switch_power
 id switch_screen
+id switch_sms_alerts
 id switch_voice
 id switch_volume
+id switch_whatsapp_alerts
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -3642,10 +3673,16 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tv_action
+id tv_contact_name
+id tv_contact_phone
 id tv_login_link
+id tv_phrase
 id tv_profile_email
 id tv_profile_name
+id tv_relation_label
 id tv_signup_link
+id txt_contacts_title
 id txt_last_updated
 id txt_pass
 id txt_power
@@ -3823,6 +3860,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_custom_command
+layout item_emergency_contact
 layout item_history
 layout item_setting_row
 layout item_share_option
@@ -5305,6 +5344,7 @@ styleable OnClick clickAction targetId
 styleable OnSwipe autoCompleteMode dragDirection dragScale dragThreshold limitBoundsTo maxAcceleration maxVelocity moveWhenScrollAtTop nestedScrollFlags onTouchUp rotationCenterId springBoundary springDamping springMass springStiffness springStopThreshold touchAnchorId touchAnchorSide touchRegionId
 styleable PopupWindow android_popupBackground android_popupAnimationStyle overlapAnchor
 styleable PopupWindowBackgroundState state_above_anchor
+styleable PreviewView implementationMode scaleType
 styleable PropertySet android_visibility android_alpha layout_constraintTag motionProgress visibilityMode
 styleable RadialViewGroup materialCircleRadius
 styleable RangeSlider minSeparation values
@@ -5346,4 +5386,5 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+xml device_admin_rules
 xml image_share_filepaths

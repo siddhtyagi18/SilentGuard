@@ -51,49 +51,308 @@
             android:orientation="vertical">
 
             <!-- Voice Command Card -->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
                 android:padding="20dp"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
-                    android:id="@+id/ic_voice"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_btn_speak_now"
-                    app:tint="@color/neon_violet" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/txt_voice"
+                    <ImageView
+                        android:id="@+id/ic_voice"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_btn_speak_now"
+                        app:tint="@color/neon_violet" />
+
+                    <TextView
+                        android:id="@+id/txt_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/ic_voice"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/voice_command"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_voice"
+                        android:layout_toEndOf="@id/ic_voice"
+                        android:layout_marginStart="16dp"
+                        android:text="Trigger SOS with a custom phrase"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:checked="true" />
+                </RelativeLayout>
+
+                <!-- AI Indicator -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ic_voice"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/voice_command"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="48dp">
+                    
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/bg_status_indicator" />
+                        
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="AI voice detection active"
+                        android:textColor="@color/success_green"
+                        android:textSize="10sp"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
+
+                <!-- Expandable Custom Commands Section -->
+                <LinearLayout
+                    android:id="@+id/btn_expand_commands"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Saved Emergency Commands"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-bold" />
+                        
+                    <ImageView
+                        android:id="@+id/iv_expand_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@android:drawable/arrow_down_float"
+                        app:tint="@color/neon_violet" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_custom_commands"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone">
+
+                    <!-- Custom Commands Container -->
+                    <include layout="@layout/item_custom_command" android:id="@+id/cmd_help" />
+                    <include layout="@layout/item_custom_command" android:id="@+id/cmd_pakdo" />
+                    <include layout="@layout/item_custom_command" android:id="@+id/cmd_give_phone" />
+
+                    <Button
+                        android:id="@+id/btn_add_command"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="+ Add New Command"
+                        android:textSize="12sp"
+                        android:textColor="@color/neon_violet"
+                        android:background="@android:color/transparent"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Emergency Contacts Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:layout_marginBottom="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ic_contacts"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        app:tint="@color/neon_violet" />
+
+                    <TextView
+                        android:id="@+id/txt_contacts_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/ic_contacts"
+                        android:layout_marginStart="16dp"
+                        android:text="Emergency Contacts"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_contacts_title"
+                        android:layout_toEndOf="@id/ic_contacts"
+                        android:layout_marginStart="16dp"
+                        android:text="Automatic alerts to trusted circle"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <!-- Import From Contacts Button -->
+                <Button
+                    android:id="@+id/btn_import_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Import From Contacts"
                     android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_neon_button"
                     android:fontFamily="sans-serif-bold"
-                    android:textSize="16sp" />
+                    android:textSize="12sp"
+                    android:drawableStart="@android:drawable/ic_menu_search"
+                    android:drawablePadding="8dp"
+                    android:paddingHorizontal="24dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_voice"
-                    android:layout_toEndOf="@id/ic_voice"
-                    android:layout_marginStart="16dp"
-                    android:text="Trigger SOS with a custom phrase"
+                    android:layout_marginTop="12dp"
+                    android:text="Imported contacts will automatically receive SOS alerts and live location during emergencies."
                     android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-medium" />
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_voice"
-                    android:layout_width="wrap_content"
+                <!-- Toggles for Alerts -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
-            </RelativeLayout>
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="48dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SMS Alerts"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp" />
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_sms_alerts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:checked="true" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WhatsApp Alerts"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp" />
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_whatsapp_alerts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Live Location Sharing"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp" />
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_location_sharing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:checked="true" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Location will be shared automatically when SOS is triggered"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
+
+                <!-- Contacts List -->
+                <LinearLayout
+                    android:id="@+id/layout_contacts_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="24dp">
+                    
+                    <include layout="@layout/item_emergency_contact" android:id="@+id/contact_1" />
+                    <include layout="@layout/item_emergency_contact" android:id="@+id/contact_2" />
+
+                    <Button
+                        android:id="@+id/btn_add_contact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="+ Add Emergency Contact"
+                        android:textSize="12sp"
+                        android:textColor="@color/neon_violet"
+                        android:background="@android:color/transparent"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <!-- Test SOS Button -->
+                <Button
+                    android:id="@+id/btn_test_sos"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Test Emergency Alert"
+                    style="@style/NeonButton"
+                    android:background="@drawable/bg_sos_pulse"
+                    android:elevation="8dp" />
+
+            </LinearLayout>
 
             <!-- Volume Button Card -->
             <RelativeLayout
@@ -127,7 +386,7 @@
                     android:layout_below="@id/txt_volume"
                     android:layout_toEndOf="@id/ic_volume"
                     android:layout_marginStart="16dp"
-                    android:text="Press volume buttons 5 times"
+                    android:text="Press volume buttons 3 times"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
 

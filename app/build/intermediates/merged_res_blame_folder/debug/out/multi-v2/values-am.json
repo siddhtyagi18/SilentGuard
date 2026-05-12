@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.silentguard.app-mergeDebugResources-31:/values-am/values-am.xml",
+            "outputFile": "com.silentguard.app-mergeDebugResources-39:/values-am/values-am.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nihar\\.gradle\\caches\\8.10\\transforms\\05cc5b3b05e4a16939002fd7b215aa86\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-am\\values.xml",

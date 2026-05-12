@@ -220,7 +220,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Press 5 times to trigger SOS"
+                            android:text="Press 3 times to trigger SOS"
                             android:textColor="@color/text_secondary"
                             android:textSize="12sp" />
 
