@@ -1,122 +1,122 @@
 [
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_edit_profile.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_edit_profile.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_logout_button.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_logout_button.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_sos_button.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_sos_button.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_login.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_trigger_settings.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_trigger_settings.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_status_indicator.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_status_indicator.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_sos_pulse.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_sos_pulse.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_emergency_contact.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_emergency_contact.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_custom_command.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_custom_command.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_share_location.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_share_location.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_signup.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_signup.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\xml_device_admin_rules.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\xml\\device_admin_rules.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_emergency_contacts.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_emergency_contacts.xml"
     },
     {
-        "merged": "com.silentguard.app-merged_res-41:/layout_activity_trigger_settings.xml.flat",
-        "source": "com.silentguard.app-main-43:/layout/activity_trigger_settings.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_neon_button.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_neon_button.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_glass_card_active.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_glass_card_active.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\xml_device_admin_rules.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\xml\\device_admin_rules.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_signup.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_signup.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_sos_pulse.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_sos_pulse.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_sos_button.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_sos_button.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_location_tag.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_location_tag.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_custom_command.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_custom_command.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_edit_profile.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_edit_profile.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_profile.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_profile.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_share_option.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_share_option.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_alert_card.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_alert_card.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_glass_card_active.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_glass_card_active.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\mipmap-anydpi-v26\\ic_launcher.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_profile.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_profile.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_emergency_contacts.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_emergency_contacts.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_setting_row.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_setting_row.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_dot_neon.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_dot_neon.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_settings.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_settings.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_history.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_history.xml"
+        "merged": "com.silentguard.app-merged_res-41:/layout_dialog_add_contact.xml.flat",
+        "source": "com.silentguard.app-main-43:/layout/dialog_add_contact.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_glass_card.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_glass_card.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_glass_card.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_glass_card.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_status_indicator.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_status_indicator.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_emergency_contact.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_emergency_contact.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_setting_row.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_setting_row.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_dot_neon.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_dot_neon.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_alert_card.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_alert_card.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_location_tag.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_location_tag.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_neon_button.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_neon_button.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_trigger_settings.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_trigger_settings.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_share_option.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_share_option.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_share_location.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_share_location.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_logout_button.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_logout_button.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_history.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_history.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_settings.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_settings.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_history.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_history.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_how_it_works.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_how_it_works.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_how_it_works.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_how_it_works.xml"
     },
     {
-        "merged": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_history.xml.flat",
-        "source": "C:\\Users\\nihar\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_history.xml"
+        "merged": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\Lenovo\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_login.xml"
     }
 ]

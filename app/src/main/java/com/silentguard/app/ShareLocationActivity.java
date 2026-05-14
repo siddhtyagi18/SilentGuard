@@ -1,7 +1,9 @@
 package com.silentguard.app;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,13 +24,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,9 +38,20 @@ public class ShareLocationActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private static final int SMS_PERMISSION_REQUEST_CODE = 1002;
-    
-    private String emergencyPhone, emergencyEmail;
-    private DatabaseReference mDatabase;
+    private SharedPreferences prefs;
+    private List<Contact> contactsList = new ArrayList<>();
+
+    static class Contact {
+        String name;
+        String phone;
+        String relation;
+
+        Contact(String name, String phone, String relation) {
+            this.name = name;
+            this.phone = phone;
+            this.relation = relation;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +61,8 @@ public class ShareLocationActivity extends AppCompatActivity {
         etLocation = findViewById(R.id.et_location);
         txtLastUpdated = findViewById(R.id.txt_last_updated);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        
-        String userId = FirebaseAuth.getInstance().getUid();
-        if (userId != null) {
-            mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("EmergencyContacts");
-            loadEmergencyContacts();
-        }
+        prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
+        loadEmergencyContacts();
 
         View backButton = findViewById(R.id.btn_back);
         if (backButton != null) {
@@ -73,35 +79,40 @@ public class ShareLocationActivity extends AppCompatActivity {
     }
 
     private void loadEmergencyContacts() {
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    emergencyPhone = snapshot.child("phone").getValue(String.class);
-                    emergencyEmail = snapshot.child("email").getValue(String.class);
+        contactsList.clear();
+        String contactsJson = prefs.getString("contacts", null);
+        if (contactsJson != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(contactsJson);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String name = jsonObject.getString("name");
+                    String phone = jsonObject.getString("phone");
+                    String relation = jsonObject.getString("relation");
+                    contactsList.add(new Contact(name, phone, relation));
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
+        }
     }
 
     private void triggerSOS() {
-        if (emergencyPhone == null || emergencyEmail == null) {
-            Toast.makeText(this, "Please set emergency contacts in Profile first!", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, EmergencyContactsActivity.class));
+        if (contactsList.isEmpty()) {
+            Toast.makeText(this, "Please add emergency contacts first!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, TriggerSettingsActivity.class));
             return;
         }
 
         String locationText = etLocation.getText().toString();
         String message = "EMERGENCY SOS! I need help. My current location: " + locationText;
 
-        // 1. Send SMS
-        sendSMS(emergencyPhone, message);
+        // Send SMS to all contacts
+        for (Contact contact : contactsList) {
+            sendSMS(contact.phone, message);
+        }
 
-        // 2. Send Email (via Intent)
-        sendEmail(emergencyEmail, "EMERGENCY SOS ALERT", message);
+        Toast.makeText(this, "Alerts sent to " + contactsList.size() + " contacts!", Toast.LENGTH_SHORT).show();
     }
 
     private void sendSMS(String phone, String message) {
@@ -111,24 +122,9 @@ public class ShareLocationActivity extends AppCompatActivity {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phone, null, message, null, null);
-                Toast.makeText(this, "SMS Alert Sent!", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Failed to send SMS: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    private void sendEmail(String email, String subject, String body) {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, body);
-        
-        try {
-            startActivity(Intent.createChooser(intent, "Send Email..."));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
 

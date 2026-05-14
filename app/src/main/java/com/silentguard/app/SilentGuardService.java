@@ -3,7 +3,9 @@ package com.silentguard.app;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -24,16 +26,13 @@ import androidx.lifecycle.LifecycleService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,38 +44,50 @@ public class SilentGuardService extends LifecycleService {
     private SpeechRecognizer speechRecognizer;
     private Intent recognizerIntent;
     private FusedLocationProviderClient fusedLocationClient;
-    private String emergencyPhone, emergencyEmail;
-    private DatabaseReference mDatabase;
+    private SharedPreferences prefs;
+    private List<Contact> contactsList = new ArrayList<>();
     private boolean isListening = false;
     private ExecutorService cameraExecutor;
+
+    static class Contact {
+        String name;
+        String phone;
+        String relation;
+
+        Contact(String name, String phone, String relation) {
+            this.name = name;
+            this.phone = phone;
+            this.relation = relation;
+        }
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         cameraExecutor = Executors.newSingleThreadExecutor();
+        prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
         loadEmergencyContacts();
         createNotificationChannel();
         initSpeechRecognizer();
     }
 
     private void loadEmergencyContacts() {
-        String userId = FirebaseAuth.getInstance().getUid();
-        if (userId != null) {
-            mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-                    .child(userId).child("EmergencyContacts");
-            mDatabase.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        emergencyPhone = snapshot.child("phone").getValue(String.class);
-                        emergencyEmail = snapshot.child("email").getValue(String.class);
-                    }
+        contactsList.clear();
+        String contactsJson = prefs.getString("contacts", null);
+        if (contactsJson != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(contactsJson);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String name = jsonObject.getString("name");
+                    String phone = jsonObject.getString("phone");
+                    String relation = jsonObject.getString("relation");
+                    contactsList.add(new Contact(name, phone, relation));
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {}
-            });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,13 +107,17 @@ public class SilentGuardService extends LifecycleService {
             @Override
             public void onBufferReceived(byte[] buffer) {}
             @Override
-            public void onEndOfSpeech() {}
+            public void onEndOfSpeech() {
+                Log.d(TAG, "Speech ended");
+                if (isListening) {
+                    restartListening();
+                }
+            }
             @Override
             public void onError(int error) {
                 Log.e(TAG, "Speech Error: " + error);
-                // Restart listening on error
                 if (isListening) {
-                    speechRecognizer.startListening(recognizerIntent);
+                    restartListening();
                 }
             }
 
@@ -111,15 +126,17 @@ public class SilentGuardService extends LifecycleService {
                 ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 if (matches != null) {
                     for (String match : matches) {
-                        if (match.toLowerCase().contains("help me")) {
+                        String lowerMatch = match.toLowerCase();
+                        Log.d(TAG, "Heard: " + lowerMatch);
+                        if (lowerMatch.contains("help me") || lowerMatch.contains("pakdo") || lowerMatch.contains("give me my phone")) {
+                            Log.d(TAG, "Emergency command detected!");
                             triggerEmergencyAlert();
-                            break;
+                            return;
                         }
                     }
                 }
-                // Continue listening
                 if (isListening) {
-                    speechRecognizer.startListening(recognizerIntent);
+                    restartListening();
                 }
             }
 
@@ -130,8 +147,22 @@ public class SilentGuardService extends LifecycleService {
         });
     }
 
+    private void restartListening() {
+        try {
+            speechRecognizer.cancel();
+            Thread.sleep(200);
+            speechRecognizer.startListening(recognizerIntent);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to restart listening", e);
+        }
+    }
+
     private void triggerEmergencyAlert() {
-        if (emergencyPhone == null) return;
+        loadEmergencyContacts();
+        if (contactsList.isEmpty()) {
+            Log.e(TAG, "No emergency contacts found!");
+            return;
+        }
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             String locationLink = "https://www.google.com/maps/search/?api=1&query=";
@@ -143,15 +174,14 @@ public class SilentGuardService extends LifecycleService {
 
             String message = "EMERGENCY! I need help. My live location: " + locationLink;
             
-            // Send SMS
-            try {
-                SmsManager.getDefault().sendTextMessage(emergencyPhone, null, message, null, null);
-            } catch (Exception e) {
-                Log.e(TAG, "SMS failed", e);
+            for (Contact contact : contactsList) {
+                try {
+                    SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
+                    Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to send SMS to " + contact.name, e);
+                }
             }
-
-            // Note: Email in background requires a custom SMTP implementation or Firebase Trigger.
-            // For this implementation, we focus on SMS as the primary background alert.
         });
     }
 
@@ -182,7 +212,7 @@ public class SilentGuardService extends LifecycleService {
                     @Override
                     public void onError(@NonNull ImageCaptureException exception) {
                         Log.e(TAG, "Photo capture failed: " + exception.getMessage());
-                        triggerEmergencyAlert(); // Still send SOS even if photo fails
+                        triggerEmergencyAlert();
                     }
                 });
 
@@ -193,8 +223,7 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void uploadSelfieAndSendSOS(File photoFile) {
-        String userId = FirebaseAuth.getInstance().getUid();
-        if (userId == null) return;
+        String userId = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference()
                 .child("selfies").child(userId).child(photoFile.getName());
@@ -212,7 +241,8 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void sendSOSWithImage(String imageUrl) {
-        if (emergencyPhone == null) return;
+        loadEmergencyContacts();
+        if (contactsList.isEmpty()) return;
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             String locationLink = "https://www.google.com/maps/search/?api=1&query=";
@@ -224,10 +254,13 @@ public class SilentGuardService extends LifecycleService {
 
             String message = "WRONG PASSWORD DETECTED! Intruder photo: " + imageUrl + " | Location: " + locationLink;
             
-            try {
-                SmsManager.getDefault().sendTextMessage(emergencyPhone, null, message, null, null);
-            } catch (Exception e) {
-                Log.e(TAG, "SMS failed", e);
+            for (Contact contact : contactsList) {
+                try {
+                    SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
+                    Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to send SMS to " + contact.name, e);
+                }
             }
         });
     }
@@ -248,6 +281,8 @@ public class SilentGuardService extends LifecycleService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        loadEmergencyContacts();
+        
         if (intent != null && "ACTION_WRONG_PASSWORD".equals(intent.getAction())) {
             takeSelfieAndSendSOS();
         }

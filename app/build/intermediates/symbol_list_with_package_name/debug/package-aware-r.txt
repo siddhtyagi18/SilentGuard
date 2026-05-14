@@ -3184,10 +3184,12 @@ id browser_actions_menu_view
 id btn_add_command
 id btn_add_contact
 id btn_back
+id btn_cancel_contact
 id btn_expand_commands
 id btn_import_contacts
 id btn_login
 id btn_logout
+id btn_save_contact
 id btn_save_contacts
 id btn_save_profile
 id btn_send_alert
@@ -3288,6 +3290,9 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id et_contact_name
+id et_contact_phone
+id et_contact_relation
 id et_edit_email
 id et_edit_name
 id et_email
@@ -3860,6 +3865,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_add_contact
 layout item_custom_command
 layout item_emergency_contact
 layout item_history

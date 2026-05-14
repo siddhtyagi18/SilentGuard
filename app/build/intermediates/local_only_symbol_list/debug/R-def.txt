@@ -35,10 +35,12 @@ id bottom_nav
 id btn_add_command
 id btn_add_contact
 id btn_back
+id btn_cancel_contact
 id btn_expand_commands
 id btn_import_contacts
 id btn_login
 id btn_logout
+id btn_save_contact
 id btn_save_contacts
 id btn_save_profile
 id btn_send_alert
@@ -57,6 +59,9 @@ id dot2
 id dot3
 id dot4
 id dot5
+id et_contact_name
+id et_contact_phone
+id et_contact_relation
 id et_edit_email
 id et_edit_name
 id et_email
@@ -178,6 +183,7 @@ layout activity_settings
 layout activity_share_location
 layout activity_signup
 layout activity_trigger_settings
+layout dialog_add_contact
 layout item_custom_command
 layout item_emergency_contact
 layout item_history

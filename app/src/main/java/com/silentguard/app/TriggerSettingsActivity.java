@@ -2,6 +2,7 @@ package com.silentguard.app;
 
 import android.Manifest;
 import android.app.admin.DevicePolicyManager;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +16,13 @@ import android.provider.ContactsContract;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,7 +32,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.materialswitch.MaterialSwitch;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TriggerSettingsActivity extends AppCompatActivity {
 
@@ -45,20 +53,148 @@ public class TriggerSettingsActivity extends AppCompatActivity {
     // Contact Picker Launcher
     private ActivityResultLauncher<Intent> contactPickerLauncher;
 
+    // Contacts data
+    private List<Contact> contactsList = new ArrayList<>();
+    private LinearLayout layoutContactsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trigger_settings);
 
         prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
+        layoutContactsList = findViewById(R.id.layout_contacts_list);
 
         initViews();
         loadSavedStates();
+        loadContacts();
         setupListeners();
         initSpeechRecognizer();
         setupCustomCommands();
         setupEmergencyContacts();
         initContactPicker();
+    }
+
+    static class Contact {
+        String name;
+        String phone;
+        String relation;
+
+        Contact(String name, String phone, String relation) {
+            this.name = name;
+            this.phone = phone;
+            this.relation = relation;
+        }
+    }
+
+    private void saveContacts() {
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for (Contact contact : contactsList) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name", contact.name);
+                jsonObject.put("phone", contact.phone);
+                jsonObject.put("relation", contact.relation);
+                jsonArray.put(jsonObject);
+            }
+            prefs.edit().putString("contacts", jsonArray.toString()).apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadContacts() {
+        contactsList.clear();
+        String contactsJson = prefs.getString("contacts", null);
+        if (contactsJson != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(contactsJson);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String name = jsonObject.getString("name");
+                    String phone = jsonObject.getString("phone");
+                    String relation = jsonObject.getString("relation");
+                    contactsList.add(new Contact(name, phone, relation));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Add default contacts if none
+            contactsList.add(new Contact("Aman Sharma", "+91 98765 43210", "Guardian"));
+            contactsList.add(new Contact("Priya Verma", "+91 99887 76655", "Family"));
+            saveContacts();
+        }
+    }
+
+    private void refreshContactsUI() {
+        // Remove all child views except the add button (last child)
+        if (layoutContactsList.getChildCount() > 0) {
+            View addButton = layoutContactsList.getChildAt(layoutContactsList.getChildCount() - 1);
+            layoutContactsList.removeAllViews();
+            layoutContactsList.addView(addButton);
+        }
+
+        // Add contact items dynamically
+        for (int i = 0; i < contactsList.size(); i++) {
+            Contact contact = contactsList.get(i);
+            View contactView = LayoutInflater.from(this).inflate(R.layout.item_emergency_contact, layoutContactsList, false);
+            setupContactItem(contactView, contact, i);
+            // Insert before add button
+            layoutContactsList.addView(contactView, layoutContactsList.getChildCount() - 1);
+        }
+    }
+
+    private void showContactDialog(final int index) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_contact, null);
+        builder.setView(dialogView);
+
+        final EditText etName = dialogView.findViewById(R.id.et_contact_name);
+        final EditText etPhone = dialogView.findViewById(R.id.et_contact_phone);
+        final EditText etRelation = dialogView.findViewById(R.id.et_contact_relation);
+        Button btnSave = dialogView.findViewById(R.id.btn_save_contact);
+        Button btnCancel = dialogView.findViewById(R.id.btn_cancel_contact);
+
+        // If editing, fill existing data
+        if (index >= 0 && index < contactsList.size()) {
+            Contact contact = contactsList.get(index);
+            etName.setText(contact.name);
+            etPhone.setText(contact.phone);
+            etRelation.setText(contact.relation);
+        }
+
+        final AlertDialog dialog = builder.create();
+
+        btnSave.setOnClickListener(v -> {
+            String name = etName.getText().toString().trim();
+            String phone = etPhone.getText().toString().trim();
+            String relation = etRelation.getText().toString().trim();
+
+            if (name.isEmpty() || phone.isEmpty()) {
+                Toast.makeText(this, "Name and phone are required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (index >= 0 && index < contactsList.size()) {
+                // Edit existing
+                contactsList.set(index, new Contact(name, phone, relation));
+                Toast.makeText(this, "Contact updated", Toast.LENGTH_SHORT).show();
+            } else {
+                // Add new
+                contactsList.add(new Contact(name, phone, relation));
+                Toast.makeText(this, "Contact added", Toast.LENGTH_SHORT).show();
+            }
+
+            saveContacts();
+            refreshContactsUI();
+            dialog.dismiss();
+        });
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
     private void initContactPicker() {
@@ -96,8 +232,10 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 String name = cursor.getString(0);
                 String number = cursor.getString(1);
                 
-                // For demonstration, we'll update the first contact card
-                setupContactItem(R.id.contact_1, name, number, "Imported");
+                // Add to contacts list
+                contactsList.add(new Contact(name, number, "Imported"));
+                saveContacts();
+                refreshContactsUI();
                 Toast.makeText(this, "Imported: " + name, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
@@ -106,40 +244,45 @@ public class TriggerSettingsActivity extends AppCompatActivity {
     }
 
     private void setupEmergencyContacts() {
-        // Setup mock contacts
-        setupContactItem(R.id.contact_1, "Aman Sharma", "+91 98765 43210", "Guardian");
-        setupContactItem(R.id.contact_2, "Priya Verma", "+91 99887 76655", "Family");
+        refreshContactsUI();
 
-        findViewById(R.id.btn_add_contact).setOnClickListener(v -> 
-            Toast.makeText(this, "Add contact feature coming soon!", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.btn_add_contact).setOnClickListener(v -> showContactDialog(-1));
 
         Button testSos = findViewById(R.id.btn_test_sos);
         if (testSos != null) {
             testSos.setOnClickListener(v -> {
                 Toast.makeText(this, "Simulating Emergency Alert sharing...", Toast.LENGTH_LONG).show();
-                // Add a small delay then success toast
                 v.postDelayed(() -> 
-                    Toast.makeText(this, "Alert successfully shared with 2 contacts!", Toast.LENGTH_SHORT).show(), 
+                    Toast.makeText(this, "Alert successfully shared with " + contactsList.size() + " contacts!", Toast.LENGTH_SHORT).show(), 
                     2000);
             });
         }
     }
 
-    private void setupContactItem(int id, String name, String phone, String relation) {
-        View item = findViewById(id);
+    private void setupContactItem(View item, final Contact contact, final int index) {
         if (item != null) {
             TextView tvName = item.findViewById(R.id.tv_contact_name);
             TextView tvPhone = item.findViewById(R.id.tv_contact_phone);
             TextView tvRelation = item.findViewById(R.id.tv_relation_label);
 
-            if (tvName != null) tvName.setText(name);
-            if (tvPhone != null) tvPhone.setText(phone);
-            if (tvRelation != null) tvRelation.setText(relation);
+            if (tvName != null) tvName.setText(contact.name);
+            if (tvPhone != null) tvPhone.setText(contact.phone);
+            if (tvRelation != null) tvRelation.setText(contact.relation);
 
-            item.findViewById(R.id.iv_edit_contact).setOnClickListener(v -> 
-                Toast.makeText(this, "Edit: " + name, Toast.LENGTH_SHORT).show());
-            item.findViewById(R.id.iv_delete_contact).setOnClickListener(v -> 
-                Toast.makeText(this, "Remove: " + name, Toast.LENGTH_SHORT).show());
+            item.findViewById(R.id.iv_edit_contact).setOnClickListener(v -> showContactDialog(index));
+            item.findViewById(R.id.iv_delete_contact).setOnClickListener(v -> {
+                new AlertDialog.Builder(this)
+                    .setTitle("Delete Contact")
+                    .setMessage("Are you sure you want to delete " + contact.name + "?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        contactsList.remove(index);
+                        saveContacts();
+                        refreshContactsUI();
+                        Toast.makeText(this, "Removed: " + contact.name, Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            });
         }
     }
 
@@ -243,13 +386,95 @@ public class TriggerSettingsActivity extends AppCompatActivity {
         }
     }
 
+    private SpeechRecognizer testSpeechRecognizer;
+    private boolean isTestListening = false;
+
     private void startListening() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERMISSION_RECORD_AUDIO);
-        } else {
-            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            speechRecognizer.startListening(intent);
+            return;
+        }
+
+        if (isTestListening) {
+            stopTestListening();
+        }
+
+        isTestListening = true;
+        testSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
+
+        testSpeechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+                Toast.makeText(TriggerSettingsActivity.this, "Listening...", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {}
+            @Override
+            public void onRmsChanged(float rmsdB) {}
+            @Override
+            public void onBufferReceived(byte[] buffer) {}
+            @Override
+            public void onEndOfSpeech() {}
+
+            @Override
+            public void onError(int error) {
+                Log.e("TriggerSettings", "Speech error: " + error);
+                if (isTestListening) {
+                    Toast.makeText(TriggerSettingsActivity.this, "Speech error, please try again", Toast.LENGTH_SHORT).show();
+                    stopTestListening();
+                }
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+                if (!isTestListening) return;
+                
+                ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                boolean commandFound = false;
+                if (matches != null) {
+                    for (String match : matches) {
+                        String lowerMatch = match.toLowerCase();
+                        Log.d("TriggerSettings", "Heard: " + lowerMatch);
+                        if (lowerMatch.contains("help me") || lowerMatch.contains("pakdo") || lowerMatch.contains("give me my phone")) {
+                            commandFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (commandFound) {
+                    Toast.makeText(TriggerSettingsActivity.this, "Emergency command detected!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(TriggerSettingsActivity.this, ShareLocationActivity.class));
+                } else {
+                    Toast.makeText(TriggerSettingsActivity.this, "No emergency command detected", Toast.LENGTH_SHORT).show();
+                }
+                stopTestListening();
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {}
+            @Override
+            public void onEvent(int eventType, Bundle params) {}
+        });
+
+        testSpeechRecognizer.startListening(intent);
+    }
+
+    private void stopTestListening() {
+        isTestListening = false;
+        if (testSpeechRecognizer != null) {
+            try {
+                testSpeechRecognizer.cancel();
+                testSpeechRecognizer.destroy();
+            } catch (Exception e) {
+                Log.e("TriggerSettings", "Error stopping test recognizer", e);
+            }
+            testSpeechRecognizer = null;
         }
     }
 
@@ -303,9 +528,8 @@ public class TriggerSettingsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (speechRecognizer != null) {
-            speechRecognizer.destroy();
-        }
+        stopTestListening();
+        // Note: We removed the old speechRecognizer since we don't use it anymore
     }
 
     private void initViews() {
