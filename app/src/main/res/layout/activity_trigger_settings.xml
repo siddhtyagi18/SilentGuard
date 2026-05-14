@@ -124,33 +124,15 @@
                         android:fontFamily="sans-serif-medium" />
                 </LinearLayout>
 
-                <!-- Expandable Custom Commands Section -->
-                <LinearLayout
-                    android:id="@+id/btn_expand_commands"
+                <!-- Saved Emergency Commands Section -->
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="20dp"
-                    android:clickable="true"
-                    android:focusable="true">
-                    
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Saved Emergency Commands"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif-bold" />
-                        
-                    <ImageView
-                        android:id="@+id/iv_expand_arrow"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@android:drawable/arrow_down_float"
-                        app:tint="@color/neon_violet" />
-                </LinearLayout>
+                    android:layout_marginTop="24dp"
+                    android:text="Saved Emergency Commands"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-bold" />
 
                 <LinearLayout
                     android:id="@+id/layout_custom_commands"
@@ -158,24 +140,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="12dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <!-- Custom Commands Container -->
                     <include layout="@layout/item_custom_command" android:id="@+id/cmd_help" />
                     <include layout="@layout/item_custom_command" android:id="@+id/cmd_pakdo" />
                     <include layout="@layout/item_custom_command" android:id="@+id/cmd_give_phone" />
-
-                    <Button
-                        android:id="@+id/btn_add_command"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="center_horizontal"
-                        android:text="+ Add New Command"
-                        android:textSize="12sp"
-                        android:textColor="@color/neon_violet"
-                        android:background="@android:color/transparent"
-                        android:textAllCaps="false" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -275,23 +245,6 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="WhatsApp Alerts"
-                            android:textColor="@color/text_primary"
-                            android:textSize="12sp" />
-                        <com.google.android.material.materialswitch.MaterialSwitch
-                            android:id="@+id/switch_whatsapp_alerts"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
                             android:layout_width="wrap_content"
@@ -353,95 +306,6 @@
                     android:elevation="8dp" />
 
             </LinearLayout>
-
-            <!-- Volume Button Card -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
-                android:padding="20dp"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:id="@+id/ic_volume"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_lock_silent_mode"
-                    app:tint="@color/neon_violet" />
-
-                <TextView
-                    android:id="@+id/txt_volume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ic_volume"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/volume_trigger"
-                    android:textColor="@color/text_primary"
-                    android:fontFamily="sans-serif-bold"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_volume"
-                    android:layout_toEndOf="@id/ic_volume"
-                    android:layout_marginStart="16dp"
-                    android:text="Press volume buttons 3 times"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_volume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-            </RelativeLayout>
-
-            <!-- Power Button Card -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
-                android:padding="20dp"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:id="@+id/ic_power"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_lock_power_off"
-                    app:tint="@color/neon_violet" />
-
-                <TextView
-                    android:id="@+id/txt_power"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ic_power"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/power_trigger"
-                    android:textColor="@color/text_primary"
-                    android:fontFamily="sans-serif-bold"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_power"
-                    android:layout_toEndOf="@id/ic_power"
-                    android:layout_marginStart="16dp"
-                    android:text="Press power button 3 times"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_power"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:checked="true" />
-            </RelativeLayout>
 
             <!-- Display Off Voice Command Card -->
             <LinearLayout
@@ -548,50 +412,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:checked="true" />
-            </RelativeLayout>
-
-            <!-- Wrong Password Card -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
-                android:padding="20dp"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:id="@+id/ic_pass"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_lock_lock"
-                    app:tint="@color/neon_violet" />
-
-                <TextView
-                    android:id="@+id/txt_pass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ic_pass"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/wrong_password"
-                    android:textColor="@color/text_primary"
-                    android:fontFamily="sans-serif-bold"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_pass"
-                    android:layout_toEndOf="@id/ic_pass"
-                    android:layout_marginStart="16dp"
-                    android:text="Detects unauthorized access"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_pass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
         </LinearLayout>

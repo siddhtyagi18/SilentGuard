@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCardStatuses() {
-        updateStatus(statusSnatches, cardSnatches, prefs.getBoolean("switch_power", true)); // Snatches tied to power for now
+        updateStatus(statusSnatches, cardSnatches, prefs.getBoolean("switch_voice", true));
         updateStatus(statusVolume, cardVolume, prefs.getBoolean("switch_volume", false));
         updateStatus(statusPassword, cardPassword, prefs.getBoolean("switch_pass", false));
     }

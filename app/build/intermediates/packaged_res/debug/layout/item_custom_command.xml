@@ -28,7 +28,7 @@
             android:orientation="vertical"
             android:layout_toEndOf="@id/iv_mic"
             android:layout_marginStart="12dp"
-            android:layout_toStartOf="@id/iv_edit"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true">
 
             <TextView
@@ -39,34 +39,7 @@
                 android:textColor="@color/text_primary"
                 android:fontFamily="sans-serif-bold"
                 android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Action Description"
-                android:textColor="@color/text_secondary"
-                android:textSize="10sp" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_delete"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@android:drawable/ic_menu_delete"
-            app:tint="@color/text_secondary"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp" />
-
-        <ImageView
-            android:id="@+id/iv_edit"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@android:drawable/ic_menu_edit"
-            app:tint="@color/text_secondary"
-            android:layout_toStartOf="@id/iv_delete"
-            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 

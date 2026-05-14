@@ -8,9 +8,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -51,6 +54,8 @@ public class SilentGuardService extends LifecycleService {
     private List<Contact> contactsList = new ArrayList<>();
     private boolean isListening = false;
     private ExecutorService cameraExecutor;
+    private MediaRecorder mediaRecorder;
+    private boolean isRecording = false;
     private DevicePolicyManager devicePolicyManager;
     private ComponentName componentName;
 
@@ -134,6 +139,10 @@ public class SilentGuardService extends LifecycleService {
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 2000L);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1000L);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000L);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 10);
 
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
@@ -154,6 +163,7 @@ public class SilentGuardService extends LifecycleService {
             }
             @Override
             public void onError(int error) {
+                // Log the error but don't show to user if we are in the background
                 Log.e(TAG, "Speech Error: " + error);
                 if (isListening) {
                     restartListening();
@@ -164,15 +174,21 @@ public class SilentGuardService extends LifecycleService {
             public void onResults(Bundle results) {
                 ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 if (matches != null) {
-                    Log.d(TAG, "Number of matches: " + matches.size());
                     for (String match : matches) {
                         String lowerMatch = match.toLowerCase().trim();
                         Log.d(TAG, "Heard: " + lowerMatch);
                         
-                        // Check for emergency commands
-                        if (lowerMatch.contains("help me") || lowerMatch.contains("pakdo") || lowerMatch.contains("give me my phone")) {
-                            Log.d(TAG, "EMERGENCY COMMAND DETECTED!");
-                            triggerEmergencyAlert();
+                        if (lowerMatch.contains("help") || lowerMatch.contains("bachao")) {
+                            Log.d(TAG, "Help command detected!");
+                            handleHelpCommand();
+                            return;
+                        } else if (lowerMatch.contains("pakdo") || lowerMatch.contains("pakado") || lowerMatch.contains("catch")) {
+                            Log.d(TAG, "Pakdo command detected!");
+                            handlePakdoCommand();
+                            return;
+                        } else if (lowerMatch.contains("give me my phone") || lowerMatch.contains("phone de")) {
+                            Log.d(TAG, "Give me my phone command detected!");
+                            handleGivePhoneCommand();
                             return;
                         }
                         
@@ -195,7 +211,28 @@ public class SilentGuardService extends LifecycleService {
             }
 
             @Override
-            public void onPartialResults(Bundle partialResults) {}
+            public void onPartialResults(Bundle partialResults) {
+                ArrayList<String> matches = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                if (matches != null) {
+                    for (String match : matches) {
+                        String lowerMatch = match.toLowerCase();
+                        if (lowerMatch.contains("help") || lowerMatch.contains("bachao")) {
+                            Log.d(TAG, "Help detected in partial results!");
+                            handleHelpCommand();
+                            return;
+                        } else if (lowerMatch.contains("pakdo") || lowerMatch.contains("pakado") || lowerMatch.contains("catch")) {
+                            Log.d(TAG, "Pakdo detected in partial results!");
+                            handlePakdoCommand();
+                            return;
+                        } else if (lowerMatch.contains("give me my phone") || lowerMatch.contains("phone de")) {
+                            Log.d(TAG, "Give me my phone detected in partial results!");
+                            handleGivePhoneCommand();
+                            return;
+                        }
+                    }
+                }
+            }
+
             @Override
             public void onEvent(int eventType, Bundle params) {}
         });
@@ -233,6 +270,9 @@ public class SilentGuardService extends LifecycleService {
                 try {
                     SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
                     Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
+                    new Handler(Looper.getMainLooper()).post(() -> 
+                        Toast.makeText(SilentGuardService.this, "Successfully Sent Alert Msg", Toast.LENGTH_LONG).show()
+                    );
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to send SMS to " + contact.name, e);
                 }
@@ -332,6 +372,25 @@ public class SilentGuardService extends LifecycleService {
                 manager.createNotificationChannel(serviceChannel);
             }
         }
+    }
+
+    private void handleHelpCommand() {
+        Log.d(TAG, "Executing Help Command...");
+        lockScreen();
+        triggerEmergencyAlert();
+    }
+
+    private void handlePakdoCommand() {
+        Log.d(TAG, "Executing Pakdo Command...");
+        triggerEmergencyAlert();
+    }
+
+    private void handleGivePhoneCommand() {
+        Log.d(TAG, "Executing Give me my phone Command...");
+        triggerEmergencyAlert();
+        new Handler(Looper.getMainLooper()).post(() -> 
+            Toast.makeText(this, "Fake Lock Mode Activated", Toast.LENGTH_LONG).show()
+        );
     }
 
     @Override

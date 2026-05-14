@@ -39,16 +39,14 @@ import java.util.List;
 
 public class TriggerSettingsActivity extends AppCompatActivity {
 
-    private MaterialSwitch switchVoice, switchVolume, switchPower, switchScreen, switchPass, switchDisplayOffVoice;
+    private MaterialSwitch switchVoice, switchScreen, switchDisplayOffVoice;
     private SharedPreferences prefs;
     private SpeechRecognizer speechRecognizer;
     private static final int PERMISSION_RECORD_AUDIO = 1;
     private static final int PERMISSION_READ_CONTACTS = 2;
 
     // Custom Commands UI
-    private View btnExpandCommands, layoutCustomCommands;
-    private ImageView ivExpandArrow;
-    private boolean isCommandsExpanded = false;
+    private View layoutCustomCommands;
 
     // Contact Picker Launcher
     private ActivityResultLauncher<Intent> contactPickerLauncher;
@@ -287,32 +285,19 @@ public class TriggerSettingsActivity extends AppCompatActivity {
     }
 
     private void setupCustomCommands() {
-        btnExpandCommands = findViewById(R.id.btn_expand_commands);
         layoutCustomCommands = findViewById(R.id.layout_custom_commands);
-        ivExpandArrow = findViewById(R.id.iv_expand_arrow);
-
-        btnExpandCommands.setOnClickListener(v -> {
-            isCommandsExpanded = !isCommandsExpanded;
-            layoutCustomCommands.setVisibility(isCommandsExpanded ? View.VISIBLE : View.GONE);
-            ivExpandArrow.setRotation(isCommandsExpanded ? 180f : 0f);
-        });
 
         // Setup mock commands
-        setupCommandItem(R.id.cmd_help, "Help", "Turns screen off instantly and starts silent recording");
-        setupCommandItem(R.id.cmd_pakdo, "Pakdo", "Shares live location with saved emergency contacts");
-        setupCommandItem(R.id.cmd_give_phone, "Give me my phone", "Activates fake lock mode and hides notifications");
-
-        findViewById(R.id.btn_add_command).setOnClickListener(v -> 
-            Toast.makeText(this, "Add new command coming soon!", Toast.LENGTH_SHORT).show());
+        setupCommandItem(R.id.cmd_help, "Help");
+        setupCommandItem(R.id.cmd_pakdo, "Pakdo");
+        setupCommandItem(R.id.cmd_give_phone, "Give me my phone");
     }
 
-    private void setupCommandItem(int id, String phrase, String action) {
+    private void setupCommandItem(int id, String phrase) {
         View item = findViewById(id);
         if (item != null) {
             TextView tvPhrase = item.findViewById(R.id.tv_phrase);
-            TextView tvAction = item.findViewById(R.id.tv_action);
             if (tvPhrase != null) tvPhrase.setText(phrase);
-            if (tvAction != null) tvAction.setText(action);
 
             item.setOnClickListener(v -> {
                 // Remove focus from others and highlight this
@@ -320,11 +305,6 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 item.setBackgroundResource(R.drawable.bg_glass_card_active);
                 Toast.makeText(this, "Selected: " + phrase, Toast.LENGTH_SHORT).show();
             });
-
-            item.findViewById(R.id.iv_edit).setOnClickListener(v -> 
-                Toast.makeText(this, "Edit: " + phrase, Toast.LENGTH_SHORT).show());
-            item.findViewById(R.id.iv_delete).setOnClickListener(v -> 
-                Toast.makeText(this, "Delete: " + phrase, Toast.LENGTH_SHORT).show());
         }
     }
 
@@ -558,19 +538,13 @@ public class TriggerSettingsActivity extends AppCompatActivity {
 
     private void initViews() {
         switchVoice = findViewById(R.id.switch_voice);
-        switchVolume = findViewById(R.id.switch_volume);
-        switchPower = findViewById(R.id.switch_power);
         switchScreen = findViewById(R.id.switch_screen);
-        switchPass = findViewById(R.id.switch_pass);
         switchDisplayOffVoice = findViewById(R.id.switch_display_off_voice);
     }
 
     private void loadSavedStates() {
         switchVoice.setChecked(prefs.getBoolean("switch_voice", true));
-        switchVolume.setChecked(prefs.getBoolean("switch_volume", false));
-        switchPower.setChecked(prefs.getBoolean("switch_power", true));
         switchScreen.setChecked(prefs.getBoolean("switch_screen", true));
-        switchPass.setChecked(prefs.getBoolean("switch_pass", false));
         switchDisplayOffVoice.setChecked(prefs.getBoolean("switch_display_off_voice", true));
     }
 
@@ -608,16 +582,7 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 stopService(new Intent(this, SilentGuardService.class));
             }
         });
-        switchVolume.setOnCheckedChangeListener((v, isChecked) -> save("switch_volume", isChecked));
-        switchPower.setOnCheckedChangeListener((v, isChecked) -> save("switch_power", isChecked));
         switchScreen.setOnCheckedChangeListener((v, isChecked) -> save("switch_screen", isChecked));
-        switchPass.setOnCheckedChangeListener((v, isChecked) -> {
-            save("switch_pass", isChecked);
-            if (isChecked) {
-                requestDeviceAdmin();
-                requestCameraPermission();
-            }
-        });
         switchDisplayOffVoice.setOnCheckedChangeListener((v, isChecked) -> {
             save("switch_display_off_voice", isChecked);
             if (isChecked) {
@@ -683,12 +648,6 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Silent Guard needs this to detect unauthorized access and lock your screen.");
                 startActivity(intent);
             }
-        }
-    }
-
-    private void requestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
         }
     }
 
