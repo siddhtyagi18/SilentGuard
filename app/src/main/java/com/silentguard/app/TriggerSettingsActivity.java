@@ -39,7 +39,7 @@ import java.util.List;
 
 public class TriggerSettingsActivity extends AppCompatActivity {
 
-    private MaterialSwitch switchVoice, switchVolume, switchPower, switchScreen, switchPass;
+    private MaterialSwitch switchVoice, switchVolume, switchPower, switchScreen, switchPass, switchDisplayOffVoice;
     private SharedPreferences prefs;
     private SpeechRecognizer speechRecognizer;
     private static final int PERMISSION_RECORD_AUDIO = 1;
@@ -121,7 +121,7 @@ public class TriggerSettingsActivity extends AppCompatActivity {
             }
         } else {
             // Add default contacts if none
-            contactsList.add(new Contact("Aman Sharma", "+91 98765 43210", "Guardian"));
+            contactsList.add(new Contact("Pratha Varsheny", "+91 82669 94260", "Police"));
             contactsList.add(new Contact("Priya Verma", "+91 99887 76655", "Family"));
             saveContacts();
         }
@@ -455,18 +455,25 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 if (emergencyFound) {
                     Toast.makeText(TriggerSettingsActivity.this, "Emergency command detected!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(TriggerSettingsActivity.this, ShareLocationActivity.class));
-                } else if (lockFound) {
+                } else if (lockFound && switchDisplayOffVoice.isChecked()) {
                     Toast.makeText(TriggerSettingsActivity.this, "Lock screen command detected!", Toast.LENGTH_SHORT).show();
                     // Try to lock screen here too
                     try {
                         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
                         ComponentName cn = new ComponentName(TriggerSettingsActivity.this, MyDeviceAdminReceiver.class);
-                        if (dpm != null && dpm.isAdminActive(cn)) {
-                            dpm.lockNow();
+                        if (dpm != null) {
+                            if (dpm.isAdminActive(cn)) {
+                                dpm.lockNow();
+                            } else {
+                                Toast.makeText(TriggerSettingsActivity.this, "Please enable Device Admin first!", Toast.LENGTH_LONG).show();
+                                requestDeviceAdmin();
+                            }
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Log.e("TriggerSettings", "Error locking screen: " + e.getMessage(), e);
                     }
+                } else if (lockFound) {
+                    Toast.makeText(TriggerSettingsActivity.this, "Display Off Voice Command is disabled", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(TriggerSettingsActivity.this, "No command detected", Toast.LENGTH_SHORT).show();
                 }
@@ -555,6 +562,7 @@ public class TriggerSettingsActivity extends AppCompatActivity {
         switchPower = findViewById(R.id.switch_power);
         switchScreen = findViewById(R.id.switch_screen);
         switchPass = findViewById(R.id.switch_pass);
+        switchDisplayOffVoice = findViewById(R.id.switch_display_off_voice);
     }
 
     private void loadSavedStates() {
@@ -563,6 +571,7 @@ public class TriggerSettingsActivity extends AppCompatActivity {
         switchPower.setChecked(prefs.getBoolean("switch_power", true));
         switchScreen.setChecked(prefs.getBoolean("switch_screen", true));
         switchPass.setChecked(prefs.getBoolean("switch_pass", false));
+        switchDisplayOffVoice.setChecked(prefs.getBoolean("switch_display_off_voice", true));
     }
 
     private void setupListeners() {
@@ -582,6 +591,12 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Please enable Voice Command first", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+        
+        // Test Lock Screen Button (Direct)
+        Button testLockButton = findViewById(R.id.btn_test_lock_screen);
+        if (testLockButton != null) {
+            testLockButton.setOnClickListener(v -> lockScreenDirectly());
         }
 
         // Switch Listeners with auto-save and Service control
@@ -603,16 +618,71 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 requestCameraPermission();
             }
         });
+        switchDisplayOffVoice.setOnCheckedChangeListener((v, isChecked) -> {
+            save("switch_display_off_voice", isChecked);
+            if (isChecked) {
+                requestDeviceAdmin();
+            }
+        });
+    }
+    
+    private void lockScreenDirectly() {
+        try {
+            Log.d("TriggerSettings", "lockScreenDirectly() called");
+            
+            DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+            if (dpm == null) {
+                Toast.makeText(this, "DevicePolicyManager is null!", Toast.LENGTH_LONG).show();
+                Log.e("TriggerSettings", "DevicePolicyManager is null!");
+                return;
+            }
+            
+            ComponentName cn = new ComponentName(this, MyDeviceAdminReceiver.class);
+            Log.d("TriggerSettings", "ComponentName: " + cn.flattenToString());
+            
+            boolean isAdminActive = dpm.isAdminActive(cn);
+            Log.d("TriggerSettings", "isAdminActive: " + isAdminActive);
+            
+            if (isAdminActive) {
+                Toast.makeText(this, "Locking screen NOW...", Toast.LENGTH_SHORT).show();
+                dpm.lockNow();
+                Log.d("TriggerSettings", "lockNow() called");
+            } else {
+                Toast.makeText(this, "Device Admin NOT enabled! Please enable it now.", Toast.LENGTH_LONG).show();
+                requestDeviceAdmin();
+            }
+        } catch (Exception e) {
+            Log.e("TriggerSettings", "Error locking screen directly: " + e.getMessage(), e);
+            Toast.makeText(this, "Error locking screen: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void requestDeviceAdmin() {
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         ComponentName adminName = new ComponentName(this, MyDeviceAdminReceiver.class);
-        if (dpm != null && !dpm.isAdminActive(adminName)) {
-            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminName);
-            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Silent Guard needs this to detect unauthorized access attempts.");
-            startActivity(intent);
+        if (dpm != null) {
+            if (dpm.isAdminActive(adminName)) {
+                new AlertDialog.Builder(this)
+                    .setTitle("Re-enable Device Admin")
+                    .setMessage("To use the screen lock feature, you need to disable and re-enable Device Admin for Silent Guard. Would you like to do this now?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        dpm.removeActiveAdmin(adminName);
+                        // Re-open the enable screen after a short delay
+                        new android.os.Handler().postDelayed(() -> {
+                            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminName);
+                            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Silent Guard needs this to detect unauthorized access and lock your screen.");
+                            startActivity(intent);
+                        }, 500);
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            } else {
+                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminName);
+                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Silent Guard needs this to detect unauthorized access and lock your screen.");
+                startActivity(intent);
+            }
         }
     }
 

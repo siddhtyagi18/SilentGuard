@@ -16,6 +16,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.CameraSelector;
@@ -68,6 +69,7 @@ public class SilentGuardService extends LifecycleService {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d(TAG, "Service created");
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         cameraExecutor = Executors.newSingleThreadExecutor();
         prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
@@ -80,11 +82,30 @@ public class SilentGuardService extends LifecycleService {
     }
     
     private void lockScreen() {
-        if (devicePolicyManager.isAdminActive(componentName)) {
-            devicePolicyManager.lockNow();
-            Log.d(TAG, "Screen locked via voice command");
-        } else {
-            Log.e(TAG, "Device admin not enabled - cannot lock screen");
+        try {
+            if (devicePolicyManager == null) {
+                Log.e(TAG, "DevicePolicyManager is null!");
+                return;
+            }
+            if (componentName == null) {
+                Log.e(TAG, "ComponentName is null!");
+                return;
+            }
+            if (devicePolicyManager.isAdminActive(componentName)) {
+                Log.d(TAG, "Attempting to lock screen");
+                devicePolicyManager.lockNow();
+                Log.d(TAG, "Screen locked successfully!");
+                new android.os.Handler(getMainLooper()).post(() -> 
+                    Toast.makeText(SilentGuardService.this, "Screen locked!", Toast.LENGTH_SHORT).show()
+                );
+            } else {
+                Log.e(TAG, "Device admin NOT enabled!");
+                new android.os.Handler(getMainLooper()).post(() -> 
+                    Toast.makeText(SilentGuardService.this, "Enable Device Admin first!", Toast.LENGTH_LONG).show()
+                );
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error locking screen: " + e.getMessage(), e);
         }
     }
 
@@ -108,16 +129,18 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void initSpeechRecognizer() {
+        Log.d(TAG, "Initializing speech recognizer");
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 10);
 
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle params) { Log.d(TAG, "Ready for speech"); }
             @Override
-            public void onBeginningOfSpeech() {}
+            public void onBeginningOfSpeech() { Log.d(TAG, "Beginning of speech"); }
             @Override
             public void onRmsChanged(float rmsdB) {}
             @Override
@@ -141,17 +164,27 @@ public class SilentGuardService extends LifecycleService {
             public void onResults(Bundle results) {
                 ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 if (matches != null) {
+                    Log.d(TAG, "Number of matches: " + matches.size());
                     for (String match : matches) {
-                        String lowerMatch = match.toLowerCase();
+                        String lowerMatch = match.toLowerCase().trim();
                         Log.d(TAG, "Heard: " + lowerMatch);
+                        
+                        // Check for emergency commands
                         if (lowerMatch.contains("help me") || lowerMatch.contains("pakdo") || lowerMatch.contains("give me my phone")) {
-                            Log.d(TAG, "Emergency command detected!");
+                            Log.d(TAG, "EMERGENCY COMMAND DETECTED!");
                             triggerEmergencyAlert();
                             return;
                         }
+                        
+                        // Check for lock screen commands
                         if (lowerMatch.contains("display off") || lowerMatch.contains("lock screen") || lowerMatch.contains("screen off")) {
-                            Log.d(TAG, "Lock screen command detected!");
-                            lockScreen();
+                            Log.d(TAG, "LOCK SCREEN COMMAND DETECTED!");
+                            boolean isEnabled = prefs.getBoolean("switch_display_off_voice", true);
+                            if (isEnabled) {
+                                lockScreen();
+                            } else {
+                                Log.d(TAG, "Lock screen command disabled in settings");
+                            }
                             return;
                         }
                     }
@@ -170,8 +203,9 @@ public class SilentGuardService extends LifecycleService {
 
     private void restartListening() {
         try {
+            Log.d(TAG, "Restarting listening...");
             speechRecognizer.cancel();
-            Thread.sleep(200);
+            Thread.sleep(300);
             speechRecognizer.startListening(recognizerIntent);
         } catch (Exception e) {
             Log.e(TAG, "Failed to restart listening", e);
@@ -302,6 +336,7 @@ public class SilentGuardService extends LifecycleService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "Service onStartCommand called");
         loadEmergencyContacts();
         
         if (intent != null && "ACTION_WRONG_PASSWORD".equals(intent.getAction())) {
@@ -317,6 +352,7 @@ public class SilentGuardService extends LifecycleService {
         startForeground(1, notification);
         
         isListening = true;
+        Log.d(TAG, "Starting speech recognition");
         speechRecognizer.startListening(recognizerIntent);
 
         return START_STICKY;

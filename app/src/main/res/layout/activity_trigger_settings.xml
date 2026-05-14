@@ -443,6 +443,68 @@
                     android:checked="true" />
             </RelativeLayout>
 
+            <!-- Display Off Voice Command Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:layout_marginBottom="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/ic_display_off"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_lock_power_off"
+                        app:tint="@color/neon_violet" />
+
+                    <TextView
+                        android:id="@+id/txt_display_off"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/ic_display_off"
+                        android:layout_marginStart="16dp"
+                        android:text="Display Off Voice Command"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_display_off"
+                        android:layout_toEndOf="@id/ic_display_off"
+                        android:layout_marginStart="16dp"
+                        android:text="Say &quot;display off&quot; to lock screen"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_display_off_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:checked="true" />
+                </RelativeLayout>
+
+                <!-- Test Lock Button -->
+                <Button
+                    android:id="@+id/btn_test_lock_screen"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Test Lock Screen (Direct)"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_neon_button"
+                    android:fontFamily="sans-serif-bold"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
             <!-- Screen Off Mode Card -->
             <RelativeLayout
                 android:layout_width="match_parent"
