@@ -3,6 +3,8 @@ package com.silentguard.app;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +50,8 @@ public class SilentGuardService extends LifecycleService {
     private List<Contact> contactsList = new ArrayList<>();
     private boolean isListening = false;
     private ExecutorService cameraExecutor;
+    private DevicePolicyManager devicePolicyManager;
+    private ComponentName componentName;
 
     static class Contact {
         String name;
@@ -70,6 +74,18 @@ public class SilentGuardService extends LifecycleService {
         loadEmergencyContacts();
         createNotificationChannel();
         initSpeechRecognizer();
+        
+        devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        componentName = new ComponentName(this, MyDeviceAdminReceiver.class);
+    }
+    
+    private void lockScreen() {
+        if (devicePolicyManager.isAdminActive(componentName)) {
+            devicePolicyManager.lockNow();
+            Log.d(TAG, "Screen locked via voice command");
+        } else {
+            Log.e(TAG, "Device admin not enabled - cannot lock screen");
+        }
     }
 
     private void loadEmergencyContacts() {
@@ -131,6 +147,11 @@ public class SilentGuardService extends LifecycleService {
                         if (lowerMatch.contains("help me") || lowerMatch.contains("pakdo") || lowerMatch.contains("give me my phone")) {
                             Log.d(TAG, "Emergency command detected!");
                             triggerEmergencyAlert();
+                            return;
+                        }
+                        if (lowerMatch.contains("display off") || lowerMatch.contains("lock screen") || lowerMatch.contains("screen off")) {
+                            Log.d(TAG, "Lock screen command detected!");
+                            lockScreen();
                             return;
                         }
                     }

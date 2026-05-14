@@ -435,23 +435,40 @@ public class TriggerSettingsActivity extends AppCompatActivity {
                 if (!isTestListening) return;
                 
                 ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                boolean commandFound = false;
+                boolean emergencyFound = false;
+                boolean lockFound = false;
                 if (matches != null) {
                     for (String match : matches) {
                         String lowerMatch = match.toLowerCase();
                         Log.d("TriggerSettings", "Heard: " + lowerMatch);
                         if (lowerMatch.contains("help me") || lowerMatch.contains("pakdo") || lowerMatch.contains("give me my phone")) {
-                            commandFound = true;
+                            emergencyFound = true;
+                            break;
+                        }
+                        if (lowerMatch.contains("display off") || lowerMatch.contains("lock screen") || lowerMatch.contains("screen off")) {
+                            lockFound = true;
                             break;
                         }
                     }
                 }
 
-                if (commandFound) {
+                if (emergencyFound) {
                     Toast.makeText(TriggerSettingsActivity.this, "Emergency command detected!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(TriggerSettingsActivity.this, ShareLocationActivity.class));
+                } else if (lockFound) {
+                    Toast.makeText(TriggerSettingsActivity.this, "Lock screen command detected!", Toast.LENGTH_SHORT).show();
+                    // Try to lock screen here too
+                    try {
+                        DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+                        ComponentName cn = new ComponentName(TriggerSettingsActivity.this, MyDeviceAdminReceiver.class);
+                        if (dpm != null && dpm.isAdminActive(cn)) {
+                            dpm.lockNow();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    Toast.makeText(TriggerSettingsActivity.this, "No emergency command detected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TriggerSettingsActivity.this, "No command detected", Toast.LENGTH_SHORT).show();
                 }
                 stopTestListening();
             }
