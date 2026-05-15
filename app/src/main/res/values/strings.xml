@@ -9,4 +9,5 @@
     <string name="power_trigger">Power Button Trigger</string>
     <string name="screen_off_mode">Screen Off Mode</string>
     <string name="test_voice">Test Voice Command</string>
+    <string name="accessibility_service_description">Allows Silent Guard to detect volume button presses even when the screen is off for emergency SOS.</string>
 </resources>

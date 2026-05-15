@@ -59,6 +59,10 @@ public class VolumeTriggerSettingsActivity extends BaseSettingsActivity {
             prefs.edit().putBoolean("switch_volume", isChecked).apply();
             manageService();
             Toast.makeText(this, "Volume Trigger " + (isChecked ? "Enabled" : "Disabled"), Toast.LENGTH_SHORT).show();
+            
+            if (isChecked) {
+                checkAccessibilityService();
+            }
         });
         
         switchShareLocation.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("vol_share_loc", isChecked).apply());
@@ -96,5 +100,27 @@ public class VolumeTriggerSettingsActivity extends BaseSettingsActivity {
             intent.putExtra("AUTO_TRIGGER", true);
             startActivity(intent);
         });
+    }
+
+    private void checkAccessibilityService() {
+        String service = getPackageName() + "/" + SilentGuardAccessibilityService.class.getName();
+        android.content.ContentResolver contentResolver = getContentResolver();
+        String enabledServices = android.provider.Settings.Secure.getString(
+            contentResolver,
+            android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        );
+        boolean isEnabled = enabledServices != null && enabledServices.contains(service);
+        
+        if (!isEnabled) {
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Enable Accessibility Service")
+                .setMessage("To use Volume Button Trigger when the screen is off, you need to enable the Accessibility Service for Silent Guard.")
+                .setPositiveButton("Open Settings", (dialog, which) -> {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+        }
     }
 }

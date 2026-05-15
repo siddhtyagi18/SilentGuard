@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -57,6 +58,7 @@ public class SilentGuardService extends LifecycleService {
 
     private static final String TAG = "SilentGuardService";
     private static final String CHANNEL_ID = "SilentGuardChannel";
+    private static final String WAKE_LOCK_TAG = "SilentGuard:WakeLock";
     private SpeechRecognizer speechRecognizer;
     private Intent recognizerIntent;
     private FusedLocationProviderClient fusedLocationClient;
@@ -68,6 +70,9 @@ public class SilentGuardService extends LifecycleService {
     private boolean isRecording = false;
     private DevicePolicyManager devicePolicyManager;
     private ComponentName componentName;
+    private PowerManager.WakeLock wakeLock;
+    private AudioManager audioManager;
+    private int lastVolume = -1;
     
     // Siren Logic
     private MediaPlayer mediaPlayer;
@@ -99,12 +104,32 @@ public class SilentGuardService extends LifecycleService {
         prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
         loadEmergencyContacts();
         createNotificationChannel();
-        initSpeechRecognizer();
+        
+        boolean isVoiceEnabled = prefs.getBoolean("switch_voice", true);
+        if (isVoiceEnabled) {
+            initSpeechRecognizer();
+        }
         
         devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         componentName = new ComponentName(this, MyDeviceAdminReceiver.class);
         
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+        
+        acquireWakeLock();
         setupVolumeObserver();
+    }
+
+    private void acquireWakeLock() {
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null) {
+            wakeLock = powerManager.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK,
+                WAKE_LOCK_TAG
+            );
+            wakeLock.setReferenceCounted(false);
+            wakeLock.acquire(10 * 60 * 1000L); // 10 minutes
+        }
     }
 
     private void setupVolumeObserver() {
@@ -112,36 +137,41 @@ public class SilentGuardService extends LifecycleService {
             @Override
             public void onChange(boolean selfChange) {
                 super.onChange(selfChange);
-                if (prefs.getBoolean("switch_volume", false)) {
-                    long currentTime = System.currentTimeMillis();
-                    if (currentTime - lastVolumePressTime < 1500) {
-                        volumePressCount++;
-                    } else {
-                        volumePressCount = 1;
-                    }
-                    lastVolumePressTime = currentTime;
-
-                    if (volumePressCount == 3) {
-                        volumePressCount = 0;
-                        Log.d(TAG, "3x Volume Trigger: Sending SOS...");
-                        triggerEmergencyAlert();
+                try {
+                    if (prefs.getBoolean("switch_volume", false)) {
+                        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
                         
-                        if (prefs.getBoolean("vol_auto_call", false)) {
-                            Log.d(TAG, "Auto Call enabled: Launching Call Confirmation...");
+                        if (currentVolume != lastVolume) {
+                            lastVolume = currentVolume;
                             
-                            // Check if contacts exist before launching popup
-                            loadEmergencyContacts();
-                            if (contactsList.isEmpty()) {
-                                new Handler(Looper.getMainLooper()).post(() -> 
-                                    Toast.makeText(SilentGuardService.this, "No emergency contacts available", Toast.LENGTH_SHORT).show()
-                                );
+                            long currentTime = System.currentTimeMillis();
+                            if (currentTime - lastVolumePressTime < 1500) {
+                                volumePressCount++;
                             } else {
-                                Intent responseIntent = new Intent(SilentGuardService.this, EmergencyResponseActivity.class);
-                                responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(responseIntent);
+                                volumePressCount = 1;
+                            }
+                            lastVolumePressTime = currentTime;
+
+                            if (volumePressCount == 3) {
+                                volumePressCount = 0;
+                                Log.d(TAG, "3x Volume Trigger: Sending SOS...");
+                                triggerEmergencyAlert();
+                                
+                                if (prefs.getBoolean("vol_auto_call", false)) {
+                                    Log.d(TAG, "Auto Call enabled: Launching Call Confirmation...");
+                                    
+                                    loadEmergencyContacts();
+                                    if (!contactsList.isEmpty()) {
+                                        Intent responseIntent = new Intent(SilentGuardService.this, EmergencyResponseActivity.class);
+                                        responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(responseIntent);
+                                    }
+                                }
                             }
                         }
                     }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error in volume observer: " + e.getMessage(), e);
                 }
             }
         };
@@ -627,9 +657,12 @@ public class SilentGuardService extends LifecycleService {
 
         startForeground(1, notification);
         
-        isListening = true;
-        Log.d(TAG, "Starting speech recognition");
-        speechRecognizer.startListening(recognizerIntent);
+        boolean isVoiceEnabled = prefs.getBoolean("switch_voice", true);
+        if (isVoiceEnabled && speechRecognizer != null) {
+            isListening = true;
+            Log.d(TAG, "Starting speech recognition");
+            speechRecognizer.startListening(recognizerIntent);
+        }
 
         return START_STICKY;
     }
@@ -644,6 +677,9 @@ public class SilentGuardService extends LifecycleService {
         }
         if (volumeObserver != null) {
             getContentResolver().unregisterContentObserver(volumeObserver);
+        }
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
         }
     }
 

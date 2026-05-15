@@ -50,14 +50,43 @@ public abstract class BaseSettingsActivity extends AppCompatActivity {
         prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
     }
 
-    protected void checkPermissionsAndStartService() {
-        String[] permissions = {
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.SEND_SMS,
-            Manifest.permission.CALL_PHONE
-        };
+    @Override
+    public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
+        if ((keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == android.view.KeyEvent.KEYCODE_VOLUME_UP) 
+                && prefs.getBoolean("switch_volume", false)) {
+            
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastVolumePressTime < 1500) {
+                volumePressCount++;
+            } else {
+                volumePressCount = 1;
+            }
+            lastVolumePressTime = currentTime;
 
+            if (volumePressCount == 3) {
+                volumePressCount = 0;
+                Intent intent = new Intent(this, ShareLocationActivity.class);
+                intent.putExtra("AUTO_TRIGGER", true);
+                startActivity(intent);
+                Toast.makeText(this, "3x Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    protected void checkPermissionsAndStartService() {
+        List<String> permissionsList = new ArrayList<>();
+        
+        boolean isVoiceEnabled = prefs.getBoolean("switch_voice", true);
+        if (isVoiceEnabled) {
+            permissionsList.add(Manifest.permission.RECORD_AUDIO);
+        }
+        permissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissionsList.add(Manifest.permission.SEND_SMS);
+        permissionsList.add(Manifest.permission.CALL_PHONE);
+
+        String[] permissions = permissionsList.toArray(new String[0]);
         boolean allGranted = true;
         for (String p : permissions) {
             if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
@@ -289,37 +318,7 @@ public abstract class BaseSettingsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
-        if ((keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == android.view.KeyEvent.KEYCODE_VOLUME_UP) 
-                && prefs.getBoolean("switch_volume", false)) {
-            
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastVolumePressTime < 1500) {
-                volumePressCount++;
-            } else {
-                volumePressCount = 1;
-            }
-            lastVolumePressTime = currentTime;
 
-            if (volumePressCount == 3) {
-                Intent intent = new Intent(this, ShareLocationActivity.class);
-                intent.putExtra("AUTO_TRIGGER", true);
-                startActivity(intent);
-                Toast.makeText(this, "3x Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
-            } else if (volumePressCount >= 4) {
-                volumePressCount = 0;
-                if (prefs.getBoolean("vol_auto_call", false)) {
-                    Intent intent = new Intent(this, EmergencyResponseActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    Toast.makeText(this, "4x Volume Trigger: Emergency Call?", Toast.LENGTH_SHORT).show();
-                }
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

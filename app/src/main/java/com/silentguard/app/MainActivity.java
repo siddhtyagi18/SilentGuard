@@ -75,6 +75,32 @@ public class MainActivity extends AppCompatActivity {
         setupSOSInteraction();
         loadUserData();
         checkBatteryOptimizations();
+        checkAccessibilityService();
+    }
+
+    private void checkAccessibilityService() {
+        boolean isVolumeEnabled = prefs.getBoolean("switch_volume", false);
+        if (isVolumeEnabled && !isAccessibilityServiceEnabled()) {
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Enable Accessibility Service")
+                .setMessage("To use Volume Button Trigger when the screen is off, you need to enable the Accessibility Service for Silent Guard.")
+                .setPositiveButton("Open Settings", (dialog, which) -> {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+        }
+    }
+
+    private boolean isAccessibilityServiceEnabled() {
+        String service = getPackageName() + "/" + SilentGuardAccessibilityService.class.getName();
+        android.content.ContentResolver contentResolver = getContentResolver();
+        String enabledServices = android.provider.Settings.Secure.getString(
+            contentResolver,
+            android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        );
+        return enabledServices != null && enabledServices.contains(service);
     }
 
     private void checkBatteryOptimizations() {
@@ -173,23 +199,17 @@ public class MainActivity extends AppCompatActivity {
             lastVolumePressTime = currentTime;
 
             if (volumePressCount == 3) {
+                volumePressCount = 0;
                 Intent intent = new Intent(this, ShareLocationActivity.class);
                 intent.putExtra("AUTO_TRIGGER", true);
                 startActivity(intent);
                 Toast.makeText(this, "3x Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
-            } else if (volumePressCount >= 4) {
-                volumePressCount = 0;
-                if (prefs.getBoolean("vol_auto_call", false)) {
-                    Intent intent = new Intent(this, EmergencyResponseActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    Toast.makeText(this, "4x Volume Trigger: Emergency Call?", Toast.LENGTH_SHORT).show();
-                }
             }
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     private Runnable sosAction = new Runnable() {
         @Override
