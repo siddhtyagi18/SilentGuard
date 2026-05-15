@@ -1,5 +1,7 @@
 package com.silentguard.app;
 
+import android.Manifest;
+import android.app.PendingIntent;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,12 +10,20 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
+import android.location.Location;
+import android.database.ContentObserver;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -58,6 +68,15 @@ public class SilentGuardService extends LifecycleService {
     private boolean isRecording = false;
     private DevicePolicyManager devicePolicyManager;
     private ComponentName componentName;
+    
+    // Siren Logic
+    private MediaPlayer mediaPlayer;
+    private boolean isSirenPlaying = false;
+    
+    // Volume Trigger Logic
+    private int volumePressCount = 0;
+    private long lastVolumePressTime = 0;
+    private ContentObserver volumeObserver;
 
     static class Contact {
         String name;
@@ -84,8 +103,168 @@ public class SilentGuardService extends LifecycleService {
         
         devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         componentName = new ComponentName(this, MyDeviceAdminReceiver.class);
+        
+        setupVolumeObserver();
+    }
+
+    private void setupVolumeObserver() {
+        volumeObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange) {
+                super.onChange(selfChange);
+                if (prefs.getBoolean("switch_volume", false)) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastVolumePressTime < 1500) {
+                        volumePressCount++;
+                    } else {
+                        volumePressCount = 1;
+                    }
+                    lastVolumePressTime = currentTime;
+
+                    if (volumePressCount == 3) {
+                        volumePressCount = 0;
+                        Log.d(TAG, "3x Volume Trigger: Sending SOS...");
+                        triggerEmergencyAlert();
+                        
+                        if (prefs.getBoolean("vol_auto_call", false)) {
+                            Log.d(TAG, "Auto Call enabled: Launching Call Confirmation...");
+                            
+                            // Check if contacts exist before launching popup
+                            loadEmergencyContacts();
+                            if (contactsList.isEmpty()) {
+                                new Handler(Looper.getMainLooper()).post(() -> 
+                                    Toast.makeText(SilentGuardService.this, "No emergency contacts available", Toast.LENGTH_SHORT).show()
+                                );
+                            } else {
+                                Intent responseIntent = new Intent(SilentGuardService.this, EmergencyResponseActivity.class);
+                                responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(responseIntent);
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        getContentResolver().registerContentObserver(
+                Settings.System.CONTENT_URI, 
+                true, 
+                volumeObserver
+        );
     }
     
+    private void handleVolumeSOS() {
+        Log.d(TAG, "Handling Volume SOS Actions...");
+        
+        // 1. Basic SMS/Location Alert
+        triggerEmergencyAlert();
+
+        // 2. Launch Interactive Response Flow
+        Intent responseIntent = new Intent(this, EmergencyResponseActivity.class);
+        responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(responseIntent);
+    }
+
+    private void playSiren() {
+        if (isSirenPlaying) return;
+        
+        try {
+            Uri sirenUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            if (sirenUri == null) {
+                sirenUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            }
+            
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(this, sirenUri);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            isSirenPlaying = true;
+            
+            updateNotificationWithSiren();
+            
+            new Handler(Looper.getMainLooper()).post(() -> 
+                Toast.makeText(this, "EMERGENCY SIREN ACTIVATED!", Toast.LENGTH_LONG).show()
+            );
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to play siren: " + e.getMessage());
+        }
+    }
+
+    private void updateNotificationWithSiren() {
+        Intent stopIntent = new Intent(this, SilentGuardService.class);
+        stopIntent.setAction("ACTION_STOP_SIREN");
+        PendingIntent stopPendingIntent = PendingIntent.getService(this, 0, stopIntent, 
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("EMERGENCY SIREN PLAYING")
+                .setContentText("Click to stop the alert sound")
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setOngoing(true)
+                .addAction(android.R.drawable.ic_menu_close_clear_cancel, "STOP SIREN", stopPendingIntent)
+                .build();
+
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager != null) {
+            manager.notify(1, notification);
+        }
+    }
+
+    private void stopSiren() {
+        if (mediaPlayer != null && isSirenPlaying) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            isSirenPlaying = false;
+            
+            // Reset to normal notification
+            resetNotification();
+        }
+    }
+
+    private void resetNotification() {
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Silent Guard")
+                .setContentText("Silent Guard is actively protecting you")
+                .setSmallIcon(android.R.drawable.ic_lock_silent_mode)
+                .build();
+
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager != null) {
+            manager.notify(1, notification);
+        }
+    }
+
+    private void autoCallEmergencyContact() {
+        loadEmergencyContacts();
+        if (contactsList.isEmpty()) {
+            Log.e(TAG, "No contacts to call!");
+            return;
+        }
+
+        // Call primary (first) contact
+        Contact primaryContact = contactsList.get(0);
+        makeCall(primaryContact.phone);
+    }
+
+    private void makeCall(String phoneNumber) {
+        try {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + phoneNumber));
+            callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                startActivity(callIntent);
+                Log.d(TAG, "Calling: " + phoneNumber);
+            } else {
+                Log.e(TAG, "CALL_PHONE permission NOT granted!");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to make call: " + e.getMessage());
+        }
+    }
+
     private void lockScreen() {
         try {
             if (devicePolicyManager == null) {
@@ -257,27 +436,62 @@ public class SilentGuardService extends LifecycleService {
         }
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-            String locationLink = "https://www.google.com/maps/search/?api=1&query=";
             if (location != null) {
-                locationLink += location.getLatitude() + "," + location.getLongitude();
+                sendAlertWithLocation(location);
             } else {
-                locationLink += "Unknown+Location";
-            }
-
-            String message = "EMERGENCY! I need help. My live location: " + locationLink;
-            
-            for (Contact contact : contactsList) {
-                try {
-                    SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
-                    Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
-                    new Handler(Looper.getMainLooper()).post(() -> 
-                        Toast.makeText(SilentGuardService.this, "Successfully Sent Alert Msg", Toast.LENGTH_LONG).show()
-                    );
-                } catch (Exception e) {
-                    Log.e(TAG, "Failed to send SMS to " + contact.name, e);
-                }
+                // Try requesting a fresh location
+                Log.d(TAG, "Last location null, requesting fresh location...");
+                requestFreshLocation();
             }
         });
+    }
+
+    private void requestFreshLocation() {
+        try {
+            com.google.android.gms.location.LocationRequest locationRequest = com.google.android.gms.location.LocationRequest.create()
+                    .setPriority(com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(1000)
+                    .setNumUpdates(1);
+
+            fusedLocationClient.requestLocationUpdates(locationRequest, new com.google.android.gms.location.LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull com.google.android.gms.location.LocationResult locationResult) {
+                    Location location = locationResult.getLastLocation();
+                    if (location != null) {
+                        sendAlertWithLocation(location);
+                    } else {
+                        sendAlertWithLocation(null);
+                    }
+                    fusedLocationClient.removeLocationUpdates(this);
+                }
+            }, Looper.getMainLooper());
+        } catch (SecurityException e) {
+            Log.e(TAG, "Location permission missing", e);
+            sendAlertWithLocation(null);
+        }
+    }
+
+    private void sendAlertWithLocation(android.location.Location location) {
+        String locationLink = "https://www.google.com/maps/search/?api=1&query=";
+        if (location != null) {
+            locationLink += location.getLatitude() + "," + location.getLongitude();
+        } else {
+            locationLink += "Unknown+Location";
+        }
+
+        String message = "EMERGENCY! I need help. My live location: " + locationLink;
+        
+        for (Contact contact : contactsList) {
+            try {
+                SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
+                Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
+                new Handler(Looper.getMainLooper()).post(() -> 
+                    Toast.makeText(SilentGuardService.this, "Successfully Sent Alert Msg", Toast.LENGTH_LONG).show()
+                );
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to send SMS to " + contact.name, e);
+            }
+        }
     }
 
     private void takeSelfieAndSendSOS() {
@@ -398,8 +612,14 @@ public class SilentGuardService extends LifecycleService {
         Log.d(TAG, "Service onStartCommand called");
         loadEmergencyContacts();
         
-        if (intent != null && "ACTION_WRONG_PASSWORD".equals(intent.getAction())) {
-            takeSelfieAndSendSOS();
+        if (intent != null) {
+            if ("ACTION_WRONG_PASSWORD".equals(intent.getAction())) {
+                takeSelfieAndSendSOS();
+            } else if ("ACTION_VOLUME_SOS".equals(intent.getAction())) {
+                handleVolumeSOS();
+            } else if ("ACTION_STOP_SIREN".equals(intent.getAction())) {
+                stopSiren();
+            }
         }
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -421,8 +641,12 @@ public class SilentGuardService extends LifecycleService {
     public void onDestroy() {
         super.onDestroy();
         isListening = false;
+        stopSiren();
         if (speechRecognizer != null) {
             speechRecognizer.destroy();
+        }
+        if (volumeObserver != null) {
+            getContentResolver().unregisterContentObserver(volumeObserver);
         }
     }
 

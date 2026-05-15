@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
@@ -58,6 +59,13 @@
         <activity android:name="com.silentguard.app.SignUpActivity" />
         <activity android:name="com.silentguard.app.MainActivity" />
         <activity android:name="com.silentguard.app.TriggerSettingsActivity" />
+        <activity android:name="com.silentguard.app.VolumeTriggerSettingsActivity" />
+        <activity android:name="com.silentguard.app.PasswordTriggerSettingsActivity" />
+        <activity
+            android:name="com.silentguard.app.EmergencyResponseActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.SilentGuard.Transparent" />
         <activity android:name="com.silentguard.app.ShareLocationActivity" />
         <activity android:name="com.silentguard.app.HowItWorksActivity" />
         <activity android:name="com.silentguard.app.HistoryActivity" />

@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         cardSnatches.setOnClickListener(v -> startActivity(new Intent(this, TriggerSettingsActivity.class)));
-        cardVolume.setOnClickListener(v -> startActivity(new Intent(this, TriggerSettingsActivity.class)));
-        cardPassword.setOnClickListener(v -> startActivity(new Intent(this, TriggerSettingsActivity.class)));
+        cardVolume.setOnClickListener(v -> startActivity(new Intent(this, VolumeTriggerSettingsActivity.class)));
+        cardPassword.setOnClickListener(v -> startActivity(new Intent(this, PasswordTriggerSettingsActivity.class)));
 
         navHistory.setOnClickListener(v -> startActivity(new Intent(this, HistoryActivity.class)));
         navSecurity.setOnClickListener(v -> startActivity(new Intent(this, HowItWorksActivity.class)));
@@ -172,10 +172,19 @@ public class MainActivity extends AppCompatActivity {
             }
             lastVolumePressTime = currentTime;
 
-            if (volumePressCount >= 3) {
+            if (volumePressCount == 3) {
+                Intent intent = new Intent(this, ShareLocationActivity.class);
+                intent.putExtra("AUTO_TRIGGER", true);
+                startActivity(intent);
+                Toast.makeText(this, "3x Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
+            } else if (volumePressCount >= 4) {
                 volumePressCount = 0;
-                startActivity(new Intent(this, ShareLocationActivity.class));
-                Toast.makeText(this, "Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
+                if (prefs.getBoolean("vol_auto_call", false)) {
+                    Intent intent = new Intent(this, EmergencyResponseActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    Toast.makeText(this, "4x Volume Trigger: Emergency Call?", Toast.LENGTH_SHORT).show();
+                }
             }
             return true;
         }

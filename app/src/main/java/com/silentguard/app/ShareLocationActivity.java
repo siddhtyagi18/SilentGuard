@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -76,6 +77,10 @@ public class ShareLocationActivity extends AppCompatActivity {
 
         requestLocationPermissions();
         setupAutoSave();
+
+        if (getIntent().getBooleanExtra("AUTO_TRIGGER", false)) {
+            new Handler().postDelayed(this::triggerSOS, 1000);
+        }
     }
 
     private void loadEmergencyContacts() {

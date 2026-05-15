@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
@@ -34,6 +35,12 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".TriggerSettingsActivity" />
+        <activity android:name=".VolumeTriggerSettingsActivity" />
+        <activity android:name=".PasswordTriggerSettingsActivity" />
+        <activity android:name=".EmergencyResponseActivity"
+            android:theme="@style/Theme.SilentGuard.Transparent"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true" />
         <activity android:name=".ShareLocationActivity" />
         <activity android:name=".HowItWorksActivity" />
         <activity android:name=".HistoryActivity" />
