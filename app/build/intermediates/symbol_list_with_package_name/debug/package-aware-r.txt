@@ -3182,11 +3182,9 @@ id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
-id btn_accept
 id btn_add_contact
 id btn_back
 id btn_cancel_contact
-id btn_decline
 id btn_import_contacts
 id btn_login
 id btn_logout
@@ -3354,11 +3352,13 @@ id ic_contacts
 id ic_contacts_sec
 id ic_display_off
 id ic_interval
+id ic_loc_sharing
 id ic_note_shield
 id ic_notif
 id ic_pass
 id ic_press_count
 id ic_screen
+id ic_sms_alert
 id ic_voice
 id icon
 id icon_glow
@@ -3696,10 +3696,8 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
-id tv_caller_name
 id tv_contact_name
 id tv_contact_phone
-id tv_date
 id tv_login_link
 id tv_message
 id tv_phrase
@@ -3708,7 +3706,6 @@ id tv_profile_name
 id tv_relation_label
 id tv_signup_link
 id tv_sub_message
-id tv_time
 id tv_title
 id txt_contacts_title
 id txt_display_off
@@ -3861,8 +3858,6 @@ layout abc_tooltip
 layout activity_edit_profile
 layout activity_emergency_contacts
 layout activity_emergency_response
-layout activity_fake_call
-layout activity_fake_lock
 layout activity_history
 layout activity_how_it_works
 layout activity_login

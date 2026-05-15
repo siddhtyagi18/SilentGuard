@@ -12,10 +12,6 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_emergency_response.xml"
     },
     {
-        "merged": "com.silentguard.app-merged_res-41:/drawable_bg_popup_neon.xml.flat",
-        "source": "com.silentguard.app-main-43:/drawable/bg_popup_neon.xml"
-    },
-    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_share_option.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_share_option.xml"
     },
@@ -52,6 +48,10 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_history.xml"
     },
     {
+        "merged": "com.silentguard.app-merged_res-41:/layout_activity_trigger_settings.xml.flat",
+        "source": "com.silentguard.app-main-43:/layout/activity_trigger_settings.xml"
+    },
+    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_dialog_add_contact.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\dialog_add_contact.xml"
     },
@@ -86,6 +86,10 @@
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_password_trigger_settings.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_password_trigger_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_popup_neon.xml.flat",
+        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_popup_neon.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_volume_trigger_settings.xml.flat",
@@ -140,19 +144,11 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_fake_lock.xml"
     },
     {
-        "merged": "com.silentguard.app-merged_res-41:/layout_activity_emergency_response.xml.flat",
-        "source": "com.silentguard.app-main-43:/layout/activity_emergency_response.xml"
-    },
-    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_share_location.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_share_location.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_history.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_history.xml"
-    },
-    {
-        "merged": "com.silentguard.app-merged_res-41:/layout_activity_volume_trigger_settings.xml.flat",
-        "source": "com.silentguard.app-main-43:/layout/activity_volume_trigger_settings.xml"
     }
 ]

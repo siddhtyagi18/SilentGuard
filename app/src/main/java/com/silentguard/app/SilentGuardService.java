@@ -602,9 +602,6 @@ public class SilentGuardService extends LifecycleService {
     private void handleGivePhoneCommand() {
         Log.d(TAG, "Executing Give me my phone Command...");
         triggerEmergencyAlert();
-        new Handler(Looper.getMainLooper()).post(() -> 
-            Toast.makeText(this, "Fake Lock Mode Activated", Toast.LENGTH_LONG).show()
-        );
     }
 
     @Override

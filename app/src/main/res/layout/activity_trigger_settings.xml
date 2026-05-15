@@ -229,9 +229,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp">
+                        <ImageView
+                            android:id="@+id/ic_sms_alert"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:src="@android:drawable/ic_menu_send"
+                            app:tint="@color/neon_violet" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/ic_sms_alert"
+                            android:layout_marginStart="12dp"
                             android:text="SMS Alerts"
                             android:textColor="@color/text_primary"
                             android:textSize="12sp" />
@@ -246,9 +256,19 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/ic_loc_sharing"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:src="@android:drawable/ic_menu_myplaces"
+                            app:tint="@color/neon_violet" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/ic_loc_sharing"
+                            android:layout_marginStart="12dp"
                             android:text="Live Location Sharing"
                             android:textColor="@color/text_primary"
                             android:textSize="12sp" />

@@ -3181,11 +3181,9 @@ int id browser_actions_menu_item_icon 0x7f080069
 int id browser_actions_menu_item_text 0x7f08006a
 int id browser_actions_menu_items 0x7f08006b
 int id browser_actions_menu_view 0x7f08006c
-int id btn_accept 0x7f08006d
 int id btn_add_contact 0x7f08006e
 int id btn_back 0x7f08006f
 int id btn_cancel_contact 0x7f080070
-int id btn_decline 0x7f080071
 int id btn_import_contacts 0x7f080072
 int id btn_login 0x7f080073
 int id btn_logout 0x7f080074
@@ -3353,11 +3351,13 @@ int id ic_contacts 0x7f080119
 int id ic_contacts_sec 0x7f08011a
 int id ic_display_off 0x7f08011b
 int id ic_interval 0x7f08011c
+int id ic_loc_sharing 0x7f0802ab
 int id ic_note_shield 0x7f08011d
 int id ic_notif 0x7f08011e
 int id ic_pass 0x7f08011f
 int id ic_press_count 0x7f080120
 int id ic_screen 0x7f080121
+int id ic_sms_alert 0x7f0802ac
 int id ic_voice 0x7f080123
 int id icon 0x7f080124
 int id icon_glow 0x7f080125
@@ -3695,10 +3695,8 @@ int id transition_position 0x7f080275
 int id transition_scene_layoutid_cache 0x7f080276
 int id transition_transform 0x7f080277
 int id triangle 0x7f080278
-int id tv_caller_name 0x7f080279
 int id tv_contact_name 0x7f08027a
 int id tv_contact_phone 0x7f08027b
-int id tv_date 0x7f08027c
 int id tv_login_link 0x7f08027d
 int id tv_message 0x7f08027e
 int id tv_phrase 0x7f08027f
@@ -3707,7 +3705,6 @@ int id tv_profile_name 0x7f080281
 int id tv_relation_label 0x7f080282
 int id tv_signup_link 0x7f080283
 int id tv_sub_message 0x7f0802a9
-int id tv_time 0x7f080284
 int id tv_title 0x7f080285
 int id txt_contacts_title 0x7f080286
 int id txt_display_off 0x7f080287
@@ -3860,8 +3857,6 @@ int layout abc_tooltip 0x7f0b001b
 int layout activity_edit_profile 0x7f0b001c
 int layout activity_emergency_contacts 0x7f0b001d
 int layout activity_emergency_response 0x7f0b001e
-int layout activity_fake_call 0x7f0b001f
-int layout activity_fake_lock 0x7f0b0020
 int layout activity_history 0x7f0b0021
 int layout activity_how_it_works 0x7f0b0022
 int layout activity_login 0x7f0b0023
