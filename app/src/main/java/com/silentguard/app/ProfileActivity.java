@@ -82,8 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void setupItemClicks() {
         setupRow(R.id.item_edit_profile, "Edit Profile", "Update your personal details", "EDIT_PROFILE");
         setupRow(R.id.item_emergency_contacts, "Emergency Contacts", "Manage your trusted circle", "EMERGENCY_CONTACTS");
-        setupRow(R.id.item_security_settings, "Security Settings", "Configure app protection", null);
-        setupRow(R.id.item_privacy_policy, "Privacy Policy", "Read our privacy terms", null);
+        setupRow(R.id.item_security_settings, "Security Settings", "Configure app protection", "SECURITY_SETTINGS");
+        setupRow(R.id.item_privacy_policy, "Privacy Policy", "Read our privacy terms", "PRIVACY_POLICY");
     }
 
     private void setupRow(int id, String title, String desc, String action) {
@@ -99,6 +99,10 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
                 } else if ("EMERGENCY_CONTACTS".equals(action)) {
                     startActivity(new Intent(ProfileActivity.this, EmergencyContactsActivity.class));
+                } else if ("SECURITY_SETTINGS".equals(action)) {
+                    startActivity(new Intent(ProfileActivity.this, SettingsActivity.class));
+                } else if ("PRIVACY_POLICY".equals(action)) {
+                    startActivity(new Intent(ProfileActivity.this, PrivacyPolicyActivity.class));
                 } else if (action != null) {
                     Toast.makeText(this, "Opening " + title + "...", Toast.LENGTH_SHORT).show();
                 } else {

@@ -58,6 +58,9 @@ public class SilentGuardService extends LifecycleService {
 
     private static final String TAG = "SilentGuardService";
     private static final String CHANNEL_ID = "SilentGuardChannel";
+    private static final String ACCESSIBILITY_CHANNEL_ID = "SilentGuardAccessibility";
+    private static final int NOTIFICATION_ID = 1001;
+    private static final int ACCESSIBILITY_NOTIFICATION_ID = 1002;
     private static final String WAKE_LOCK_TAG = "SilentGuard:WakeLock";
     private SpeechRecognizer speechRecognizer;
     private Intent recognizerIntent;
@@ -73,6 +76,8 @@ public class SilentGuardService extends LifecycleService {
     private PowerManager.WakeLock wakeLock;
     private AudioManager audioManager;
     private int lastVolume = -1;
+    private Handler accessibilityCheckHandler = new Handler(Looper.getMainLooper());
+    private Runnable accessibilityCheckRunnable;
     
     // Siren Logic
     private MediaPlayer mediaPlayer;
@@ -104,6 +109,7 @@ public class SilentGuardService extends LifecycleService {
         prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
         loadEmergencyContacts();
         createNotificationChannel();
+        createAccessibilityNotificationChannel();
         
         boolean isVoiceEnabled = prefs.getBoolean("switch_voice", true);
         if (isVoiceEnabled) {
@@ -118,6 +124,7 @@ public class SilentGuardService extends LifecycleService {
         
         acquireWakeLock();
         setupVolumeObserver();
+        startAccessibilityServiceCheck();
     }
 
     private void acquireWakeLock() {
@@ -128,11 +135,16 @@ public class SilentGuardService extends LifecycleService {
                 WAKE_LOCK_TAG
             );
             wakeLock.setReferenceCounted(false);
-            wakeLock.acquire(10 * 60 * 1000L); // 10 minutes
+            wakeLock.acquire(30 * 60 * 1000L); // 30 minutes timeout
         }
     }
 
     private void setupVolumeObserver() {
+        boolean isVolumeEnabled = prefs.getBoolean("switch_volume", false);
+        if (!isVolumeEnabled) {
+            return;
+        }
+        
         volumeObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
             @Override
             public void onChange(boolean selfChange) {
@@ -459,6 +471,12 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void triggerEmergencyAlert() {
+        triggerEmergencyAlert(true);
+    }
+
+    private void triggerEmergencyAlert(boolean showToast) {
+        HistoryActivity.addHistoryEntry(this, "Emergency SOS Triggered", "Location shared with emergency contacts");
+        
         loadEmergencyContacts();
         if (contactsList.isEmpty()) {
             Log.e(TAG, "No emergency contacts found!");
@@ -467,16 +485,20 @@ public class SilentGuardService extends LifecycleService {
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             if (location != null) {
-                sendAlertWithLocation(location);
+                sendAlertWithLocation(location, showToast);
             } else {
                 // Try requesting a fresh location
                 Log.d(TAG, "Last location null, requesting fresh location...");
-                requestFreshLocation();
+                requestFreshLocation(showToast);
             }
         });
     }
 
     private void requestFreshLocation() {
+        requestFreshLocation(true);
+    }
+
+    private void requestFreshLocation(boolean showToast) {
         try {
             com.google.android.gms.location.LocationRequest locationRequest = com.google.android.gms.location.LocationRequest.create()
                     .setPriority(com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY)
@@ -488,20 +510,20 @@ public class SilentGuardService extends LifecycleService {
                 public void onLocationResult(@NonNull com.google.android.gms.location.LocationResult locationResult) {
                     Location location = locationResult.getLastLocation();
                     if (location != null) {
-                        sendAlertWithLocation(location);
+                        sendAlertWithLocation(location, showToast);
                     } else {
-                        sendAlertWithLocation(null);
+                        sendAlertWithLocation(null, showToast);
                     }
                     fusedLocationClient.removeLocationUpdates(this);
                 }
             }, Looper.getMainLooper());
         } catch (SecurityException e) {
             Log.e(TAG, "Location permission missing", e);
-            sendAlertWithLocation(null);
+            sendAlertWithLocation(null, showToast);
         }
     }
 
-    private void sendAlertWithLocation(android.location.Location location) {
+    private void sendAlertWithLocation(android.location.Location location, boolean showToast) {
         String locationLink = "https://www.google.com/maps/search/?api=1&query=";
         if (location != null) {
             locationLink += location.getLatitude() + "," + location.getLongitude();
@@ -515,13 +537,19 @@ public class SilentGuardService extends LifecycleService {
             try {
                 SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
                 Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
-                new Handler(Looper.getMainLooper()).post(() -> 
-                    Toast.makeText(SilentGuardService.this, "Successfully Sent Alert Msg", Toast.LENGTH_LONG).show()
-                );
+                if (showToast) {
+                    new Handler(Looper.getMainLooper()).post(() -> 
+                        Toast.makeText(SilentGuardService.this, "Successfully Sent Alert Msg", Toast.LENGTH_LONG).show()
+                    );
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Failed to send SMS to " + contact.name, e);
             }
         }
+    }
+
+    private void sendAlertWithLocation(android.location.Location location) {
+        sendAlertWithLocation(location, true);
     }
 
     private void takeSelfieAndSendSOS() {
@@ -618,6 +646,96 @@ public class SilentGuardService extends LifecycleService {
         }
     }
 
+    private void createAccessibilityNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel accessibilityChannel = new NotificationChannel(
+                    ACCESSIBILITY_CHANNEL_ID,
+                    "Accessibility Reminder",
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            accessibilityChannel.setDescription("Reminds you to enable Accessibility Service");
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(accessibilityChannel);
+            }
+        }
+    }
+
+    private boolean isAccessibilityServiceEnabled() {
+        String service = getPackageName() + "/" + SilentGuardAccessibilityService.class.getName();
+        android.content.ContentResolver contentResolver = getContentResolver();
+        String enabledServices = android.provider.Settings.Secure.getString(
+            contentResolver,
+            android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        );
+        return enabledServices != null && enabledServices.contains(service);
+    }
+
+    private void showAccessibilityReminderNotification() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return;
+        }
+
+        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ACCESSIBILITY_CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_lock_lock)
+            .setContentTitle("Enable Volume Trigger")
+            .setContentText("Tap to enable Accessibility Service for screen-off volume trigger")
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .setColor(ContextCompat.getColor(this, R.color.neon_violet));
+
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager != null) {
+            manager.notify(ACCESSIBILITY_NOTIFICATION_ID, builder.build());
+        }
+    }
+
+    private void cancelAccessibilityReminderNotification() {
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager != null) {
+            manager.cancel(ACCESSIBILITY_NOTIFICATION_ID);
+        }
+    }
+
+    private void startAccessibilityServiceCheck() {
+        createAccessibilityNotificationChannel();
+
+        accessibilityCheckRunnable = new Runnable() {
+            @Override
+            public void run() {
+                boolean isVolumeEnabled = prefs.getBoolean("switch_volume", false);
+                if (isVolumeEnabled) {
+                    if (!isAccessibilityServiceEnabled()) {
+                        showAccessibilityReminderNotification();
+                    } else {
+                        cancelAccessibilityReminderNotification();
+                    }
+                } else {
+                    cancelAccessibilityReminderNotification();
+                }
+                accessibilityCheckHandler.postDelayed(this, 30000); // Check every 30 seconds
+            }
+        };
+
+        accessibilityCheckHandler.post(accessibilityCheckRunnable);
+    }
+
+    private void stopAccessibilityServiceCheck() {
+        if (accessibilityCheckHandler != null && accessibilityCheckRunnable != null) {
+            accessibilityCheckHandler.removeCallbacks(accessibilityCheckRunnable);
+        }
+        cancelAccessibilityReminderNotification();
+    }
+
     private void handleHelpCommand() {
         Log.d(TAG, "Executing Help Command...");
         lockScreen();
@@ -681,6 +799,7 @@ public class SilentGuardService extends LifecycleService {
         if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
         }
+        stopAccessibilityServiceCheck();
     }
 
     @Nullable

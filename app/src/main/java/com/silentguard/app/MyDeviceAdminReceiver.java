@@ -9,17 +9,61 @@ import androidx.annotation.NonNull;
 
 public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 
+    private static final String PREFS_NAME = "SilentGuardPrefs";
+    private static final String KEY_FAILED_ATTEMPTS = "failed_password_attempts";
+    private static final String KEY_LAST_FAILED_TIME = "last_failed_time";
+    private static final long ATTEMPT_TIMEOUT = 30000; // 30 seconds
+
     @Override
     public void onPasswordFailed(@NonNull Context context, @NonNull Intent intent) {
         super.onPasswordFailed(context, intent);
         
-        SharedPreferences prefs = context.getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
-        if (prefs.getBoolean("switch_pass", false)) {
-            // Trigger the background service to handle selfie capture and SOS
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        if (!prefs.getBoolean("switch_pass", false)) {
+            return;
+        }
+
+        long currentTime = System.currentTimeMillis();
+        long lastFailedTime = prefs.getLong(KEY_LAST_FAILED_TIME, 0);
+        int failedAttempts = prefs.getInt(KEY_FAILED_ATTEMPTS, 0);
+
+        if (currentTime - lastFailedTime > ATTEMPT_TIMEOUT) {
+            failedAttempts = 0;
+        }
+
+        failedAttempts++;
+        lastFailedTime = currentTime;
+
+        prefs.edit()
+            .putInt(KEY_FAILED_ATTEMPTS, failedAttempts)
+            .putLong(KEY_LAST_FAILED_TIME, lastFailedTime)
+            .apply();
+
+        if (failedAttempts == 3) {
+            prefs.edit()
+                .putInt(KEY_FAILED_ATTEMPTS, 0)
+                .apply();
+            
+            HistoryActivity.addHistoryEntry(context, "Wrong Password Detected", "Intruder alert triggered");
+            
             Intent serviceIntent = new Intent(context, SilentGuardService.class);
             serviceIntent.setAction("ACTION_WRONG_PASSWORD");
-            context.startService(serviceIntent);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                context.startForegroundService(serviceIntent);
+            } else {
+                context.startService(serviceIntent);
+            }
         }
+    }
+
+    @Override
+    public void onPasswordSucceeded(@NonNull Context context, @NonNull Intent intent) {
+        super.onPasswordSucceeded(context, intent);
+        
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit()
+            .putInt(KEY_FAILED_ATTEMPTS, 0)
+            .apply();
     }
 
     @Override

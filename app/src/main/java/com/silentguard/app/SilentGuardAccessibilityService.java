@@ -57,7 +57,7 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
                 WAKE_LOCK_TAG
             );
             wakeLock.setReferenceCounted(false);
-            wakeLock.acquire();
+            wakeLock.acquire(10 * 60 * 1000L); // 10 minutes timeout
         }
     }
 
@@ -102,6 +102,8 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
     }
 
     private void triggerEmergencyAlert() {
+        HistoryActivity.addHistoryEntry(this, "Volume Trigger Activated", "Location shared with emergency contacts");
+        
         loadEmergencyContacts();
         if (contactsList.isEmpty()) {
             Log.e(TAG, "No emergency contacts found!");

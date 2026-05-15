@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@color/bg_primary" />
-    <foreground>
-        <inset android:drawable="@color/accent_purple" android:inset="25%" />
-    </foreground>
+    <foreground android:drawable="@drawable/app_logo" />
 </adaptive-icon>

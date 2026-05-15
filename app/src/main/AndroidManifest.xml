@@ -49,6 +49,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".EmergencyContactsActivity" />
+        <activity android:name=".PrivacyPolicyActivity" />
 
         <service
             android:name=".SilentGuardService"
