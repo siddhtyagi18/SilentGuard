@@ -29,6 +29,10 @@ import java.util.List;
 
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import android.os.Build;
+import android.view.WindowManager;
 
 public class EmergencyResponseActivity extends AppCompatActivity {
 
@@ -42,11 +46,32 @@ public class EmergencyResponseActivity extends AppCompatActivity {
     private TelephonyManager telephonyManager;
     private PhoneStateListener phoneStateListener;
     private boolean isCallInProgress = false;
+    private Handler autoCallHandler = new Handler(Looper.getMainLooper());
+    private Runnable autoCallRunnable;
+    private int countdownSeconds = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // Essential flags to show over lock screen - must be set BEFORE super.onCreate or setContentView
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+            android.app.KeyguardManager km = (android.app.KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            if (km != null) {
+                km.requestDismissKeyguard(this, null);
+            }
+        } else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
         super.onCreate(savedInstanceState);
+        Log.d("EmergencyResponse", "onCreate: Popup activity starting...");
+        
         setContentView(R.layout.activity_emergency_response);
+        Log.d("EmergencyResponse", "onCreate: Layout set");
 
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         setupPhoneStateListener();
@@ -55,6 +80,44 @@ public class EmergencyResponseActivity extends AppCompatActivity {
         initViews();
         startEntranceAnimation();
         provideHapticFeedback();
+        
+        // Start auto-call countdown if enabled
+        startAutoCallCountdown();
+    }
+
+    private void startAutoCallCountdown() {
+        android.content.SharedPreferences prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
+        if (contactsList.isEmpty()) {
+            tvTitle.setText("No Emergency Contacts");
+            tvMessage.setText("Please add contacts in settings to enable calling.");
+            btnPositive.setVisibility(View.GONE);
+            btnNegative.setText("CLOSE");
+            return;
+        }
+
+        if (prefs.getBoolean("vol_auto_call", true)) {
+            autoCallRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (countdownSeconds > 0) {
+                        btnPositive.setText("CALL NOW (" + countdownSeconds + "s)");
+                        countdownSeconds--;
+                        autoCallHandler.postDelayed(this, 1000);
+                    } else {
+                        btnPositive.setText("CALLING...");
+                        startSequentialCalling();
+                    }
+                }
+            };
+            autoCallHandler.post(autoCallRunnable);
+        }
+    }
+
+    private void cancelAutoCall() {
+        if (autoCallHandler != null && autoCallRunnable != null) {
+            autoCallHandler.removeCallbacks(autoCallRunnable);
+        }
+        btnPositive.setText("CALL NOW");
     }
 
     private void setupPhoneStateListener() {
@@ -118,8 +181,14 @@ public class EmergencyResponseActivity extends AppCompatActivity {
         btnPositive = findViewById(R.id.btn_positive);
         btnNegative = findViewById(R.id.btn_negative);
 
-        btnPositive.setOnClickListener(v -> startSequentialCalling());
-        btnNegative.setOnClickListener(v -> finish());
+        btnPositive.setOnClickListener(v -> {
+            cancelAutoCall();
+            startSequentialCalling();
+        });
+        btnNegative.setOnClickListener(v -> {
+            cancelAutoCall();
+            finish();
+        });
     }
 
     private void provideHapticFeedback() {
@@ -171,15 +240,27 @@ public class EmergencyResponseActivity extends AppCompatActivity {
 
     private void makeCall(String phoneNumber) {
         try {
+            Log.d("EmergencyResponse", "Initiating call to: " + phoneNumber);
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.parse("tel:" + phoneNumber));
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                currentContactIndex++; // Prepare next index
+                currentContactIndex++; // Prepare next index for the next call
                 startActivity(callIntent);
+                
+                // Monitor call state to trigger next call if this one isn't answered
+                // We use a timeout fallback in case the listener doesn't catch all states
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    if (!isCallInProgress && currentContactIndex < contactsList.size()) {
+                        Log.d("EmergencyResponse", "Call not picked up or ended quickly, trying next...");
+                        handleCallEnded();
+                    }
+                }, 15000); // 15 second timeout per contact
             } else {
                 Toast.makeText(this, "Call permission not granted", Toast.LENGTH_SHORT).show();
+                finish();
             }
         } catch (Exception e) {
+            Log.e("EmergencyResponse", "Error making call: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private View sosButton;
     private View cardSnatches, cardVolume, cardPassword;
     private TextView statusSnatches, statusVolume, statusPassword;
+    private TextView txtOverallStatus;
+    private android.widget.ImageView imgSystemStatus;
     private TextView appTitle;
     private View navHistory, navSecurity, navProfile;
     private Handler longPressHandler = new Handler();
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    private static final int PERMISSION_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         prefs = getSharedPreferences("SilentGuardPrefs", Context.MODE_PRIVATE);
 
+        // Force enable password detection for the user if they requested it
+        if (!prefs.contains("switch_pass")) {
+            prefs.edit().putBoolean("switch_pass", true).apply();
+        }
+
         // Initialize Views
         sosButton = findViewById(R.id.sos_button);
         cardSnatches = findViewById(R.id.card_snatches);
@@ -66,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         statusSnatches = findViewById(R.id.txt_status_snatches);
         statusVolume = findViewById(R.id.txt_status_volume);
         statusPassword = findViewById(R.id.txt_status_password);
+        txtOverallStatus = findViewById(R.id.txt_overall_status);
+        imgSystemStatus = findViewById(R.id.img_system_status);
         
         navHistory = findViewById(R.id.nav_history);
         navSecurity = findViewById(R.id.nav_security);
@@ -74,8 +85,81 @@ public class MainActivity extends AppCompatActivity {
         setupClickListeners();
         setupSOSInteraction();
         loadUserData();
+        startProtectionService();
+        checkPermissions();
         checkBatteryOptimizations();
         checkAccessibilityService();
+        checkOverlayPermission();
+    }
+
+    private void startProtectionService() {
+        Intent serviceIntent = new Intent(this, SilentGuardService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
+    }
+
+    private void checkPermissions() {
+        String[] permissions = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.RECORD_AUDIO
+        };
+
+        boolean allGranted = true;
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                allGranted = false;
+                break;
+            }
+        }
+
+        if (!allGranted) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            boolean allGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false;
+                    break;
+                }
+            }
+            if (allGranted) {
+                Toast.makeText(this, "All permissions granted!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permissions are required for all features to work.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void checkOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("Permission Required")
+                    .setMessage("To show the emergency call popup over other apps, please enable 'Draw over other apps' permission.")
+                    .setPositiveButton("Settings", (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Later", null)
+                    .show();
+            }
+        }
     }
 
     private void checkAccessibilityService() {
@@ -138,9 +222,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCardStatuses() {
-        updateStatus(statusSnatches, cardSnatches, prefs.getBoolean("switch_voice", true));
-        updateStatus(statusVolume, cardVolume, prefs.getBoolean("switch_volume", false));
-        updateStatus(statusPassword, cardPassword, prefs.getBoolean("switch_pass", false));
+        boolean isVoice = prefs.getBoolean("switch_voice", true);
+        boolean isVolume = prefs.getBoolean("switch_volume", false);
+        boolean isPass = prefs.getBoolean("switch_pass", false);
+
+        updateStatus(statusSnatches, cardSnatches, isVoice);
+        updateStatus(statusVolume, cardVolume, isVolume);
+        updateStatus(statusPassword, cardPassword, isPass);
+
+        int activeCount = 0;
+        if (isVoice) activeCount++;
+        if (isVolume) activeCount++;
+        if (isPass) activeCount++;
+
+        if (activeCount == 3) {
+            txtOverallStatus.setText("All systems are active");
+            txtOverallStatus.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+            imgSystemStatus.setColorFilter(ContextCompat.getColor(this, R.color.success_green));
+        } else if (activeCount > 0) {
+            txtOverallStatus.setText(activeCount + (activeCount == 1 ? " System is active" : " Systems are active"));
+            txtOverallStatus.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+            imgSystemStatus.setColorFilter(ContextCompat.getColor(this, R.color.neon_violet));
+        } else {
+            txtOverallStatus.setText("All systems are inactive");
+            txtOverallStatus.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+            imgSystemStatus.setColorFilter(ContextCompat.getColor(this, R.color.text_secondary));
+        }
     }
 
     private void updateStatus(TextView statusTxt, View card, boolean isActive) {

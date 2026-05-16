@@ -26,6 +26,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
         long currentTime = System.currentTimeMillis();
         long lastFailedTime = prefs.getLong(KEY_LAST_FAILED_TIME, 0);
         int failedAttempts = prefs.getInt(KEY_FAILED_ATTEMPTS, 0);
+        int triggerLimit = prefs.getInt("pass_trigger_limit", 3); // Default to 3 attempts as per user request
 
         if (currentTime - lastFailedTime > ATTEMPT_TIMEOUT) {
             failedAttempts = 0;
@@ -39,7 +40,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
             .putLong(KEY_LAST_FAILED_TIME, lastFailedTime)
             .apply();
 
-        if (failedAttempts == 3) {
+        if (failedAttempts >= triggerLimit) {
             prefs.edit()
                 .putInt(KEY_FAILED_ATTEMPTS, 0)
                 .apply();

@@ -2,27 +2,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#99000000">
+    android:layout_height="match_parent">
 
     <!-- Glassmorphism Container -->
     <LinearLayout
         android:id="@+id/popup_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:background="@drawable/bg_popup_neon"
+        android:layout_margin="24dp"
+        android:background="@drawable/bg_glass_card"
         android:orientation="vertical"
         android:padding="28dp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:elevation="12dp">
 
-        <!-- Phone Icon with Glow -->
+        <!-- Phone Icon with Circular Background -->
         <FrameLayout
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="24dp">
             
             <View
@@ -30,15 +31,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_dot_neon"
-                android:alpha="0.4" />
+                android:alpha="0.8" />
 
             <ImageView
                 android:id="@+id/iv_warning"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:src="@android:drawable/ic_menu_call"
-                app:tint="@color/neon_violet" />
+                app:tint="@color/text_primary" />
         </FrameLayout>
 
         <TextView
@@ -47,10 +48,10 @@
             android:layout_height="wrap_content"
             android:text="Do you want to call your\nsaved emergency contact?"
             android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-black"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-bold"
             android:gravity="center"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/tv_message"
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="This will call your primary\nemergency contact."
             android:textColor="@color/text_secondary"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:gravity="center"
             android:layout_marginBottom="32dp" />
 

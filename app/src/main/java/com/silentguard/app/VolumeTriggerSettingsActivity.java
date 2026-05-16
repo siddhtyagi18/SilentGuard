@@ -46,7 +46,7 @@ public class VolumeTriggerSettingsActivity extends BaseSettingsActivity {
         
         switchShareLocation.setChecked(prefs.getBoolean("vol_share_loc", true));
         switchSendSms.setChecked(prefs.getBoolean("vol_send_sms", true));
-        switchAutoCall.setChecked(prefs.getBoolean("vol_auto_call", false));
+        switchAutoCall.setChecked(prefs.getBoolean("vol_auto_call", true));
     }
 
     private void setupListeners() {
@@ -96,9 +96,20 @@ public class VolumeTriggerSettingsActivity extends BaseSettingsActivity {
 
         btnTestTrigger.setOnClickListener(v -> {
             Toast.makeText(this, "Simulating Volume Button Trigger (3x)...", Toast.LENGTH_SHORT).show();
+            
+            // 1. Simulate SOS (SMS + Location)
             Intent intent = new Intent(this, ShareLocationActivity.class);
             intent.putExtra("AUTO_TRIGGER", true);
             startActivity(intent);
+
+            // 2. Simulate Call Popup if enabled
+            if (prefs.getBoolean("vol_auto_call", true)) {
+                new android.os.Handler().postDelayed(() -> {
+                    Intent responseIntent = new Intent(this, EmergencyResponseActivity.class);
+                    responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(responseIntent);
+                }, 1500); // Show popup after 1.5s to simulate background delay
+            }
         });
     }
 

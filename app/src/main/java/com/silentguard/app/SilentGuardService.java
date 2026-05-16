@@ -167,18 +167,14 @@ public class SilentGuardService extends LifecycleService {
                             if (volumePressCount == 3) {
                                 volumePressCount = 0;
                                 Log.d(TAG, "3x Volume Trigger: Sending SOS...");
-                                triggerEmergencyAlert();
                                 
-                                if (prefs.getBoolean("vol_auto_call", false)) {
-                                    Log.d(TAG, "Auto Call enabled: Launching Call Confirmation...");
-                                    
-                                    loadEmergencyContacts();
-                                    if (!contactsList.isEmpty()) {
-                                        Intent responseIntent = new Intent(SilentGuardService.this, EmergencyResponseActivity.class);
-                                        responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(responseIntent);
-                                    }
-                                }
+                                // Show a toast immediately to confirm detection
+                                new Handler(Looper.getMainLooper()).post(() -> 
+                                    Toast.makeText(SilentGuardService.this, "SOS Triggered! Sending Alert...", Toast.LENGTH_SHORT).show()
+                                );
+
+                                // 1. First send SMS and Location (Popup will be triggered inside sendAlertWithLocation)
+                                triggerEmergencyAlert();
                             }
                         }
                     }
@@ -226,7 +222,7 @@ public class SilentGuardService extends LifecycleService {
             updateNotificationWithSiren();
             
             new Handler(Looper.getMainLooper()).post(() -> 
-                Toast.makeText(this, "EMERGENCY SIREN ACTIVATED!", Toast.LENGTH_LONG).show()
+                Toast.makeText(SilentGuardService.this, "EMERGENCY SIREN ACTIVATED!", Toast.LENGTH_LONG).show()
             );
         } catch (Exception e) {
             Log.e(TAG, "Failed to play siren: " + e.getMessage());
@@ -475,7 +471,15 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void triggerEmergencyAlert(boolean showToast) {
-        HistoryActivity.addHistoryEntry(this, "Emergency SOS Triggered", "Location shared with emergency contacts");
+        boolean sendSms = prefs.getBoolean("vol_send_sms", true);
+        boolean shareLoc = prefs.getBoolean("vol_share_loc", true);
+        
+        if (!sendSms && !shareLoc) {
+            Log.d(TAG, "SOS Actions disabled in settings (SMS and Location)");
+            return;
+        }
+
+        HistoryActivity.addHistoryEntry(this, "Emergency SOS Triggered", "SOS alert initiated via Volume Trigger");
         
         loadEmergencyContacts();
         if (contactsList.isEmpty()) {
@@ -483,15 +487,19 @@ public class SilentGuardService extends LifecycleService {
             return;
         }
 
-        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-            if (location != null) {
-                sendAlertWithLocation(location, showToast);
-            } else {
-                // Try requesting a fresh location
-                Log.d(TAG, "Last location null, requesting fresh location...");
-                requestFreshLocation(showToast);
-            }
-        });
+        if (shareLoc) {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                if (location != null) {
+                    sendAlertWithLocation(location, showToast);
+                } else {
+                    Log.d(TAG, "Last location null, requesting fresh location...");
+                    requestFreshLocation(showToast);
+                }
+            });
+        } else if (sendSms) {
+            // Send SMS without location if location sharing is disabled
+            sendAlertWithLocation(null, showToast);
+        }
     }
 
     private void requestFreshLocation() {
@@ -546,6 +554,11 @@ public class SilentGuardService extends LifecycleService {
                 Log.e(TAG, "Failed to send SMS to " + contact.name, e);
             }
         }
+
+        // 2. Launch Call Popup AFTER sending alerts
+        if (prefs.getBoolean("vol_auto_call", true)) {
+            new Handler(Looper.getMainLooper()).postDelayed(this::showEmergencyPopup, 500);
+        }
     }
 
     private void sendAlertWithLocation(android.location.Location location) {
@@ -553,10 +566,25 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void takeSelfieAndSendSOS() {
+        Log.d(TAG, "takeSelfieAndSendSOS: Starting intruder detection flow...");
+        
+        if (!prefs.getBoolean("pass_capture_selfie", true)) {
+            Log.d(TAG, "Selfie capture disabled in settings, falling back to basic alert");
+            triggerEmergencyAlert();
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "Camera permission not granted for selfie! Falling back to basic alert");
+            triggerEmergencyAlert();
+            return;
+        }
+
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                Log.d(TAG, "CameraProvider obtained");
                 
                 ImageCapture imageCapture = new ImageCapture.Builder()
                         .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
@@ -565,26 +593,32 @@ public class SilentGuardService extends LifecycleService {
                 CameraSelector cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;
 
                 cameraProvider.unbindAll();
+                // We use this (LifecycleService) as the lifecycle owner
                 cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture);
+                Log.d(TAG, "Camera bound to lifecycle");
                 
-                File photoFile = new File(getExternalFilesDir(null), "selfie_" + System.currentTimeMillis() + ".jpg");
+                File photoFile = new File(getExternalFilesDir(null), "intruder_" + System.currentTimeMillis() + ".jpg");
                 ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(photoFile).build();
 
+                Log.d(TAG, "Taking picture...");
                 imageCapture.takePicture(outputOptions, cameraExecutor, new ImageCapture.OnImageSavedCallback() {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        Log.d(TAG, "Selfie saved successfully: " + photoFile.getAbsolutePath());
                         uploadSelfieAndSendSOS(photoFile);
                     }
 
                     @Override
                     public void onError(@NonNull ImageCaptureException exception) {
-                        Log.e(TAG, "Photo capture failed: " + exception.getMessage());
+                        Log.e(TAG, "Photo capture failed: " + exception.getMessage(), exception);
+                        // Fallback to location-only alert if camera fails
                         triggerEmergencyAlert();
                     }
                 });
 
             } catch (ExecutionException | InterruptedException e) {
                 Log.e(TAG, "Camera initialization failed", e);
+                triggerEmergencyAlert();
             }
         }, ContextCompat.getMainExecutor(this));
     }
@@ -608,25 +642,48 @@ public class SilentGuardService extends LifecycleService {
     }
 
     private void sendSOSWithImage(String imageUrl) {
+        boolean shareLoc = prefs.getBoolean("pass_share_loc", true);
+        boolean sendSms = prefs.getBoolean("pass_send_sms", true);
+        boolean attachSelfie = prefs.getBoolean("pass_attach_selfie", true);
+
+        if (!sendSms) {
+            Log.d(TAG, "SMS alerts disabled for intruder detection");
+            return;
+        }
+
         loadEmergencyContacts();
-        if (contactsList.isEmpty()) return;
+        if (contactsList.isEmpty()) {
+            Log.e(TAG, "No contacts to send SOS with image!");
+            return;
+        }
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             String locationLink = "https://www.google.com/maps/search/?api=1&query=";
-            if (location != null) {
+            if (location != null && shareLoc) {
                 locationLink += location.getLatitude() + "," + location.getLongitude();
             } else {
                 locationLink += "Unknown+Location";
             }
 
-            String message = "WRONG PASSWORD DETECTED! Intruder photo: " + imageUrl + " | Location: " + locationLink;
+            // Construct message based on enabled actions
+            StringBuilder messageBuilder = new StringBuilder("ALERT: Someone tried to unlock your phone after 3 failed attempts!");
+            
+            if (attachSelfie) {
+                messageBuilder.append(" Intruder photo: ").append(imageUrl);
+            }
+            
+            if (shareLoc) {
+                messageBuilder.append(" | Location: ").append(locationLink);
+            }
+            
+            String message = messageBuilder.toString();
             
             for (Contact contact : contactsList) {
                 try {
                     SmsManager.getDefault().sendTextMessage(contact.phone, null, message, null, null);
-                    Log.d(TAG, "SMS sent to " + contact.name + " at " + contact.phone);
+                    Log.d(TAG, "Intruder Alert SMS sent to " + contact.name);
                 } catch (Exception e) {
-                    Log.e(TAG, "Failed to send SMS to " + contact.name, e);
+                    Log.e(TAG, "Failed to send intruder SMS to " + contact.name, e);
                 }
             }
         });
@@ -750,6 +807,45 @@ public class SilentGuardService extends LifecycleService {
     private void handleGivePhoneCommand() {
         Log.d(TAG, "Executing Give me my phone Command...");
         triggerEmergencyAlert();
+    }
+
+    private void showEmergencyPopup() {
+        Log.d(TAG, "Launching EmergencyResponseActivity popup...");
+        
+        Intent intent = new Intent(this, EmergencyResponseActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK 
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP 
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+        
+        // On Android 10+, background activity starts are restricted.
+        // We use a high-priority notification with fullScreenIntent as a fallback and primary way.
+        PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                        .setContentTitle("Emergency SOS Triggered!")
+                        .setContentText("Tap to manage emergency call")
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setCategory(NotificationCompat.CATEGORY_CALL)
+                        .setFullScreenIntent(fullScreenPendingIntent, true)
+                        .setAutoCancel(true)
+                        .setOngoing(true);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+        }
+
+        // Also try direct start as some devices/accessibility services allow it
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "Direct startActivity failed, relying on FullScreenIntent: " + e.getMessage());
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.silentguard.app;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.PowerManager;
@@ -91,6 +93,13 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
                     if (volumePressCount == 3) {
                         volumePressCount = 0;
                         Log.d(TAG, "3x Volume Trigger (Accessibility): Sending SOS...");
+                        
+                        // Show a toast immediately to confirm detection
+                        new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> 
+                            android.widget.Toast.makeText(SilentGuardAccessibilityService.this, "SOS Triggered! Sending Alert...", android.widget.Toast.LENGTH_SHORT).show()
+                        );
+
+                        // 1. First send SMS and Location (Popup will be triggered inside sendAlertWithLocation)
                         triggerEmergencyAlert();
                     }
                 }
@@ -102,7 +111,15 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
     }
 
     private void triggerEmergencyAlert() {
-        HistoryActivity.addHistoryEntry(this, "Volume Trigger Activated", "Location shared with emergency contacts");
+        boolean sendSms = prefs.getBoolean("vol_send_sms", true);
+        boolean shareLoc = prefs.getBoolean("vol_share_loc", true);
+
+        if (!sendSms && !shareLoc) {
+            Log.d(TAG, "SOS Actions disabled in settings (SMS and Location)");
+            return;
+        }
+
+        HistoryActivity.addHistoryEntry(this, "Volume Trigger Activated", "SOS alert initiated via Accessibility Service");
         
         loadEmergencyContacts();
         if (contactsList.isEmpty()) {
@@ -110,13 +127,17 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
             return;
         }
 
-        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-            if (location != null) {
-                sendAlertWithLocation(location);
-            } else {
-                requestFreshLocation();
-            }
-        });
+        if (shareLoc) {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                if (location != null) {
+                    sendAlertWithLocation(location);
+                } else {
+                    requestFreshLocation();
+                }
+            });
+        } else if (sendSms) {
+            sendAlertWithLocation(null);
+        }
     }
 
     private void requestFreshLocation() {
@@ -162,6 +183,11 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
                 Log.e(TAG, "Failed to send SMS to " + contact.name, e);
             }
         }
+
+        // 2. Launch Call Popup AFTER sending alerts
+        if (prefs.getBoolean("vol_auto_call", true)) {
+            new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(this::showEmergencyPopup, 500);
+        }
     }
 
     private void loadEmergencyContacts() {
@@ -180,6 +206,46 @@ public class SilentGuardAccessibilityService extends AccessibilityService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void showEmergencyPopup() {
+        Log.d(TAG, "Launching EmergencyResponseActivity popup via Accessibility...");
+        
+        Intent intent = new Intent(this, EmergencyResponseActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK 
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP 
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+        
+        // Notification channel ID should match SilentGuardService
+        String CHANNEL_ID = "SilentGuardChannel";
+        int NOTIFICATION_ID = 1001;
+
+        PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        androidx.core.app.NotificationCompat.Builder notificationBuilder =
+                new androidx.core.app.NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                        .setContentTitle("Emergency SOS Triggered!")
+                        .setContentText("Tap to manage emergency call")
+                        .setPriority(androidx.core.app.NotificationCompat.PRIORITY_MAX)
+                        .setCategory(androidx.core.app.NotificationCompat.CATEGORY_CALL)
+                        .setFullScreenIntent(fullScreenPendingIntent, true)
+                        .setAutoCancel(true)
+                        .setOngoing(true);
+
+        android.app.NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+        }
+
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "Accessibility startActivity failed: " + e.getMessage());
         }
     }
 

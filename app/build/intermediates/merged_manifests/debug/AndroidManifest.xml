@@ -20,13 +20,15 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.front" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
 
@@ -65,7 +67,9 @@
             android:name="com.silentguard.app.EmergencyResponseActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.SilentGuard.Transparent" />
+            android:showWhenLocked="true"
+            android:theme="@style/Theme.SilentGuard.Transparent"
+            android:turnScreenOn="true" />
         <activity android:name="com.silentguard.app.ShareLocationActivity" />
         <activity android:name="com.silentguard.app.HowItWorksActivity" />
         <activity android:name="com.silentguard.app.HistoryActivity" />
@@ -73,6 +77,7 @@
         <activity android:name="com.silentguard.app.ProfileActivity" />
         <activity android:name="com.silentguard.app.EditProfileActivity" />
         <activity android:name="com.silentguard.app.EmergencyContactsActivity" />
+        <activity android:name="com.silentguard.app.PrivacyPolicyActivity" />
 
         <service
             android:name="com.silentguard.app.SilentGuardService"
@@ -94,6 +99,28 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="com.silentguard.app.BootReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.silentguard.app.SilentGuardAccessibilityService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
 
         <activity
             android:name="com.google.firebase.auth.internal.GenericIdpActivity"

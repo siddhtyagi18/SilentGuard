@@ -92,15 +92,6 @@
                 </RelativeLayout>
             </FrameLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tap_hold_sos"
-                android:textColor="@color/text_secondary"
-                android:gravity="center"
-                android:layout_marginBottom="32dp" />
-
-            <!-- Security Status Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,15 +99,18 @@
                 android:padding="16dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="32dp">
 
                 <ImageView
+                    android:id="@+id/img_system_status"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@android:drawable/checkbox_on_background"
                     app:tint="@color/success_green" />
 
                 <TextView
+                    android:id="@+id/txt_overall_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"

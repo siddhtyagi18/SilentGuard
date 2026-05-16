@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-73:12
-INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-73:12
-INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-73:12
-INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-73:12
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-101:12
+INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-101:12
+INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-101:12
+INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:2:1-101:12
 MERGED from [com.google.firebase:firebase-auth:22.1.0] C:\Users\hp\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:17:1-75:12
 MERGED from [com.google.firebase:firebase-database:20.2.2] C:\Users\hp\.gradle\caches\8.10\transforms\830f73aaea0e3475e4bf228c658f89c0\transformed\jetified-firebase-database-20.2.2\AndroidManifest.xml:15:1-37:12
 MERGED from [com.google.firebase:firebase-analytics:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\f74702570f13e3f8a4c35ef9345b5c85\transformed\jetified-firebase-analytics-21.3.0\AndroidManifest.xml:2:1-9:12
@@ -136,17 +136,37 @@ uses-permission#android.permission.CAMERA
 ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:16:5-65
 	android:name
 		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:16:22-62
+uses-permission#android.permission.WAKE_LOCK
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:17:5-68
+MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:24:5-68
+MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:24:5-68
+MERGED from [com.google.android.gms:play-services-measurement:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\528bb2edd25033ded1e2aa01a837cb8f\transformed\jetified-play-services-measurement-impl-21.3.0\AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\528bb2edd25033ded1e2aa01a837cb8f\transformed\jetified-play-services-measurement-impl-21.3.0\AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\01a01f6e9052625ffac01c2f9a666d91\transformed\jetified-play-services-measurement-sdk-api-21.3.0\AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\01a01f6e9052625ffac01c2f9a666d91\transformed\jetified-play-services-measurement-sdk-api-21.3.0\AndroidManifest.xml:25:5-68
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:17:22-65
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:18:5-78
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:18:22-75
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:19:5-81
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:19:22-78
 uses-feature#android.hardware.camera
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:17:5-60
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:20:5-60
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:17:19-57
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:20:19-57
 uses-feature#android.hardware.camera.front
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:18:5-66
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:21:5-66
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:18:19-63
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:21:19-63
 application
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:20:5-71:19
-INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:20:5-71:19
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:23:5-99:19
+INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:23:5-99:19
 MERGED from [com.google.firebase:firebase-auth:22.1.0] C:\Users\hp\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-auth:22.1.0] C:\Users\hp\.gradle\caches\8.10\transforms\57d690484aaf965ee0c7f155dd698b42\transformed\jetified-firebase-auth-22.1.0\AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-database:20.2.2] C:\Users\hp\.gradle\caches\8.10\transforms\830f73aaea0e3475e4bf228c658f89c0\transformed\jetified-firebase-database-20.2.2\AndroidManifest.xml:27:5-35:19
@@ -214,125 +234,171 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hp
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.9.0] C:\Users\hp\.gradle\caches\8.10\transforms\af5953fb1933183c92d4e885ecdc63fe\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:25:9-35
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:28:9-35
 	android:label
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:23:9-41
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:26:9-41
 	android:roundIcon
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:24:9-54
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:27:9-54
 	android:icon
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:22:9-43
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:25:9-43
 	android:allowBackup
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:21:9-35
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:24:9-35
 	android:theme
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:26:9-49
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:29:9-49
 activity#com.silentguard.app.LoginActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:27:9-34:20
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:30:9-37:20
 	android:exported
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:29:13-36
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:32:13-36
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:28:13-42
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:31:13-42
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:30:13-33:29
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:33:13-36:29
 action#android.intent.action.MAIN
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:31:17-69
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:34:17-69
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:31:25-66
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:34:25-66
 category#android.intent.category.LAUNCHER
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:32:17-77
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:35:17-77
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:32:27-74
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:35:27-74
 activity#com.silentguard.app.SignUpActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:35:9-52
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:38:9-52
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:35:19-49
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:38:19-49
 activity#com.silentguard.app.MainActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:36:9-50
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:39:9-50
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:36:19-47
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:39:19-47
 activity#com.silentguard.app.TriggerSettingsActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:37:9-61
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:40:9-61
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:37:19-58
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:40:19-58
 activity#com.silentguard.app.VolumeTriggerSettingsActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:38:9-67
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:41:9-67
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:38:19-64
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:41:19-64
 activity#com.silentguard.app.PasswordTriggerSettingsActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:39:9-69
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:42:9-69
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:39:19-66
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:42:19-66
 activity#com.silentguard.app.EmergencyResponseActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:40:9-43:49
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:43:9-48:43
+	android:turnScreenOn
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:48:13-40
 	android:excludeFromRecents
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:43:13-46
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:46:13-46
+	android:showWhenLocked
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:47:13-42
 	android:launchMode
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:42:13-48
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:45:13-48
 	android:theme
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:41:13-65
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:44:13-65
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:40:19-60
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:43:19-60
 activity#com.silentguard.app.ShareLocationActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:44:9-59
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:49:9-59
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:44:19-56
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:49:19-56
 activity#com.silentguard.app.HowItWorksActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:45:9-56
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:50:9-56
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:45:19-53
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:50:19-53
 activity#com.silentguard.app.HistoryActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:46:9-53
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:51:9-53
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:46:19-50
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:51:19-50
 activity#com.silentguard.app.SettingsActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:47:9-54
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:52:9-54
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:47:19-51
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:52:19-51
 activity#com.silentguard.app.ProfileActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:48:9-53
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:53:9-53
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:48:19-50
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:53:19-50
 activity#com.silentguard.app.EditProfileActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:49:9-57
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:54:9-57
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:49:19-54
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:54:19-54
 activity#com.silentguard.app.EmergencyContactsActivity
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:50:9-63
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:55:9-63
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:50:19-60
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:55:19-60
+activity#com.silentguard.app.PrivacyPolicyActivity
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:56:9-59
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:56:19-56
 service#com.silentguard.app.SilentGuardService
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:52:9-56:67
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:58:9-62:67
 	android:enabled
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:54:13-35
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:60:13-35
 	android:exported
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:55:13-37
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:61:13-37
 	android:foregroundServiceType
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:56:13-64
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:62:13-64
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:53:13-47
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:59:13-47
 receiver#com.silentguard.app.MyDeviceAdminReceiver
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:58:9-70:20
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:64:9-76:20
 	android:label
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:61:13-45
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:67:13-45
 	android:exported
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:63:13-36
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:69:13-36
 	android:permission
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:62:13-70
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:68:13-70
 	android:description
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:60:13-51
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:66:13-51
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:59:13-50
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:65:13-50
 meta-data#android.app.device_admin
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:64:13-66:62
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:70:13-72:62
 	android:resource
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:66:17-59
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:72:17-59
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:65:17-56
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:71:17-56
 intent-filter#action:name:android.app.action.DEVICE_ADMIN_ENABLED
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:67:13-69:29
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:73:13-75:29
 action#android.app.action.DEVICE_ADMIN_ENABLED
-ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:68:17-82
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:74:17-82
 	android:name
-		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:68:25-79
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:74:25-79
+receiver#com.silentguard.app.BootReceiver
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:78:9-86:20
+	android:enabled
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:80:13-35
+	android:exported
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:81:13-36
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:79:13-41
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.QUICKBOOT_POWERON
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:82:13-85:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:83:17-79
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:83:25-76
+action#android.intent.action.QUICKBOOT_POWERON
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:84:17-82
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:84:25-79
+service#com.silentguard.app.SilentGuardAccessibilityService
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:88:9-98:19
+	android:exported
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:91:13-36
+	android:permission
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:90:13-79
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:89:13-60
+intent-filter#action:name:android.accessibilityservice.AccessibilityService
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:92:13-94:29
+action#android.accessibilityservice.AccessibilityService
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:93:17-92
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:93:25-89
+meta-data#android.accessibilityservice
+ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:95:13-97:72
+	android:resource
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:97:17-69
+	android:name
+		ADDED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml:96:17-60
 uses-sdk
 INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\desktop  data\coding\SilentGuard\SilentGuard\app\src\main\AndroidManifest.xml
@@ -647,16 +713,6 @@ ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\hp\.gradl
 		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\hp\.gradle\caches\8.10\transforms\5233ba2b5ab776f6367d02460d9d25fc\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
 	android:name
 		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\hp\.gradle\caches\8.10\transforms\5233ba2b5ab776f6367d02460d9d25fc\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
-uses-permission#android.permission.WAKE_LOCK
-ADDED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:24:5-68
-MERGED from [com.google.android.gms:play-services-measurement:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:25:5-68
-MERGED from [com.google.android.gms:play-services-measurement:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\4d75980dee88adad95ee5b024c522cbb\transformed\jetified-play-services-measurement-21.3.0\AndroidManifest.xml:25:5-68
-MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\528bb2edd25033ded1e2aa01a837cb8f\transformed\jetified-play-services-measurement-impl-21.3.0\AndroidManifest.xml:25:5-68
-MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\528bb2edd25033ded1e2aa01a837cb8f\transformed\jetified-play-services-measurement-impl-21.3.0\AndroidManifest.xml:25:5-68
-MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\01a01f6e9052625ffac01c2f9a666d91\transformed\jetified-play-services-measurement-sdk-api-21.3.0\AndroidManifest.xml:25:5-68
-MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\01a01f6e9052625ffac01c2f9a666d91\transformed\jetified-play-services-measurement-sdk-api-21.3.0\AndroidManifest.xml:25:5-68
-	android:name
-		ADDED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:24:22-65
 uses-permission#com.google.android.gms.permission.AD_ID
 ADDED from [com.google.android.gms:play-services-measurement-api:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\b535641933703631869956d7aa1066d9\transformed\jetified-play-services-measurement-api-21.3.0\AndroidManifest.xml:25:5-79
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] C:\Users\hp\.gradle\caches\8.10\transforms\528bb2edd25033ded1e2aa01a837cb8f\transformed\jetified-play-services-measurement-impl-21.3.0\AndroidManifest.xml:27:5-79

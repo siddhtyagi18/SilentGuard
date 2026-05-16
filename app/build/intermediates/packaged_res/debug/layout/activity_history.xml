@@ -53,21 +53,10 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/history_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <!-- History Item 1 -->
-            <include layout="@layout/item_history" android:id="@+id/item1" />
-            
-            <!-- History Item 2 -->
-            <include layout="@layout/item_history" android:id="@+id/item2" />
-            
-            <!-- History Item 3 -->
-            <include layout="@layout/item_history" android:id="@+id/item3" />
-            
-            <!-- History Item 4 -->
-            <include layout="@layout/item_history" android:id="@+id/item4" />
 
         </LinearLayout>
     </ScrollView>

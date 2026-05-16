@@ -20,6 +20,10 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_sos_pulse.xml"
     },
     {
+        "merged": "com.silentguard.app-merged_res-41:/layout_activity_main.xml.flat",
+        "source": "com.silentguard.app-main-43:/layout/activity_main.xml"
+    },
+    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_item_custom_command.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_custom_command.xml"
     },
@@ -28,12 +32,12 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_location_tag.xml.flat",
-        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_location_tag.xml"
-    },
-    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_sos_button.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_sos_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_location_tag.xml.flat",
+        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_location_tag.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_glass_card_active.xml.flat",
@@ -48,8 +52,8 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\item_history.xml"
     },
     {
-        "merged": "com.silentguard.app-merged_res-41:/layout_activity_trigger_settings.xml.flat",
-        "source": "com.silentguard.app-main-43:/layout/activity_trigger_settings.xml"
+        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\ic_launcher_foreground.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_dialog_add_contact.xml.flat",
@@ -76,6 +80,10 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\xml\\device_admin_rules.xml"
     },
     {
+        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_app_logo.png.flat",
+        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\app_logo.png"
+    },
+    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_how_it_works.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_how_it_works.xml"
     },
@@ -100,12 +108,12 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_status_indicator.xml"
     },
     {
-        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_fake_call.xml.flat",
-        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_fake_call.xml"
-    },
-    {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_main.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_privacy_policy.xml.flat",
+        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_privacy_policy.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_logout_button.xml.flat",
@@ -124,8 +132,8 @@
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_neon_button.xml"
     },
     {
-        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_dialog_add_command.xml.flat",
-        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\dialog_add_command.xml"
+        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\xml_accessibility_service_config.xml.flat",
+        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\xml\\accessibility_service_config.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
@@ -138,10 +146,6 @@
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\drawable_bg_glass_card.xml.flat",
         "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\drawable\\bg_glass_card.xml"
-    },
-    {
-        "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_fake_lock.xml.flat",
-        "source": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-main-43:\\layout\\activity_fake_lock.xml"
     },
     {
         "merged": "C:\\Users\\hp\\.gradle\\daemon\\8.10\\com.silentguard.app-merged_res-41:\\layout_activity_share_location.xml.flat",
