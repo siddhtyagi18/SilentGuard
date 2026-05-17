@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private View cardSnatches, cardVolume, cardPassword;
     private TextView statusSnatches, statusVolume, statusPassword;
     private TextView appTitle;
+    private TextView securityStatusText;
+    private ImageView securityStatusIcon;
+    private ImageView notificationBellIcon;
     private View navHistory, navSecurity, navProfile;
     private Handler longPressHandler = new Handler();
     private boolean isLongPressing = false;
@@ -67,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         statusVolume = findViewById(R.id.txt_status_volume);
         statusPassword = findViewById(R.id.txt_status_password);
         
+        securityStatusText = findViewById(R.id.security_status_text);
+        securityStatusIcon = findViewById(R.id.security_status_icon);
+        
+        notificationBellIcon = findViewById(R.id.ic_notif);
+        
         navHistory = findViewById(R.id.nav_history);
         navSecurity = findViewById(R.id.nav_security);
         navProfile = findViewById(R.id.nav_profile);
@@ -76,6 +87,18 @@ public class MainActivity extends AppCompatActivity {
         loadUserData();
         checkBatteryOptimizations();
         checkAccessibilityService();
+        SilentGuardService.checkPermissionsOnAppOpen(this);
+        startSilentGuardService();
+    }
+
+    private void startSilentGuardService() {
+        Intent serviceIntent = new Intent(this, SilentGuardService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
+        Log.d("MainActivity", "SilentGuardService started successfully");
     }
 
     private void checkAccessibilityService() {
@@ -115,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadUserData() {
+        String localName = prefs.getString("user_name", "");
+        if (!TextUtils.isEmpty(localName)) {
+            appTitle.setText("Hello, " + localName.split(" ")[0]);
+        }
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -122,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     String name = snapshot.child("name").getValue(String.class);
                     if (name != null) {
                         appTitle.setText("Hello, " + name.split(" ")[0]);
+                        prefs.edit().putString("user_name", name).apply();
                     }
                 }
             }
@@ -134,13 +163,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        loadUserData();
         updateCardStatuses();
     }
 
     private void updateCardStatuses() {
-        updateStatus(statusSnatches, cardSnatches, prefs.getBoolean("switch_voice", true));
-        updateStatus(statusVolume, cardVolume, prefs.getBoolean("switch_volume", false));
-        updateStatus(statusPassword, cardPassword, prefs.getBoolean("switch_pass", false));
+        boolean voiceActive = prefs.getBoolean("switch_voice", true);
+        boolean volumeActive = prefs.getBoolean("switch_volume", false);
+        boolean passwordActive = prefs.getBoolean("switch_pass", false);
+        
+        updateStatus(statusSnatches, cardSnatches, voiceActive);
+        updateStatus(statusVolume, cardVolume, volumeActive);
+        updateStatus(statusPassword, cardPassword, passwordActive);
+        
+        updateSecurityStatus(voiceActive, volumeActive, passwordActive);
+    }
+    
+    private void updateSecurityStatus(boolean voiceActive, boolean volumeActive, boolean passwordActive) {
+        int activeCount = 0;
+        if (voiceActive) activeCount++;
+        if (volumeActive) activeCount++;
+        if (passwordActive) activeCount++;
+        
+        if (activeCount == 3) {
+            securityStatusText.setText("All systems are active");
+            securityStatusIcon.setImageResource(android.R.drawable.checkbox_on_background);
+            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.success_green));
+        } else if (activeCount > 0) {
+            securityStatusText.setText(activeCount + " system" + (activeCount > 1 ? "s" : "") + " active");
+            securityStatusIcon.setImageResource(android.R.drawable.presence_online);
+            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.neon_violet));
+        } else {
+            securityStatusText.setText("No systems active");
+            securityStatusIcon.setImageResource(android.R.drawable.presence_invisible);
+            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.text_secondary));
+        }
     }
 
     private void updateStatus(TextView statusTxt, View card, boolean isActive) {
@@ -163,6 +220,10 @@ public class MainActivity extends AppCompatActivity {
         navHistory.setOnClickListener(v -> startActivity(new Intent(this, HistoryActivity.class)));
         navSecurity.setOnClickListener(v -> startActivity(new Intent(this, HowItWorksActivity.class)));
         navProfile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
+        
+        notificationBellIcon.setOnClickListener(v -> {
+            startActivity(new Intent(this, NotificationCenterActivity.class));
+        });
     }
 
     private void setupSOSInteraction() {

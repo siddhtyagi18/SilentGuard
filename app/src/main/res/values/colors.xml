@@ -11,6 +11,17 @@
     <color name="neon_violet">#A855F7</color>
     <color name="neon_violet_glow">#40A855F7</color>
 
+    <!-- Emergency Theme Colors -->
+    <color name="emergency_red">#E94560</color>
+    <color name="emergency_red_light">#FF6B6B</color>
+    <color name="emergency_red_dark">#0F3460</color>
+    <color name="emergency_dark_1">#1A1A2E</color>
+    <color name="emergency_dark_2">#16213E</color>
+    <color name="emergency_text_primary">#FFFFFF</color>
+    <color name="emergency_text_secondary">#CBD5E1</color>
+    <color name="emergency_button_dark">#2D3748</color>
+    <color name="emergency_button_border">#4A5568</color>
+
     <!-- Text Colors -->
     <color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#A1A1AA</color>

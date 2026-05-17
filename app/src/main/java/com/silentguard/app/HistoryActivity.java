@@ -36,6 +36,11 @@ public class HistoryActivity extends AppCompatActivity {
             backButton.setOnClickListener(v -> finish());
         }
 
+        View clearButton = findViewById(R.id.btn_clear_history);
+        if (clearButton != null) {
+            clearButton.setOnClickListener(v -> clearAllHistory());
+        }
+
         loadHistory();
     }
 
@@ -108,6 +113,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, hh:mm a", Locale.getDefault());
         return sdf.format(new Date(timestamp));
+    }
+
+    private void clearAllHistory() {
+        prefs.edit().putString(KEY_HISTORY, "[]").apply();
+        loadHistory();
+        Toast.makeText(this, "All history cleared", Toast.LENGTH_SHORT).show();
     }
 
     public static void addHistoryEntry(Context context, String title, String description) {

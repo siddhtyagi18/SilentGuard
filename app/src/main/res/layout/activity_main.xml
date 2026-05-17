@@ -111,12 +111,14 @@
                 android:layout_marginBottom="24dp">
 
                 <ImageView
+                    android:id="@+id/security_status_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@android:drawable/checkbox_on_background"
                     app:tint="@color/success_green" />
 
                 <TextView
+                    android:id="@+id/security_status_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"

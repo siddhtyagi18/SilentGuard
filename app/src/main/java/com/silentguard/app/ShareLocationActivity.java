@@ -42,18 +42,6 @@ public class ShareLocationActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private List<Contact> contactsList = new ArrayList<>();
 
-    static class Contact {
-        String name;
-        String phone;
-        String relation;
-
-        Contact(String name, String phone, String relation) {
-            this.name = name;
-            this.phone = phone;
-            this.relation = relation;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

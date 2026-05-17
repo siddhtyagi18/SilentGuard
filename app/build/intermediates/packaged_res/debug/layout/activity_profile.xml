@@ -61,7 +61,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@android:drawable/ic_menu_gallery"
+                    android:src="@android:drawable/ic_lock_lock"
                     app:tint="@color/neon_violet"
                     android:padding="20dp" />
             </FrameLayout>
@@ -102,9 +102,10 @@
                     android:layout_marginEnd="12dp">
                     
                     <TextView
+                        android:id="@+id/tv_alerts_sent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12"
+                        android:text="0"
                         android:textColor="@color/neon_violet"
                         android:textSize="20sp"
                         android:fontFamily="sans-serif-black" />

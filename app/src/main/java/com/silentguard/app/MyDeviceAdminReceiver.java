@@ -39,20 +39,21 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
             .putLong(KEY_LAST_FAILED_TIME, lastFailedTime)
             .apply();
 
+        HistoryActivity.addHistoryEntry(context, "Wrong Password Attempt " + failedAttempts, "Capturing intruder selfie");
+        
+        Intent serviceIntent = new Intent(context, SilentGuardService.class);
+        serviceIntent.setAction("ACTION_WRONG_PASSWORD");
+        serviceIntent.putExtra("ATTEMPT_NUMBER", failedAttempts);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            context.startForegroundService(serviceIntent);
+        } else {
+            context.startService(serviceIntent);
+        }
+
         if (failedAttempts == 3) {
             prefs.edit()
                 .putInt(KEY_FAILED_ATTEMPTS, 0)
                 .apply();
-            
-            HistoryActivity.addHistoryEntry(context, "Wrong Password Detected", "Intruder alert triggered");
-            
-            Intent serviceIntent = new Intent(context, SilentGuardService.class);
-            serviceIntent.setAction("ACTION_WRONG_PASSWORD");
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                context.startForegroundService(serviceIntent);
-            } else {
-                context.startService(serviceIntent);
-            }
         }
     }
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.app.NotificationManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +36,7 @@ public class EmergencyResponseActivity extends AppCompatActivity {
 
     private View popupContainer, iconGlow;
     private ImageView ivWarning;
-    private TextView tvTitle, tvMessage;
+    private TextView tvTitle, tvMessage, tvSubMessage;
     private Button btnPositive, btnNegative;
     
     private List<SilentGuardService.Contact> contactsList = new ArrayList<>();
@@ -42,10 +44,25 @@ public class EmergencyResponseActivity extends AppCompatActivity {
     private TelephonyManager telephonyManager;
     private PhoneStateListener phoneStateListener;
     private boolean isCallInProgress = false;
+    
+    private Handler countdownHandler = new Handler(Looper.getMainLooper());
+    private Runnable countdownRunnable;
+    private int countdownSeconds = 10;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+        }
+        
+        getWindow().addFlags(
+            android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+            android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+        );
+        
         setContentView(R.layout.activity_emergency_response);
 
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -55,6 +72,12 @@ public class EmergencyResponseActivity extends AppCompatActivity {
         initViews();
         startEntranceAnimation();
         provideHapticFeedback();
+        startCountdown();
+        
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.cancel(1003);
+        }
     }
 
     private void setupPhoneStateListener() {
@@ -115,11 +138,18 @@ public class EmergencyResponseActivity extends AppCompatActivity {
         ivWarning = findViewById(R.id.iv_warning);
         tvTitle = findViewById(R.id.tv_title);
         tvMessage = findViewById(R.id.tv_message);
+        tvSubMessage = findViewById(R.id.tv_sub_message);
         btnPositive = findViewById(R.id.btn_positive);
         btnNegative = findViewById(R.id.btn_negative);
 
-        btnPositive.setOnClickListener(v -> startSequentialCalling());
-        btnNegative.setOnClickListener(v -> finish());
+        btnPositive.setOnClickListener(v -> {
+            cancelCountdown();
+            callEmergencyContact();
+        });
+        btnNegative.setOnClickListener(v -> {
+            cancelCountdown();
+            finish();
+        });
     }
 
     private void provideHapticFeedback() {
@@ -169,6 +199,47 @@ public class EmergencyResponseActivity extends AppCompatActivity {
         }
     }
 
+    private void callEmergencyContact() {
+        Intent callIntent = new Intent(this, SilentGuardService.class);
+        callIntent.setAction("ACTION_CALL_CONTACT");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(callIntent);
+        } else {
+            startService(callIntent);
+        }
+        finish();
+    }
+    
+    private void startCountdown() {
+        tvSubMessage.setVisibility(View.VISIBLE);
+        updateCountdownText();
+        
+        countdownRunnable = new Runnable() {
+            @Override
+            public void run() {
+                countdownSeconds--;
+                if (countdownSeconds <= 0) {
+                    callEmergencyContact();
+                } else {
+                    updateCountdownText();
+                    countdownHandler.postDelayed(this, 1000);
+                }
+            }
+        };
+        countdownHandler.postDelayed(countdownRunnable, 1000);
+    }
+    
+    private void updateCountdownText() {
+        tvSubMessage.setText("Calling emergency contact in " + countdownSeconds + " seconds...");
+    }
+    
+    private void cancelCountdown() {
+        if (countdownRunnable != null) {
+            countdownHandler.removeCallbacks(countdownRunnable);
+            countdownRunnable = null;
+        }
+    }
+    
     private void makeCall(String phoneNumber) {
         try {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -192,6 +263,7 @@ public class EmergencyResponseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        cancelCountdown();
         if (telephonyManager != null && phoneStateListener != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
         }

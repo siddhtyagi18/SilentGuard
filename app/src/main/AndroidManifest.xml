@@ -15,10 +15,13 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.front" />
 
     <application
+        android:name=".SilentGuardApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -40,8 +43,9 @@
         <activity android:name=".PasswordTriggerSettingsActivity" />
         <activity android:name=".EmergencyResponseActivity"
             android:theme="@style/Theme.SilentGuard.Transparent"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true" />
+            android:excludeFromRecents="true"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true" />
         <activity android:name=".ShareLocationActivity" />
         <activity android:name=".HowItWorksActivity" />
         <activity android:name=".HistoryActivity" />
@@ -50,6 +54,7 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".EmergencyContactsActivity" />
         <activity android:name=".PrivacyPolicyActivity" />
+        <activity android:name=".NotificationCenterActivity" />
 
         <service
             android:name=".SilentGuardService"

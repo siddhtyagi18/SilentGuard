@@ -38,11 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
         setupSetting(R.id.set_contacts, "Emergency Contacts", "Manage trusted circle", android.R.drawable.ic_menu_myplaces, "EMERGENCY_CONTACTS");
         setupSetting(R.id.set_voice, "Voice Command", "Change trigger word", android.R.drawable.ic_btn_speak_now, null);
         setupSetting(R.id.set_password, "Change Password", "Update app security", android.R.drawable.ic_lock_idle_lock, null);
-        setupSetting(R.id.set_lock, "App Lock", "Secure the application", android.R.drawable.ic_lock_lock, null);
         setupSetting(R.id.set_boot, "Start on Boot", "Run automatically", android.R.drawable.ic_menu_rotate, null);
-        setupSetting(R.id.set_dark, "Dark Mode", "Theme settings", android.R.drawable.ic_menu_day, null);
-        setupSetting(R.id.set_notif, "Notifications", "Alert preferences", android.R.drawable.ic_popup_reminder, null);
-        setupSetting(R.id.set_about, "About", "App information", android.R.drawable.ic_menu_info_details, null);
     }
 
     private void setupSetting(int id, String title, String desc, int iconRes, String action) {
