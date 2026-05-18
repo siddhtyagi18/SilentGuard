@@ -16,27 +16,42 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingBottom="20dp">
+            android:paddingBottom="24dp">
 
             <ImageView
                 android:id="@+id/btn_back"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@android:drawable/ic_menu_revert"
-                android:tint="@color/text_primary"
+                app:tint="@color/text_primary"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="4dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Privacy Policy"
-                android:textColor="@color/text_primary"
-                android:textSize="22sp"
-                android:fontFamily="sans-serif-bold"
-                android:gravity="center" />
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy Policy"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:fontFamily="sans-serif-black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your data, your control"
+                    android:textColor="@color/neon_violet"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
             <View
                 android:layout_width="32dp"
@@ -49,287 +64,286 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_glass_card"
-            android:padding="16dp">
+            android:padding="24dp"
+            android:elevation="4dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to Silent Guard.\n\nYour privacy and safety are important to us. This Privacy Policy explains how Silent Guard collects, uses, and protects user information while using the application.\n\n"
+                android:text="🛡️ Welcome to Silent Guard"
+                android:textColor="@color/neon_violet"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-bold"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your privacy and safety are our top priorities. This Privacy Policy explains how Silent Guard collects, uses, and protects your information while keeping you safe in emergency situations."
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:lineSpacingExtra="6dp"
+                android:layout_marginBottom="24dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_glass_stroke"
+                android:layout_marginBottom="20dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. Introduction"
                 android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/feature_snatch_bg"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="What is Silent Guard?"
+                    android:textColor="@color/feature_snatch_accent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Silent Guard is a personal safety and emergency assistance app designed to help you during critical situations through SOS alerts, live location sharing, voice triggers, emergency contacts, and anti-theft protection."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Silent Guard is a personal safety and emergency assistance application designed to help users during emergency situations through SOS alerts, live location sharing, voice triggers, emergency contacts, and anti-theft protection features.\n\nBy using Silent Guard, you agree to the practices described in this Privacy Policy.\n\n"
+                android:text="By using Silent Guard, you agree to the practices described in this Privacy Policy.\n"
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Information We Collect"
                 android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginBottom="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Silent Guard may collect the following information depending on enabled features:\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:background="@color/feature_volume_bg"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📍 Location Data"
+                    android:textColor="@color/feature_volume_accent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Real-time device location\n• Background location during emergency mode\n• Live location sharing for SOS alerts"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="a) Location Data"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp" />
+                android:orientation="vertical"
+                android:background="@color/feature_pass_bg"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📞 Emergency Contacts"
+                    android:textColor="@color/feature_pass_accent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Contact names\n• Phone numbers selected by you"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• Real-time device location\n• Background location during emergency mode\n• Live location sharing for SOS alerts\n\nPurpose:\nTo send accurate emergency location details to trusted contacts during emergencies.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:background="@drawable/bg_glass_card"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="b) Emergency Contact Information"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎤 Microphone and 📷 Camera"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• Contact names\n• Phone numbers selected by the user\n\nPurpose:\nTo notify trusted contacts during SOS events.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="c) Microphone Access"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Voice command detection may require microphone access.\n\nPurpose:\nTo detect emergency voice commands such as:\n• &quot;Help&quot;\n• Custom SOS phrases\n\nAudio is processed only for emergency detection functionality.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="d) Camera Access"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Camera access may be used for:\n• Wrong password detection\n• Intruder image capture\n• Security monitoring features\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="e) Device &amp; Sensor Data"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="The app may access:\n• Accelerometer\n• Motion sensors\n• Button interactions (power/volume trigger)\n\nPurpose:\nTo detect emergency gestures or theft-related activity.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Voice commands (help, SOS)\n• Wrong password detection\n• Intruder selfie capture"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3. How We Use Your Information"
                 android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Silent Guard uses collected information only for:\n• Emergency assistance\n• SOS alert functionality\n• Live location sharing\n• Security and anti-theft protection\n• Improving app performance and safety features\n\nWe do not use personal data for advertising purposes.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:background="@color/feature_snatch_bg"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✅ Only for Your Safety"
+                    android:textColor="@color/feature_snatch_accent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Emergency assistance\n• SOS alerts\n• Live location sharing\n• Security protection\n• No advertising use!"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="4. Data Sharing"
                 android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Silent Guard does not sell, rent, or trade user data.\n\nInformation may only be shared:\n• With emergency contacts chosen by the user\n• During SOS or emergency events\n• When required by law\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="5. Background Permissions"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Some features require background access to function properly, including:\n• Live location tracking\n• Voice trigger detection\n• Emergency monitoring\n• Screen-off protection features\n\nThese permissions are used strictly for app functionality and user safety.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="6. Data Security"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="We implement reasonable security measures to protect user information from unauthorized access, misuse, or disclosure.\n\nHowever, no digital system can guarantee complete security.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="7. User Control"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Users can:\n• Add or remove emergency contacts\n• Disable permissions anytime from device settings\n• Turn off emergency features whenever desired\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="8. Children&apos;s Privacy"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Silent Guard is not intended for children under the age of 13.\n\nWe do not knowingly collect personal information from children.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="9. Third-Party Services"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Silent Guard may use trusted third-party services such as:\n• Firebase\n• Google Maps APIs\n• Notification services\n\nThese services may process limited technical information necessary for app functionality.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="10. Changes to This Privacy Policy"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="We may update this Privacy Policy from time to time.\n\nUsers are encouraged to review this page periodically for updates.\n\n"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="11. Contact Us"
-                android:textColor="@color/neon_violet"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="If you have any questions or concerns regarding this Privacy Policy, you may contact us at:\n\nSilent Guard Support\nEmail: siddhtyagi1845@gmail.com"
+                android:text="We do NOT sell, rent, or trade your data. Information is only shared:\n• With your emergency contacts\n• During SOS events\n• When required by law"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp"
-                android:layout_marginBottom="32dp" />
+                android:lineSpacingExtra="6dp"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5. Your Control"
+                android:textColor="@color/neon_violet"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/feature_pass_bg"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔐 You're In Charge"
+                    android:textColor="@color/feature_pass_accent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Add/remove emergency contacts\n• Disable permissions anytime\n• Turn off features whenever you want"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6. Contact Us"
+                android:textColor="@color/neon_violet"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/feature_volume_bg"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📧 Questions?"
+                    android:textColor="@color/feature_volume_accent"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Silent Guard Support\nEmail: siddhtyagi1845@gmail.com"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
 
         </LinearLayout>
 

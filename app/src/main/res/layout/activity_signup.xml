@@ -83,7 +83,7 @@
             android:id="@+id/til_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             app:hintEnabled="false"
             app:boxBackgroundMode="none"
             app:passwordToggleEnabled="true"
@@ -95,6 +95,28 @@
                 android:layout_height="60dp"
                 android:background="@drawable/bg_glass_card"
                 android:hint="Create Password"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/text_primary"
+                android:paddingHorizontal="20dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:hintEnabled="false"
+            app:boxBackgroundMode="none"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/neon_violet">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_glass_card"
+                android:hint="Confirm Password"
                 android:textColorHint="@color/text_secondary"
                 android:textColor="@color/text_primary"
                 android:paddingHorizontal="20dp"

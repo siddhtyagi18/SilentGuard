@@ -53,14 +53,8 @@
             <!-- Setting Item: Emergency Contacts -->
             <include layout="@layout/item_setting_row" android:id="@+id/set_contacts" />
             
-            <!-- Setting Item: Change Voice Command -->
-            <include layout="@layout/item_setting_row" android:id="@+id/set_voice" />
-            
             <!-- Setting Item: Change Password -->
             <include layout="@layout/item_setting_row" android:id="@+id/set_password" />
-            
-            <!-- Setting Item: Start on Boot -->
-            <include layout="@layout/item_setting_row" android:id="@+id/set_boot" />
             
             <!-- About Section -->
             <LinearLayout
@@ -68,53 +62,202 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_glass_card"
-                android:padding="20dp"
+                android:padding="24dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="24dp"
+                android:elevation="4dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="About Silent Guard"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:fontFamily="sans-serif-bold"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_shield_lock_purple"
+                        android:padding="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="About Silent Guard"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Personal Safety Companion"
+                            android:textColor="@color/neon_violet"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bg_glass_stroke"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Your Personal Safety Companion"
-                    android:textColor="@color/neon_violet"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:text="Silent Guard is your ultimate personal safety app, designed to protect you in emergency situations with advanced, discreet features that work silently in the background. Whether you're walking alone at night, traveling, or just want peace of mind, Silent Guard has you covered."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginBottom="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🚀 Core Features"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-bold"
                     android:layout_marginBottom="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Silent Guard is designed to keep you safe in emergency situations. With voice commands, volume triggers, and wrong password detection, you're always protected."
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:lineSpacingExtra="4dp"
-                    android:layout_marginBottom="16dp" />
+                    android:orientation="vertical"
+                    android:background="@color/feature_snatch_bg"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Features:"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:fontFamily="sans-serif-bold"
-                    android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎤 Voice Command Triggers"
+                        android:textColor="@color/feature_snatch_accent"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Say 'help' or 'sos' to trigger emergency response instantly, even when your phone is locked."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Voice command triggers (help, sos)\n• 3x volume button SOS\n• Wrong password detection with selfie capture\n• Emergency contact management\n• Location sharing via SMS"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:lineSpacingExtra="4dp" />
+                    android:orientation="vertical"
+                    android:background="@color/feature_volume_bg"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔊 Volume Button SOS"
+                        android:textColor="@color/feature_volume_accent"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Press volume button 3 times rapidly to activate emergency alert - no need to unlock your phone."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/feature_pass_bg"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔐 Wrong Password Detection"
+                        android:textColor="@color/feature_pass_accent"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Captures selfie and sends alert to emergency contacts when someone enters wrong password multiple times."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_glass_card"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📞 Emergency Contacts"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Manage your trusted circle - add, edit, and remove emergency contacts who will receive your alerts."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_glass_card"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📍 Location Sharing via SMS"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Automatically sends your precise GPS location to emergency contacts via SMS when SOS is triggered."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
 
             </LinearLayout>
 

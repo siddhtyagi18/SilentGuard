@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText etFullName, etEmail, etPassword;
+    private EditText etFullName, etEmail, etPassword, etConfirmPassword;
     private Button btnSignUp;
     private TextView tvLoginLink;
     private FirebaseAuth mAuth;
@@ -30,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
         etFullName = findViewById(R.id.et_full_name);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
+        etConfirmPassword = findViewById(R.id.et_confirm_password);
         btnSignUp = findViewById(R.id.btn_signup);
         tvLoginLink = findViewById(R.id.tv_login_link);
 
@@ -41,9 +42,18 @@ public class SignUpActivity extends AppCompatActivity {
         String name = etFullName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
+        String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword)) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
             return;
         }
 
