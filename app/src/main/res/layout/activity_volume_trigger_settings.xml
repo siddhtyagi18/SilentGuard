@@ -3,222 +3,150 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_primary"
-    android:padding="20dp">
+    android:background="@color/ui_bg_main">
 
+    <!-- Header Section -->
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="32dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@android:drawable/ic_menu_revert"
-            app:tint="@color/text_primary"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_back_circular"
+                app:tint="@color/ui_text_title"
+                android:background="@drawable/bg_avatar_circle"
+                android:backgroundTint="#08000000"
+                android:clickable="true"
+                android:focusable="true" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Volume Button Trigger"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-black" />
+                android:layout_marginTop="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Press volume buttons 3 times to trigger SOS"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/header_image">
 
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/switch_volume_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Volume Button Trigger"
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="32sp"
+                        android:fontFamily="sans-serif-black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Press volume buttons 3 times to trigger SOS"
+                        android:textColor="@color/ui_text_body"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/header_image"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@android:drawable/ic_lock_silent_mode"
+                    app:tint="@color/feature_volume_accent"
+                    android:alpha="0.15" />
+            </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintBottom_toTopOf="@id/btn_test_volume_trigger"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
+        android:paddingHorizontal="20dp"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
-            <!-- How It Works Card -->
+            <!-- Toggle Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
-                android:orientation="vertical"
-                android:padding="16dp"
+                android:background="@drawable/bg_feature_card_new"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="20dp">
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@color/feature_volume_bg">
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@android:drawable/ic_dialog_info"
-                        app:tint="@color/neon_violet" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="How It Works"
-                        android:textColor="@color/text_primary"
-                        android:fontFamily="sans-serif-bold"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal">
-
-                    <!-- 1st Press -->
-                    <LinearLayout
-                        android:id="@+id/layout_1st"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/bg_dot_neon"
-                            android:src="@android:drawable/ic_lock_silent_mode"
-                            android:padding="10dp"
-                            app:tint="@color/neon_violet" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="1st"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/line1"
-                        android:layout_width="25dp"
-                        android:layout_height="1dp"
-                        android:background="@color/neon_violet"
-                        android:layout_toEndOf="@id/layout_1st"
-                        android:layout_alignTop="@id/layout_1st"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5" />
-
-                    <!-- 2nd Press -->
-                    <LinearLayout
-                        android:id="@+id/layout_2nd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_toEndOf="@id/line1">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/bg_dot_neon"
-                            android:src="@android:drawable/ic_lock_silent_mode"
-                            android:padding="10dp"
-                            app:tint="@color/neon_violet" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="2nd"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/line2"
-                        android:layout_width="25dp"
-                        android:layout_height="1dp"
-                        android:background="@color/neon_violet"
-                        android:layout_toEndOf="@id/layout_2nd"
-                        android:layout_alignTop="@id/layout_2nd"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.5" />
-
-                    <!-- 3rd Press -->
-                    <LinearLayout
-                        android:id="@+id/layout_3rd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_toEndOf="@id/line2">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/bg_dot_neon"
-                            android:src="@android:drawable/ic_lock_silent_mode"
-                            android:padding="10dp"
-                            app:tint="@color/neon_violet" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="3rd"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-                </RelativeLayout>
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_lock_silent_mode"
+                        app:tint="@color/feature_volume_accent" />
+                </FrameLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="16dp">
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="• 3x Presses: Shares location with contacts"
-                        android:textColor="@color/success_green"
-                        android:textSize="11sp"
-                        android:layout_gravity="center_horizontal" />
+                        android:text="Volume Button Trigger"
+                        android:textColor="@color/ui_text_title"
+                        android:fontFamily="sans-serif-bold"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enable to trigger SOS by pressing volume buttons 3 times."
+                        android:textColor="@color/ui_text_body"
+                        android:textSize="13sp" />
                 </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_volume_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <!-- Trigger Settings Card -->
+            <!-- Trigger Settings -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
+                android:background="@drawable/bg_feature_card_new"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:layout_marginBottom="16dp">
 
                 <LinearLayout
@@ -228,94 +156,97 @@
                     android:gravity="center_vertical"
                     android:layout_marginBottom="16dp">
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_manage"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent"
+                        android:alpha="0.6" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:text="Trigger Settings"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/ui_text_title"
                         android:fontFamily="sans-serif-bold"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
-                <!-- Press Count -->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="52dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
                     <ImageView
-                        android:id="@+id/ic_press_count"
+                        android:id="@+id/ic_cnt"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
                         android:src="@android:drawable/ic_menu_sort_by_size"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/ic_press_count"
-                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/ic_cnt"
+                        android:layout_marginStart="16dp"
                         android:text="Press Count"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp" />
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:text="3 Presses >"
-                        android:textColor="@color/neon_violet"
-                        android:textSize="13sp" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/text_secondary"
-                        android:layout_alignParentBottom="true"
-                        android:alpha="0.2" />
+                        android:text="3 Presses &gt;"
+                        android:textColor="@color/feature_volume_accent"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-bold" />
                 </RelativeLayout>
 
-                <!-- Press Interval -->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="52dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
                     <ImageView
-                        android:id="@+id/ic_interval"
+                        android:id="@+id/ic_time"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
                         android:src="@android:drawable/ic_menu_recent_history"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/ic_interval"
-                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/ic_time"
+                        android:layout_marginStart="16dp"
                         android:text="Press Interval"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp" />
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:text="Within 3 Seconds >"
-                        android:textColor="@color/neon_violet"
-                        android:textSize="13sp" />
+                        android:text="Within 3 Seconds &gt;"
+                        android:textColor="@color/feature_volume_accent"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-bold" />
                 </RelativeLayout>
             </LinearLayout>
 
-            <!-- Actions on Trigger Card -->
+            <!-- Actions -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
+                android:background="@drawable/bg_feature_card_new"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:layout_marginBottom="16dp">
 
                 <LinearLayout
@@ -325,228 +256,205 @@
                     android:gravity="center_vertical"
                     android:layout_marginBottom="16dp">
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_send"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent"
+                        android:alpha="0.6" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:text="Actions on Trigger"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/ui_text_title"
                         android:fontFamily="sans-serif-bold"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
-                <!-- Share Live Location -->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="56dp">
                     <ImageView
-                        android:id="@+id/ic_act_loc"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/ic_loc"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/ic_act_loc"
-                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/ic_loc"
+                        android:layout_marginStart="16dp"
                         android:text="Share Live Location"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp" />
+                        android:textColor="@color/ui_text_title"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp" />
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switch_share_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:checked="true" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/text_secondary"
-                        android:layout_alignParentBottom="true"
-                        android:alpha="0.2" />
+                        android:layout_centerVertical="true" />
                 </RelativeLayout>
 
-                <!-- Send SOS Alert (SMS) -->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="56dp">
                     <ImageView
-                        android:id="@+id/ic_act_sms"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/ic_sms"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@android:drawable/ic_menu_send"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/ic_act_sms"
-                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/ic_sms"
+                        android:layout_marginStart="16dp"
                         android:text="Send SOS Alert (SMS)"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp" />
+                        android:textColor="@color/ui_text_title"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp" />
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switch_send_sms"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:checked="true" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/text_secondary"
-                        android:layout_alignParentBottom="true"
-                        android:alpha="0.2" />
+                        android:layout_centerVertical="true" />
                 </RelativeLayout>
 
-                <!-- Auto Call Emergency Contact -->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="56dp">
                     <ImageView
-                        android:id="@+id/ic_act_call"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:id="@+id/ic_call"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@android:drawable/ic_menu_call"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/feature_snatch_accent" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/ic_act_call"
-                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/ic_call"
+                        android:layout_marginStart="16dp"
                         android:text="Auto Call Emergency Contact"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp" />
+                        android:textColor="@color/ui_text_title"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp" />
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switch_auto_call"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:checked="false" />
+                        android:layout_centerVertical="true" />
                 </RelativeLayout>
             </LinearLayout>
 
-            <!-- Emergency Contacts Section (Restored for functionality) -->
+            <!-- Contacts Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
+                android:background="@drawable/bg_feature_card_new"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:layout_marginBottom="16dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:id="@+id/ic_contacts_sec"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:id="@+id/ic_group"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        app:tint="@color/neon_violet" />
+                        app:tint="@color/brand_success" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/ic_contacts_sec"
-                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/ic_group"
+                        android:layout_marginStart="16dp"
                         android:text="Emergency Contacts"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/ui_text_title"
                         android:fontFamily="sans-serif-bold"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
                 </RelativeLayout>
 
                 <Button
                     android:id="@+id/btn_import_contacts"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="24dp"
                     android:text="Import From Contacts"
-                    android:textColor="@color/text_primary"
-                    android:background="@drawable/bg_neon_button"
+                    android:textColor="@color/brand_success"
+                    android:backgroundTint="#F0FDF4"
+                    android:textAllCaps="false"
                     android:fontFamily="sans-serif-bold"
-                    android:textSize="11sp"
-                    android:drawableStart="@android:drawable/ic_menu_search"
-                    android:drawablePadding="8dp"
-                    android:paddingHorizontal="16dp" />
+                    app:cornerRadius="16dp"
+                    app:strokeColor="@color/brand_success"
+                    app:strokeWidth="1dp" />
 
                 <LinearLayout
                     android:id="@+id/layout_contacts_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="16dp">
-                    <Button
+                    android:layout_marginTop="24dp">
+                    <include layout="@layout/item_emergency_contact" android:id="@+id/contact_1" />
+                    <TextView
                         android:id="@+id/btn_add_contact"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:layout_gravity="center_horizontal"
                         android:text="+ Add Emergency Contact"
-                        android:textSize="11sp"
-                        android:textColor="@color/neon_violet"
-                        android:background="@android:color/transparent"
-                        android:textAllCaps="false" />
+                        android:textColor="@color/brand_success"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-bold" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Important Note Card -->
-            <RelativeLayout
+            <!-- Important Note -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
-                android:padding="16dp"
-                android:layout_marginBottom="24dp">
+                android:background="@color/feature_snatch_bg"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
                 <ImageView
-                    android:id="@+id/ic_note_shield"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_lock_power_off"
-                    app:tint="@color/neon_violet"
-                    android:layout_centerVertical="true" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/checkbox_on_background"
+                    app:tint="@color/feature_snatch_accent" />
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_toEndOf="@id/ic_note_shield"
-                    android:layout_toStartOf="@id/iv_note_arrow"
+                    android:layout_weight="1"
                     android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Important Note"
-                        android:textColor="@color/neon_violet"
+                        android:textColor="@color/ui_text_title"
                         android:fontFamily="sans-serif-bold"
                         android:textSize="14sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="After triggering SOS, your live location and alert message will be sent to all saved emergency contacts."
-                        android:textColor="@color/text_secondary"
-                        android:textSize="10sp" />
+                        android:textColor="@color/ui_text_body"
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="2dp" />
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/iv_note_arrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@android:drawable/arrow_down_float"
-                    android:rotation="-90"
-                    app:tint="@color/text_secondary"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
@@ -554,13 +462,15 @@
     <Button
         android:id="@+id/btn_test_volume_trigger"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="-|: Test Volume Button Trigger"
-        style="@style/NeonButton"
-        android:background="@drawable/bg_neon_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="10dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:text="Test Volume Button Trigger"
+        android:textColor="@color/ui_card_white"
+        android:backgroundTint="@color/feature_snatch_accent"
         android:textAllCaps="false"
-        android:fontFamily="sans-serif-bold" />
+        android:fontFamily="sans-serif-black"
+        android:textSize="16sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,44 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp"
-    android:layout_marginBottom="8dp"
-    android:background="@drawable/bg_glass_card"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:gravity="center_vertical"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:background="@drawable/bg_command_item">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_mic"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@android:drawable/ic_btn_speak_now"
+        app:tint="@color/feature_snatch_accent" />
 
-        <ImageView
-            android:id="@+id/iv_mic"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@android:drawable/ic_btn_speak_now"
-            app:tint="@color/neon_violet"
-            android:layout_centerVertical="true" />
+    <TextView
+        android:id="@+id/tv_phrase"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:text="Command Phrase"
+        android:textColor="@color/ui_text_title"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/iv_mic"
-            android:layout_marginStart="12dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:id="@+id/tv_phrase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Command Phrase"
-                android:textColor="@color/text_primary"
-                android:fontFamily="sans-serif-bold"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-    </RelativeLayout>
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@android:drawable/ic_menu_more"
+        app:tint="@color/ui_text_light" />
 
 </LinearLayout>

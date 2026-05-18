@@ -85,9 +85,11 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Save Changes"
-            android:textColor="@color/text_primary"
-            android:background="@drawable/bg_neon_button"
-            android:fontFamily="sans-serif-bold" />
+            android:textColor="@color/ui_card_white"
+            android:backgroundTint="@color/ui_text_title"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-bold"
+            app:cornerRadius="16dp" />
 
     </LinearLayout>
 

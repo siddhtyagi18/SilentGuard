@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/ui_card_white" />
+            <corners android:radius="24dp" />
+            <stroke android:width="2.5dp" android:color="@color/ui_card_border" />
+        </shape>
+    </item>
+    <!-- We can't easily do the wave pattern in XML without a path, 
+         so we'll use a subtle gradient or just the solid white for now. 
+         In a real app, this would be a PNG/SVG background. -->
+</layer-list>

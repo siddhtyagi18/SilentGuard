@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Background Colors -->
-    <color name="bg_primary">#050816</color>
-    <color name="bg_secondary">#0B1020</color>
-    <color name="bg_glass">#20FFFFFF</color>
-    <color name="bg_glass_stroke">#30FFFFFF</color>
-
-    <!-- Accent Colors -->
+    <!-- Brand Colors (Light Theme from Image) -->
+    <color name="brand_primary">#0F172A</color>
+    <color name="brand_success">#22C55E</color>
+    <color name="brand_danger">#EF4444</color>
+    <color name="brand_warning">#F59E0B</color>
+    
+    <!-- UI Backgrounds -->
+    <color name="ui_bg_main">#F8FAFC</color>
+    <color name="ui_card_white">#FFFFFF</color>
+    <color name="ui_card_border">#F1F5F9</color>
+    
+    <!-- Text Colors -->
+    <color name="ui_text_title">#0F172A</color>
+    <color name="ui_text_body">#64748B</color>
+    <color name="ui_text_light">#94A3B8</color>
+    
+    <!-- Feature Colors -->
+    <color name="feature_snatch_bg">#F5F3FF</color>
+    <color name="feature_snatch_accent">#8B5CF6</color>
+    <color name="feature_volume_bg">#FFF7ED</color>
+    <color name="feature_volume_accent">#F97316</color>
+    <color name="feature_pass_bg">#F0FDF4</color>
+    <color name="feature_pass_accent">#22C55E</color>
+    
+    <!-- Legacy Support (Don't break existing code) -->
+    <color name="bg_primary">#F8FAFC</color>
+    <color name="bg_secondary">#FFFFFF</color>
+    <color name="bg_glass">#FFFFFF</color>
+    <color name="bg_glass_stroke">#F1F5F9</color>
     <color name="accent_purple">#8B5CF6</color>
-    <color name="neon_violet">#A855F7</color>
-    <color name="neon_violet_glow">#40A855F7</color>
+    <color name="neon_violet">#8B5CF6</color>
+    <color name="neon_violet_glow">#408B5CF6</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="success_green">#22C55E</color>
+    <color name="alert_red">#EF4444</color>
 
-    <!-- Emergency Theme Colors -->
+    <!-- Emergency Response UI Colors -->
     <color name="emergency_red">#E94560</color>
     <color name="emergency_red_light">#FF6B6B</color>
-    <color name="emergency_red_dark">#0F3460</color>
-    <color name="emergency_dark_1">#1A1A2E</color>
-    <color name="emergency_dark_2">#16213E</color>
     <color name="emergency_text_primary">#FFFFFF</color>
-    <color name="emergency_text_secondary">#CBD5E1</color>
-    <color name="emergency_button_dark">#2D3748</color>
-    <color name="emergency_button_border">#4A5568</color>
-
-    <!-- Text Colors -->
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#A1A1AA</color>
-
-    <!-- Status Colors -->
-    <color name="alert_red">#EF4444</color>
-    <color name="success_green">#22C55E</color>
-
-    <!-- Navigation -->
-    <color name="nav_inactive">#6B7280</color>
+    <color name="emergency_bg_gradient_start">#1A1A2E</color>
+    <color name="emergency_bg_gradient_end">#16213E</color>
 </resources>

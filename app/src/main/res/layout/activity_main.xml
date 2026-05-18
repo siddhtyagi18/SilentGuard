@@ -4,295 +4,398 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_primary"
+    android:background="@color/ui_bg_main"
     tools:context=".MainActivity">
 
-    <!-- Top Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/top_section"
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/header_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="32dp"
+        android:gravity="top"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/app_title"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Silent Guard"
-            android:textColor="@color/text_primary"
-            android:textSize="24sp"
-            android:fontFamily="sans-serif-black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ic_notif" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ic_notif"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_popup_reminder"
-            app:tint="@color/text_primary"
-            app:layout_constraintEnd_toStartOf="@id/status_indicator"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="16dp" />
+            <TextView
+                android:id="@+id/app_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello, Virat"
+                android:textColor="@color/ui_text_title"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-black" />
 
-        <View
-            android:id="@+id/status_indicator"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/bg_status_indicator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/checkbox_on_background"
+                    app:tint="@color/brand_success" />
+
+                <TextView
+                    android:id="@+id/security_summary_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="You're Protected"
+                    android:textColor="@color/ui_text_body"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/ic_notif_container"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ic_notif"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:src="@drawable/ic_bell_straight"
+                app:tint="@color/ui_text_title" />
+
+            <!-- Notification Dot -->
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_status_dot" />
+        </FrameLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/top_section"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav">
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/header_section"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
 
-            <!-- Main Center SOS Button -->
-            <FrameLayout
+            <!-- Hero Banner Card (Carousel) -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:gravity="center">
+                android:layout_height="240dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp">
 
-                <View
-                    android:layout_width="220dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bg_sos_pulse" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/hero_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-                <RelativeLayout
-                    android:id="@+id/sos_button"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bg_sos_button"
-                    android:elevation="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="SOS"
-                        android:textColor="@color/text_primary"
-                        android:textSize="32sp"
-                        android:fontFamily="sans-serif-black" />
-                </RelativeLayout>
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tap_hold_sos"
-                android:textColor="@color/text_secondary"
-                android:gravity="center"
-                android:layout_marginBottom="32dp" />
+            </androidx.cardview.widget.CardView>
 
             <!-- Security Status Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glass_card"
-                android:padding="16dp"
+                android:background="@drawable/bg_feature_card_new"
                 android:orientation="horizontal"
+                android:padding="20dp"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="24dp">
 
-                <ImageView
-                    android:id="@+id/security_status_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/checkbox_on_background"
-                    app:tint="@color/success_green" />
+                <View
+                    android:id="@+id/security_status_accent"
+                    android:layout_width="4dp"
+                    android:layout_height="44dp"
+                    android:background="@color/brand_success" />
 
-                <TextView
-                    android:id="@+id/security_status_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/all_systems_active"
-                    android:textColor="@color/text_primary"
-                    android:fontFamily="sans-serif-medium" />
-            </LinearLayout>
-
-            <!-- Feature Cards Section -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Protection Features"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-bold"
-                android:layout_marginBottom="16dp" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/feature_pass_bg">
+                    <ImageView
+                        android:id="@+id/security_status_icon"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_shield_checked" />
+                </FrameLayout>
 
                 <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Security Status"
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:id="@+id/security_status_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="All systems are ready"
+                        android:textColor="@color/brand_success"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="Protection Features"
+                    android:textColor="@color/ui_text_title"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-bold" />
+            </RelativeLayout>
 
-                    <!-- Phone Snatches Card -->
-                    <LinearLayout
-                        android:id="@+id/card_snatches"
-                        android:layout_width="160dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/bg_glass_card_active"
-                        android:padding="16dp"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="16dp"
-                        android:clickable="true"
-                        android:focusable="true">
+            <!-- Feature 1: Phone Snatches -->
+            <LinearLayout
+                android:id="@+id/card_snatches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_feature_card_new"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@android:drawable/ic_menu_send"
-                            app:tint="@color/neon_violet" />
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="44dp"
+                    android:background="@color/feature_snatch_accent" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="@string/phone_snatches"
-                            android:textColor="@color/text_primary"
-                            android:fontFamily="sans-serif-bold" />
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@color/feature_snatch_bg">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_btn_speak_now"
+                        app:tint="@color/feature_snatch_accent" />
+                </FrameLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Detects sudden phone snatching"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/txt_status_snatches"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="ACTIVE"
-                            android:textColor="@color/neon_violet"
-                            android:textSize="10sp"
-                            android:fontFamily="sans-serif-black" />
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone Snatches"
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-bold" />
 
-                    <!-- Volume Trigger Card -->
-                    <LinearLayout
-                        android:id="@+id/card_volume"
-                        android:layout_width="160dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/bg_glass_card"
-                        android:padding="16dp"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="16dp"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@android:drawable/ic_lock_silent_mode"
-                            app:tint="@color/text_secondary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="@string/volume_trigger"
-                            android:textColor="@color/text_primary"
-                            android:fontFamily="sans-serif-bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Press 3 times to trigger SOS"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/txt_status_volume"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="INACTIVE"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"
-                            android:fontFamily="sans-serif-black" />
-                    </LinearLayout>
-
-                    <!-- Wrong Password Card -->
-                    <LinearLayout
-                        android:id="@+id/card_password"
-                        android:layout_width="160dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/bg_glass_card"
-                        android:padding="16dp"
-                        android:orientation="vertical"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@android:drawable/ic_lock_lock"
-                            app:tint="@color/text_secondary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="@string/wrong_password"
-                            android:textColor="@color/text_primary"
-                            android:fontFamily="sans-serif-bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Alerts on failed attempts"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/txt_status_password"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="INACTIVE"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"
-                            android:fontFamily="sans-serif-black" />
-                    </LinearLayout>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Detects sudden phone snatching"
+                        android:textColor="@color/ui_text_body"
+                        android:textSize="13sp" />
                 </LinearLayout>
-            </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/txt_status_snatches"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INACTIVE"
+                    android:textColor="@color/feature_snatch_accent"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif-black"
+                    android:background="#158B5CF6"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp" />
+            </LinearLayout>
+
+            <!-- Feature 2: Volume Button -->
+            <LinearLayout
+                android:id="@+id/card_volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_feature_card_new"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="44dp"
+                    android:background="@color/feature_volume_accent" />
+
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@color/feature_volume_bg">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_lock_silent_mode"
+                        app:tint="@color/feature_volume_accent" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Volume Button Trigger"
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Press 3 times to trigger SOS"
+                        android:textColor="@color/ui_text_body"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_status_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INACTIVE"
+                    android:textColor="@color/feature_volume_accent"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif-black"
+                    android:background="#15F97316"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp" />
+            </LinearLayout>
+
+            <!-- Feature 3: Wrong Password -->
+            <LinearLayout
+                android:id="@+id/card_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_feature_card_new"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="44dp"
+                    android:background="@color/feature_pass_accent" />
+
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@color/feature_pass_bg">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_lock_lock"
+                        app:tint="@color/feature_pass_accent" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wrong Password Detection"
+                        android:textColor="@color/ui_text_title"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Detects unauthorized access attempts"
+                        android:textColor="@color/ui_text_body"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_status_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INACTIVE"
+                    android:textColor="@color/feature_pass_accent"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif-black"
+                    android:background="#1522C55E"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
+    <!-- Bottom Navigation -->
     <LinearLayout
-        android:id="@+id/bottom_nav"
+        android:id="@+id/bottom_nav_container"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/bg_secondary"
+        android:layout_height="80dp"
+        android:background="@color/ui_card_white"
         android:orientation="horizontal"
+        android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
@@ -308,13 +411,15 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_today"
-                app:tint="@color/neon_violet" />
+                app:tint="@color/brand_success" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home"
-                android:textColor="@color/neon_violet"
-                android:textSize="10sp" />
+                android:textColor="@color/brand_success"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-bold"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -330,13 +435,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_recent_history"
-                app:tint="@color/nav_inactive" />
+                app:tint="@color/ui_text_light" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="History"
-                android:textColor="@color/nav_inactive"
-                android:textSize="10sp" />
+                android:textColor="@color/ui_text_light"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -352,13 +458,14 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_lock_idle_lock"
-                app:tint="@color/nav_inactive" />
+                app:tint="@color/ui_text_light" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Security"
-                android:textColor="@color/nav_inactive"
-                android:textSize="10sp" />
+                android:textColor="@color/ui_text_light"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -374,15 +481,26 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="@color/nav_inactive" />
+                app:tint="@color/ui_text_light" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Profile"
-                android:textColor="@color/nav_inactive"
-                android:textSize="10sp" />
+                android:textColor="@color/ui_text_light"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <!-- Center Floating SOS Button (Not in image but required for functionality) -->
+    <!-- I will hide this for now to match the image, but it can be added as a floating FAB if needed -->
+    <RelativeLayout
+        android:id="@+id/sos_button"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

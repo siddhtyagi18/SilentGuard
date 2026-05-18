@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -53,24 +54,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end">
+        android:gravity="end"
+        android:layout_marginTop="8dp">
 
         <Button
             android:id="@+id/btn_cancel_contact"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:text="Cancel"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
-            android:textColor="@color/text_secondary"/>
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="@color/ui_text_body"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-medium"
+            style="@style/Widget.Material3.Button.TextButton"/>
 
         <Button
             android:id="@+id/btn_save_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="52dp"
             android:text="Save"
-            android:background="@drawable/bg_neon_button"
-            android:textColor="@color/text_primary"/>
+            android:textColor="@color/ui_card_white"
+            android:backgroundTint="@color/ui_text_title"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-bold"
+            app:cornerRadius="16dp"/>
 
     </LinearLayout>
 

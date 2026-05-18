@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -208,17 +210,41 @@ public abstract class BaseSettingsActivity extends AppCompatActivity {
     protected void refreshContactsUI() {
         if (layoutContactsList == null) return;
         
-        if (layoutContactsList.getChildCount() > 0) {
-            View addButton = layoutContactsList.getChildAt(layoutContactsList.getChildCount() - 1);
-            layoutContactsList.removeAllViews();
-            layoutContactsList.addView(addButton);
-        }
+        // Find the "Add Contact" button and "Header" to preserve them
+        View addButton = findViewById(R.id.btn_add_contact);
+        
+        // Clear all except the fixed elements
+        layoutContactsList.removeAllViews();
+        
+        // Add header if it exists in activity_trigger_settings style
+        TextView header = new TextView(this);
+        header.setText("Emergency Contacts (" + contactsList.size() + ")");
+        header.setTextColor(ContextCompat.getColor(this, R.color.ui_text_title));
+        header.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+        header.setTextSize(14);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, 0, 0, (int)(12 * getResources().getDisplayMetrics().density));
+        header.setLayoutParams(params);
+        layoutContactsList.addView(header);
 
         for (int i = 0; i < contactsList.size(); i++) {
             TriggerSettingsActivity.Contact contact = contactsList.get(i);
             View contactView = LayoutInflater.from(this).inflate(R.layout.item_emergency_contact, layoutContactsList, false);
             setupContactItem(contactView, contact, i);
-            layoutContactsList.addView(contactView, layoutContactsList.getChildCount() - 1);
+            layoutContactsList.addView(contactView);
+        }
+
+        // Re-add the "Add" button at the bottom
+        if (addButton != null) {
+            // Remove from old parent if any
+            if (addButton.getParent() != null) {
+                ((ViewGroup)addButton.getParent()).removeView(addButton);
+            }
+            layoutContactsList.addView(addButton);
+            
+            // Re-setup listener since we might have moved it
+            addButton.setOnClickListener(v -> showContactDialog(-1));
         }
     }
 
@@ -227,10 +253,32 @@ public abstract class BaseSettingsActivity extends AppCompatActivity {
             TextView tvName = item.findViewById(R.id.tv_contact_name);
             TextView tvPhone = item.findViewById(R.id.tv_contact_phone);
             TextView tvRelation = item.findViewById(R.id.tv_relation_label);
+            TextView tvInitial = item.findViewById(R.id.tv_avatar_initial);
+            View avatarBg = item.findViewById(R.id.tv_avatar_initial).getParent() instanceof View ? 
+                    (View) item.findViewById(R.id.tv_avatar_initial).getParent() : null;
 
             if (tvName != null) tvName.setText(contact.name);
             if (tvPhone != null) tvPhone.setText(contact.phone);
             if (tvRelation != null) tvRelation.setText(contact.relation);
+            
+            if (tvInitial != null && contact.name != null && !contact.name.isEmpty()) {
+                String initial = String.valueOf(contact.name.charAt(0)).toUpperCase();
+                tvInitial.setText(initial);
+                
+                // Professional color generation based on name
+                if (avatarBg != null) {
+                    int[] colors = {
+                        Color.parseColor("#22C55E"), // Green
+                        Color.parseColor("#8B5CF6"), // Purple
+                        Color.parseColor("#F97316"), // Orange
+                        Color.parseColor("#3B82F6"), // Blue
+                        Color.parseColor("#EF4444")  // Red
+                    };
+                    int colorIndex = Math.abs(contact.name.hashCode()) % colors.length;
+                    avatarBg.getBackground().setTint(colors[colorIndex]);
+                    tvInitial.setTextColor(Color.WHITE);
+                }
+            }
 
             item.findViewById(R.id.iv_edit_contact).setOnClickListener(v -> showContactDialog(index));
             item.findViewById(R.id.iv_delete_contact).setOnClickListener(v -> {

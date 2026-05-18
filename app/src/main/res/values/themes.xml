@@ -1,22 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.SilentGuard" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/accent_purple</item>
-        <item name="android:windowBackground">@color/bg_primary</item>
-        <item name="android:statusBarColor">@color/bg_primary</item>
-        <item name="android:navigationBarColor">@color/bg_primary</item>
+    <style name="Theme.SilentGuard" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="android:windowBackground">@color/ui_bg_main</item>
+        <item name="android:statusBarColor">@color/ui_bg_main</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/ui_bg_main</item>
     </style>
 
-    <!-- Glassmorphism Card Style -->
-    <style name="GlassCard">
-        <item name="android:background">@drawable/bg_glass_card</item>
+    <!-- UI Component Styles -->
+    <style name="WhiteCard">
+        <item name="android:background">@drawable/bg_white_card</item>
+        <item name="android:elevation">2dp</item>
     </style>
 
-    <!-- Neon Button Style -->
-    <style name="NeonButton">
+    <style name="FeatureCard">
+        <item name="android:background">@drawable/bg_white_card</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="NeonButton" parent="Widget.Material3.Button">
         <item name="android:background">@drawable/bg_neon_button</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/ui_card_white</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="cornerRadius">16dp</item>
     </style>
 
     <style name="Theme.SilentGuard.Transparent" parent="Theme.SilentGuard">

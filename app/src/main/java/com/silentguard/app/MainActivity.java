@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,12 +16,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,14 +34,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.viewpager2.widget.ViewPager2;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    private ViewPager2 heroViewPager;
+    private HeroCarouselAdapter heroAdapter;
     private View sosButton;
     private View cardSnatches, cardVolume, cardPassword;
     private TextView statusSnatches, statusVolume, statusPassword;
-    private TextView appTitle;
+    private TextView appTitle, securitySummaryText;
     private TextView securityStatusText;
     private ImageView securityStatusIcon;
+    private View securityStatusAccent;
     private ImageView notificationBellIcon;
     private View navHistory, navSecurity, navProfile;
     private Handler longPressHandler = new Handler();
@@ -67,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
         cardSnatches = findViewById(R.id.card_snatches);
         cardVolume = findViewById(R.id.card_volume);
         cardPassword = findViewById(R.id.card_password);
+
+        setupHeroCarousel();
+        
         appTitle = findViewById(R.id.app_title);
+        securitySummaryText = findViewById(R.id.security_summary_text);
         
         statusSnatches = findViewById(R.id.txt_status_snatches);
         statusVolume = findViewById(R.id.txt_status_volume);
@@ -75,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         
         securityStatusText = findViewById(R.id.security_status_text);
         securityStatusIcon = findViewById(R.id.security_status_icon);
+        securityStatusAccent = findViewById(R.id.security_status_accent);
         
         notificationBellIcon = findViewById(R.id.ic_notif);
         
@@ -87,8 +104,89 @@ public class MainActivity extends AppCompatActivity {
         loadUserData();
         checkBatteryOptimizations();
         checkAccessibilityService();
+        checkOverlayPermission();
         SilentGuardService.checkPermissionsOnAppOpen(this);
+        syncContactsFromFirebase();
         startSilentGuardService();
+        applyAnimations();
+    }
+
+    private void setupHeroCarousel() {
+        heroViewPager = findViewById(R.id.hero_view_pager);
+        List<HeroCarouselAdapter.HeroItem> items = new ArrayList<>();
+        
+        // Slide 1: Green Shield (Original)
+        items.add(new HeroCarouselAdapter.HeroItem(
+                "We've got your", "back!", 
+                "Our smart protection is\nalways active to keep you safe.",
+                R.drawable.ic_shield_checked, 0));
+                
+        // Slide 2: Purple Shield (Stay Secure Always)
+        items.add(new HeroCarouselAdapter.HeroItem(
+                "Stay Secure", "Always", 
+                "Smart protection working silently to keep you safe 24/7.",
+                R.drawable.ic_shield_lock_purple, 2));
+                
+        // Slide 3: Orange SOS (Quick Response SOS)
+        items.add(new HeroCarouselAdapter.HeroItem(
+                "Quick Response", "SOS", 
+                "Instant SOS alerts and emergency help when you need it most.",
+                R.drawable.ic_sos_circle_orange, 1));
+
+        heroAdapter = new HeroCarouselAdapter(items);
+        heroViewPager.setAdapter(heroAdapter);
+    }
+
+    private void applyAnimations() {
+        // Entry Slide-Up for feature cards
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        
+        View securityStatusCard = findViewById(R.id.security_status_accent).getParent() instanceof View ? 
+                (View) findViewById(R.id.security_status_accent).getParent() : null;
+        if (securityStatusCard != null) securityStatusCard.startAnimation(slideUp);
+
+        if (cardSnatches != null) cardSnatches.startAnimation(slideUp);
+        if (cardVolume != null) cardVolume.startAnimation(slideUp);
+        if (cardPassword != null) cardPassword.startAnimation(slideUp);
+    }
+
+    private void syncContactsFromFirebase() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            DatabaseReference contactsRef = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(user.getUid()).child("EmergencyContacts");
+            
+            contactsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String phone = snapshot.child("phone").getValue(String.class);
+                        if (!TextUtils.isEmpty(phone)) {
+                            saveToLocalPrefs(phone);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+            });
+        }
+    }
+
+    private void saveToLocalPrefs(String phone) {
+        try {
+            JSONArray array = new JSONArray();
+            JSONObject contactObj = new JSONObject();
+            contactObj.put("name", "Emergency Contact");
+            contactObj.put("phone", phone);
+            contactObj.put("relation", "Family");
+            array.put(contactObj);
+            
+            prefs.edit().putString("contacts", array.toString()).apply();
+            Log.d("MainActivity", "Synced contacts to local prefs");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void startSilentGuardService() {
@@ -99,6 +197,23 @@ public class MainActivity extends AppCompatActivity {
             startService(serviceIntent);
         }
         Log.d("MainActivity", "SilentGuardService started successfully");
+    }
+
+    private void checkOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("Display Over Other Apps")
+                    .setMessage("Silent Guard needs permission to show the Emergency Call Popup over other apps and the lock screen.")
+                    .setPositiveButton("Grant Permission", (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+            }
+        }
     }
 
     private void checkAccessibilityService() {
@@ -187,35 +302,80 @@ public class MainActivity extends AppCompatActivity {
         
         if (activeCount == 3) {
             securityStatusText.setText("All systems are active");
+            securitySummaryText.setText("You're Protected");
             securityStatusIcon.setImageResource(android.R.drawable.checkbox_on_background);
-            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.success_green));
+            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.brand_success));
+            securityStatusAccent.setBackgroundColor(ContextCompat.getColor(this, R.color.brand_success));
+            securityStatusText.setTextColor(ContextCompat.getColor(this, R.color.brand_success));
         } else if (activeCount > 0) {
             securityStatusText.setText(activeCount + " system" + (activeCount > 1 ? "s" : "") + " active");
+            securitySummaryText.setText("Partially Protected");
             securityStatusIcon.setImageResource(android.R.drawable.presence_online);
-            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.neon_violet));
+            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.brand_warning));
+            securityStatusAccent.setBackgroundColor(ContextCompat.getColor(this, R.color.brand_warning));
+            securityStatusText.setTextColor(ContextCompat.getColor(this, R.color.brand_warning));
         } else {
             securityStatusText.setText("No systems active");
+            securitySummaryText.setText("You're at risk");
             securityStatusIcon.setImageResource(android.R.drawable.presence_invisible);
-            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.text_secondary));
+            securityStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.brand_danger));
+            securityStatusAccent.setBackgroundColor(ContextCompat.getColor(this, R.color.brand_danger));
+            securityStatusText.setTextColor(ContextCompat.getColor(this, R.color.brand_danger));
         }
     }
 
     private void updateStatus(TextView statusTxt, View card, boolean isActive) {
         if (isActive) {
             statusTxt.setText("ACTIVE");
-            statusTxt.setTextColor(ContextCompat.getColor(this, R.color.neon_violet));
-            card.setBackgroundResource(R.drawable.bg_glass_card_active);
+            if (statusTxt == statusSnatches) {
+                statusTxt.setTextColor(ContextCompat.getColor(this, R.color.feature_snatch_accent));
+                statusTxt.setBackgroundColor(Color.parseColor("#158B5CF6"));
+            } else if (statusTxt == statusVolume) {
+                statusTxt.setTextColor(ContextCompat.getColor(this, R.color.feature_volume_accent));
+                statusTxt.setBackgroundColor(Color.parseColor("#15F97316"));
+            } else if (statusTxt == statusPassword) {
+                statusTxt.setTextColor(ContextCompat.getColor(this, R.color.feature_pass_accent));
+                statusTxt.setBackgroundColor(Color.parseColor("#1522C55E"));
+            }
         } else {
             statusTxt.setText("INACTIVE");
-            statusTxt.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-            card.setBackgroundResource(R.drawable.bg_glass_card);
+            // Match the image where INACTIVE also has the feature's color but maybe slightly more transparent or gray
+            // Actually, the image shows "INACTIVE" in purple for Phone Snatches, so we'll use the same accent color
+            if (statusTxt == statusSnatches) {
+                statusTxt.setTextColor(ContextCompat.getColor(this, R.color.feature_snatch_accent));
+                statusTxt.setBackgroundColor(Color.parseColor("#108B5CF6"));
+            } else if (statusTxt == statusVolume) {
+                statusTxt.setTextColor(ContextCompat.getColor(this, R.color.feature_volume_accent));
+                statusTxt.setBackgroundColor(Color.parseColor("#10F97316"));
+            } else if (statusTxt == statusPassword) {
+                statusTxt.setTextColor(ContextCompat.getColor(this, R.color.feature_pass_accent));
+                statusTxt.setBackgroundColor(Color.parseColor("#1022C55E"));
+            }
         }
+        
+        // Ensure padding is kept to match the pill shape in image
+        int py = (int) (4 * getResources().getDisplayMetrics().density);
+        int px = (int) (10 * getResources().getDisplayMetrics().density);
+        statusTxt.setPadding(px, py, px, py);
     }
 
     private void setupClickListeners() {
-        cardSnatches.setOnClickListener(v -> startActivity(new Intent(this, TriggerSettingsActivity.class)));
-        cardVolume.setOnClickListener(v -> startActivity(new Intent(this, VolumeTriggerSettingsActivity.class)));
-        cardPassword.setOnClickListener(v -> startActivity(new Intent(this, PasswordTriggerSettingsActivity.class)));
+        Animation clickAnim = AnimationUtils.loadAnimation(this, R.anim.click_press);
+
+        cardSnatches.setOnClickListener(v -> {
+            v.startAnimation(clickAnim);
+            startActivity(new Intent(MainActivity.this, TriggerSettingsActivity.class));
+        });
+
+        cardVolume.setOnClickListener(v -> {
+            v.startAnimation(clickAnim);
+            startActivity(new Intent(MainActivity.this, VolumeTriggerSettingsActivity.class));
+        });
+
+        cardPassword.setOnClickListener(v -> {
+            v.startAnimation(clickAnim);
+            startActivity(new Intent(MainActivity.this, PasswordTriggerSettingsActivity.class));
+        });
 
         navHistory.setOnClickListener(v -> startActivity(new Intent(this, HistoryActivity.class)));
         navSecurity.setOnClickListener(v -> startActivity(new Intent(this, HowItWorksActivity.class)));
@@ -243,31 +403,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private int volumePressCount = 0;
-    private long lastVolumePressTime = 0;
-
     @Override
     public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
-        if ((keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == android.view.KeyEvent.KEYCODE_VOLUME_UP) 
-                && prefs.getBoolean("switch_volume", false)) {
-            
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastVolumePressTime < 1500) {
-                volumePressCount++;
-            } else {
-                volumePressCount = 1;
-            }
-            lastVolumePressTime = currentTime;
-
-            if (volumePressCount == 3) {
-                volumePressCount = 0;
-                Intent intent = new Intent(this, ShareLocationActivity.class);
-                intent.putExtra("AUTO_TRIGGER", true);
-                startActivity(intent);
-                Toast.makeText(this, "3x Volume Trigger: SOS Sent!", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
         return super.onKeyDown(keyCode, event);
     }
 

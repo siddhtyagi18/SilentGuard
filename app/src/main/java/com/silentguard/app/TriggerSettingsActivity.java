@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,7 +89,7 @@ public class TriggerSettingsActivity extends BaseSettingsActivity {
             item.setOnClickListener(v -> {
                 // Remove focus from others and highlight this
                 resetCommandHighlights();
-                item.setBackgroundResource(R.drawable.bg_glass_card_active);
+                item.setBackgroundColor(Color.parseColor("#158B5CF6"));
                 Toast.makeText(this, "Selected: " + phrase, Toast.LENGTH_SHORT).show();
             });
         }
@@ -98,7 +99,7 @@ public class TriggerSettingsActivity extends BaseSettingsActivity {
         int[] ids = {R.id.cmd_help, R.id.cmd_pakdo, R.id.cmd_give_phone};
         for (int id : ids) {
             View v = findViewById(id);
-            if (v != null) v.setBackgroundResource(R.drawable.bg_glass_card);
+            if (v != null) v.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
@@ -245,7 +246,7 @@ public class TriggerSettingsActivity extends BaseSettingsActivity {
         }
 
         // Test Voice Command Button
-        Button testButton = findViewById(R.id.test_button);
+        Button testButton = findViewById(R.id.bottom_test_button);
         if (testButton != null) {
             testButton.setOnClickListener(v -> {
                 if (switchVoice.isChecked()) {

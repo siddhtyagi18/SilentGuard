@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
+import android.content.SharedPreferences;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class EmergencyContactsActivity extends AppCompatActivity {
 
@@ -82,11 +86,29 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         mDatabase.setValue(contacts)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        saveToLocalPrefs(phone);
                         Toast.makeText(EmergencyContactsActivity.this, "Contacts updated!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
                         Toast.makeText(EmergencyContactsActivity.this, "Update failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void saveToLocalPrefs(String phone) {
+        try {
+            SharedPreferences prefs = getSharedPreferences("SilentGuardPrefs", MODE_PRIVATE);
+            JSONArray array = new JSONArray();
+            JSONObject contactObj = new JSONObject();
+            contactObj.put("name", "Emergency Contact");
+            contactObj.put("phone", phone);
+            contactObj.put("relation", "Family");
+            array.put(contactObj);
+            
+            prefs.edit().putString("contacts", array.toString()).apply();
+            Log.d("EmergencyContacts", "Saved to local prefs: " + array.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
