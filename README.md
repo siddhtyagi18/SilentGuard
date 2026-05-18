@@ -155,7 +155,9 @@ This project is licensed under the MIT License.
 ## 👥 Authors
 
 - **Siddh Tyagi** - [siddhtyagi18](https://github.com/siddhtyagi18)
-- **pv-tech28** - [pv-tech28](https://github.com/pv-tech28)
+- **Pratha Varshney** - [pv-tech28](https://github.com/pv-tech28)
+- **Niharika Swain** - [
+NiharikaSwain0](https://github.com/NiharikaSwain0)
 
 ---
 
