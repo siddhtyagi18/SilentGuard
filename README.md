@@ -1,12 +1,13 @@
 # 🔒 Silent Guard - Your Personal Safety Companion
 
 <p align="center">
-  <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=modern%20mobile%20app%20logo%20for%20Silent%20Guard%20personal%20safety%20application%2C%20shield%20icon%2C%20purple%20and%20orange%20gradient%2C%20professional%20design&image_size=square_hd" alt="Silent Guard Logo" width="200">
+  <b>Made with ❤️ for everyone's safety</b>
+  <br>
+  <i>Stay safe, stay protected with Silent Guard</i>
 </p>
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="#screenshots">Screenshots</a> •
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
   <a href="#tech-stack">Tech Stack</a> •
@@ -52,27 +53,6 @@
 - **Security monitoring**
 - Intruder documentation
 - Evidence collection
-
----
-
-## 📱 Screenshots
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=mobile%20app%20home%20screen%20for%20Silent%20Guard%20with%20SOS%20button%20and%20feature%20cards%2C%20modern%20UI%20design&image_size=portrait_4_3" width="200">
-      <br>Home Screen
-    </td>
-    <td align="center">
-      <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Silent%20Guard%20profile%20screen%20with%20user%20information%20and%20settings%20menu%2C%20clean%20UI&image_size=portrait_4_3" width="200">
-      <br>Profile
-    </td>
-    <td align="center">
-      <img src="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=Silent%20Guard%20settings%20screen%20with%20privacy%20policy%20and%20security%20options%2C%20modern%20design&image_size=portrait_4_3" width="200">
-      <br>Settings
-    </td>
-  </tr>
-</table>
 
 ---
 
@@ -152,8 +132,6 @@ Silent Guard takes your privacy seriously:
 - ✅ User control over all permissions
 - ✅ Local storage for sensitive data
 
-For more details, see our [Privacy Policy](app/src/main/res/layout/activity_privacy_policy.xml).
-
 ---
 
 ## 🤝 Contributing
@@ -170,7 +148,7 @@ We welcome contributions! Here's how you can help:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 
